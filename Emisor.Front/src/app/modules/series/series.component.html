@@ -1,0 +1,25 @@
+<h1 class="content-series-title mt-6 mt-md-5 mb-0 text-center" [ngClass]="customer.slug">¡HOLA!</h1>
+<h1 class="txt-info-secondary mt-6 mt-md-5 mb-0 text-center" [ngClass]="customer.slug">¿QUÉ NECESITA HACER?</h1>
+<h1 class="txt-info-secondary-2 mt-2 mb-0 text-center" [ngClass]="customer.slug">Seleccione una opción para continuar</h1>
+<div class="series-container mt-6 mt-md-5" *ngIf="!showSubSeries">
+  <ul *ngIf="seriesCargadas">
+    <li *ngFor="let serie of seriesMData" (click)="!isButtonDisabled && selectSerie(serie)" [class.disabled]="isButtonDisabled">
+      <img class="img-fluid rounded-circle" src="assets/img/serie.png" alt="serie" style="width: 75px !important" />
+      {{ serie.serieBoton }}
+    </li>
+  </ul>
+  <div class="d-flex align-items-center justify-content-center">
+    <button type="button" class="btn btn-primary shadow ms-5 ms-md-0" (click)="regresar()"><i class="fas fa-arrow-left"></i> Volver</button>
+  </div>
+</div>
+<div class="series-container" *ngIf="showSubSeries">
+  <ul>
+    <li *ngFor="let serie of this.subSeriesData" (click)="!isButtonDisabled && selectSubserie(serie)" [class.disabled]="isButtonDisabled">
+      <img class="img-fluid rounded-circle" src="assets/img/serie.png" alt="serie" style="width: 75px !important" />
+      {{ serie.serieBoton }}
+    </li>
+  </ul>
+  <div class="d-flex align-items-center justify-content-center">
+    <button type="button" class="btn btn-primary shadow ms-5 ms-md-0" (click)="regresarASeries()">Volver</button>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="ticket-container mt-6" *ngIf="!error && showTicket">
+  <h1 class="content-title mt-4" [ngClass]="customer.slug">Tu turno ha sido<br />ingresado</h1>
+  <div class="">
+    <h2 class="content-subtitle mt-4" [ngClass]="customer.slug">Espera al llamado para ser atendido</h2>
+    <h3 [ngClass]="{ 'texto-turno': turn.turno < 100, 'texto-turno-2': turn.turno >= 100 && turn.turno < 1000, 'texto-turno-3': turn.turno >= 1000 }">{{ this.turn.letra | titlecase }}{{ this.turn.turno }}</h3>
+    <div class="img-container mt-5" [ngClass]="customer.slug">
+      <img [src]="images.ticket" class="img-ticket" alt="ticket" />
+    </div>
+    <h1 class="content-title mt-6 mt-md-5 ticket-mensaje" [ngClass]="customer.slug">Muchas gracias, por su preferencia</h1>
+  </div>
+</div>

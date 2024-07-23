@@ -1,0 +1,10 @@
+{
+    "/api": {
+        "target": "https://apiturno.totalpack.cl/v1/turno-hub",
+        "secure": true,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}
