@@ -1,0 +1,25 @@
+{
+  "url_seguimiento": "https://dev-seguimiento-v40saas.totalpack.cl/",
+  "api_turno": {
+    "url": "https://dev-apiturno-v40saas.totalpack.cl/",
+    "apiKey": "c58aaa5a-a026-4fe8-8ef3-1bcec32e2bd9"
+  },
+  "api_auxiliar": {
+    "url": "https://dev-turnoaux-v40saas.totalpack.cl/",
+    "apiKey": "RhY7kFE9skCCUBVLvXnvdQ=="
+  },
+  "api_ticket": {
+    "url": "https://dev-apiticket-v40saas.totalpack.cl/"
+  },
+  "api_impresion": {
+    "url": "http://localhost/ApiImpresion/"
+  },
+  "api_segmentacion": {
+    "url": "http://localhost/ApiSegmentacion/",
+    "apiKey": "QXBpVjQwQWdlbmRhOlRUUFY0MCpBZ2VuZGEw"
+  },
+  "api_campana": {
+    "url": "http://localhost/ApiCampana/",
+    "apiKey": "QXBpVjQwQWdlbmRhOlRUUFY0MCpBZ2VuZGEw"
+  }
+}
