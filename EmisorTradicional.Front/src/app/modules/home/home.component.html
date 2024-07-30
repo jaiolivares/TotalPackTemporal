@@ -1,0 +1,10 @@
+<a  (click)="probarImpresora()" style="height: 1920px;">
+    <img *ngIf="images" [src]="images.home" class="home-img" alt="background-img">
+    <div class="attack1" *ngIf="cargandoEstadoImpresora">
+        <div class="pulse1"></div>
+        <div class="pulse2"></div>
+        <div class="pulse3"></div>
+        <div class="pulse4"></div>
+    </div>
+  </a>
+  

@@ -1,0 +1,10 @@
+<ng-container *ngIf="turn && selectedSerie">
+  <h1 class="title-ticket-informativo mt-4">{{ selectedSerie.serieBoton }}</h1>
+  <h1 class="mt-5 ticket-informativo-text">{{ turn.infoMsg }}</h1>
+  <div class="d-flex flex-column align-items-center justify-content-center mt-5">
+    <button class="serie serie-key-ingresar text-center botonera" type="button" (click)="regresar()">
+      <i class="fas fa-arrow-left"></i> Volver 
+  </button>
+  </div>
+</ng-container>
+  

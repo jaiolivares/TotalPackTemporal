@@ -1,0 +1,32 @@
+<div class="row mx-0 ">
+  <div class="col-12">
+    <div class="text-center mt-6 mt-md-5">
+      <div class="row">
+        <div class="col-md-12 col-lg-10 mx-auto mt-5 mt-md-2 border-r-1">
+          <h1 class="content-title mt-4" [ngClass]="customer.slug">Ingresa tu RUT</h1>
+          <form autocomplete="off" class="rutForm">
+            <div class="input-group mt-5 mb-2">
+              <input type="text" #formRut id="rut" class="form-control rut-form-control text-center" placeholder="EJ: 12.345.678-9" [formControl]="rut" maxlength="12" required>
+            </div>
+            <div class="d-flex align-items-center justify-content-center" *ngIf="isSubmitted && rut.invalid">
+              <div class="text-danger h1 mt-5" *ngIf="rut.hasError('required')">El campo RUT es obligatorio</div>
+              <div class="text-danger h1 mt-5" *ngIf="rut.hasError('rutInvalid')">Por favor ingresa un RUT válido</div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-primary shadow ms-5 me-5 ms-md-0 mt-5"  (click)="logout()" >Volver</button>
+              <button type="button" class="btn btn-primary shadow ms-5 ms-md-0 mt-5" (click)="onSubmit()">Siguiente</button>
+            </div>
+          </form>
+        </div>
+        <!--TECLADO-->
+        <div class="col-modified mx-auto text-center app-teclado-2">
+          <app-keyboard 
+            [rut]="true" 
+            (keypressEmit)="keypress($event)" 
+            (deleteKeyEmit)="deleteKey()">
+          </app-keyboard>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

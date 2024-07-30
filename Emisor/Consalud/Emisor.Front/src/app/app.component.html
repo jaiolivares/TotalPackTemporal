@@ -1,0 +1,7 @@
+<div class="auth-content">
+  <div *ngIf="showImg.includes(router.url)" class="row border-header"></div>
+  <router-outlet></router-outlet>
+</div>
+<app-header *ngIf="showImg.includes(router.url)"></app-header>
+<!-- <img [src]="images.logo" *ngIf="images && (router.url === '/dni' || router.url === '/series' || router.url === '/ticket' || router.url === '/informative-ticket')" class="img-background" alt="img-background" /> -->
+<app-footer></app-footer>

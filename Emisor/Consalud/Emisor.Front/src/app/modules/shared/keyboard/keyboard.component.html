@@ -1,0 +1,18 @@
+<button class="btn-teclado" (click)="onKeypress('1')">1</button>
+<button class="btn-teclado" (click)="onKeypress('2')">2</button>
+<button class="btn-teclado" (click)="onKeypress('3')">3</button>
+<button class="btn-teclado" (click)="onKeypress('4')">4</button>
+<button class="btn-teclado" (click)="onKeypress('5')">5</button>
+<button class="btn-teclado" (click)="onKeypress('6')">6</button>
+<button class="btn-teclado" (click)="onKeypress('7')">7</button>
+<button class="btn-teclado" (click)="onKeypress('8')">8</button>
+<button class="btn-teclado" (click)="onKeypress('9')">9</button>
+<ng-container *ngIf="rut; else noRut">
+    <button class="btn-teclado" (click)="onKeypress('k')">K</button>
+</ng-container>
+<ng-template #noRut>
+    <div class="btn-teclado"></div>
+</ng-template>
+<button class="btn-teclado" (click)="onKeypress('0')">0</button>
+<button class="btn-teclado" (click)="onDeleteKey()">  <i class="fas fa-backspace"></i></button>
+
