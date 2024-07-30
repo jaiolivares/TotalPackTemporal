@@ -17,13 +17,14 @@ export class PrinterService {
 
   async printerStatus(): Promise<GlobalResponse> {
     try {
+      const url = `${Settings.api_impresion.url}api/v1/PrinterStatus`;
       //validar si esta la respuesta a simular
       if (Config.simular.impresion) {
         return { status: true, code: 200, message: "OK" } as GlobalResponse;
       }
 
       //si no esta simulado se ejecuta el servicio
-      return await lastValueFrom(this.http.get<GlobalResponse>(`${Settings.api_impresion.url}/PrinterStatus`, { headers: this.headers }));
+      return await lastValueFrom(this.http.get<GlobalResponse>(url, { headers: this.headers }));
     } catch (error) {
       return { status: false } as GlobalResponse;
     }
@@ -31,7 +32,7 @@ export class PrinterService {
 
   async printTurno(base64: string): Promise<GlobalResponse> {
     try {
-      const url: string = `${Settings.api_impresion.url}/PrintTerm64`;
+      const url: string = `${Settings.api_impresion.url}api/v1/PrintTerm64`;
       return await lastValueFrom(this.http.post<GlobalResponse>(url, { document: base64 }, { headers: this.headers }));
     } catch (error) {
       throw error;

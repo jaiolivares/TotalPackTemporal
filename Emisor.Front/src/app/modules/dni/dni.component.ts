@@ -16,7 +16,7 @@ import { StorageService } from "src/app/core/utils/storage.service";
 import { SweetAlertService } from "src/app/core/utils/sweetalert.service";
 import { AuthService } from "src/app/core/services/auth/auth.service";
 import { ConsaludService } from "src/app/core/services/http/consalud.service";
-
+import { DataService } from 'src/app/core/utils/data.service';
 import { DataAfiliado, DataMensajeAtencion, DataCaminaContigo } from "src/app/core/interfaces/afiliado.interface";
 import { RequestDataAfiliado, RequestMensajeAtencion, RequestCaminaContigo } from "src/app/core/interfaces/requests/emitter.interface";
 
@@ -30,9 +30,8 @@ export class DniComponent implements OnInit {
   emitter!: EmitterData;
   customer!: CustomerData;
   //formulario
-  rut: FormControl = new FormControl("");
+  rut: FormControl = new FormControl("", [Validators.required, this.dniService.validarRut([])]);
   isSubmitted: boolean = false;
-  theme: number = Config.theme
 
   constructor(
     private cache: StorageService,
@@ -43,15 +42,14 @@ export class DniComponent implements OnInit {
     private router: Router,
     private sweetAlertService: SweetAlertService,
     private authService: AuthService,
-    private consaludService: ConsaludService
+    private consaludService: ConsaludService,
+    private dataService: DataService
   ) {
     this.customer = this.cache.getValue("customer") as CustomerData;
     this.emitter = this.cache.getValue("emitter") as EmitterData;
   }
 
   async ngOnInit(): Promise<void> {
-    this.rut.setValidators([Validators.required]);
-    this.rut.updateValueAndValidity();
     this.authService.stopWatching();
   }
 
@@ -70,108 +68,89 @@ export class DniComponent implements OnInit {
     this.isSubmitted = true;
 
     //valida que el rut sea valido
-    if (this.rut.invalid) {
-      return;
-    }
+    if (this.rut.invalid) { return; }
 
     try {
       this.sweetAlertService.swalLoading();
 
       //validar conexión a internet
       const online: boolean = await this.internetService.checkApi(true);
-      if (!online) {
-        return;
-      }
+      if (!online) { return; }
 
-      if (!(await this.probarImpresora())) {
+      //valida que la impresora este conectada
+      const impresora: GlobalResponse = await this.printerService.printerStatus();
+      if(!impresora.status) {
         this.sweetAlertService.swalNoImprime();
         return;
       }
 
+      //parsea el rut y separa el dv de la mantisa
       const rut = this.rut.value.replace(/\./g, "");
       const splitRut = rut.split("-");
-      this.cache.setValue("client", this.rut.value);
+      this.dataService.setValue("Rut", this.rut.value);
 
       //obtener nombre del afiliado
       const dataAfiliado: RequestDataAfiliado = { rutPers: splitRut[0] };
       const responseAfiliado: GlobalResponse2<DataAfiliado> = await this.consaludService.ObtenerNombreAfiliado(dataAfiliado);
+      //si el afiliado posee un nombre, se asignar para la posterior emisión de ticket
       const nombre: string = responseAfiliado.status && responseAfiliado.data.data ? responseAfiliado.data.data : "Sin nombre";
-      this.cache.setValue("nombre", nombre);
+      this.dataService.setValue('Nombre', nombre);
 
       //validar si el usuario tiene oferta
       await this.ObtenerOfertaUsuario(rut);
 
       //CAMINA CONTIGO
-      let caminaContigo: boolean = false;
       const dataCC: RequestCaminaContigo = { rut: splitRut[0] };
       const responseCC: GlobalResponse2<DataCaminaContigo> = await this.consaludService.CaminaContigo(dataCC);
+      
       //si pertenece al grupo camina contigo debo emitir un ticket de inmediato
       if (responseCC.status && responseCC.data.data.beneficiarioAnfitrion.grupoPrioritario?.toUpperCase() === "CAMINA CONTIGO") {
-        caminaContigo = true;
-        this.cache.setValue("series", "Camina Contigo");
+        this.dataService.setValue("CaminaContigo", true);
         this.sweetAlertService.swalClose();
         this.router.navigate(["/ticket"]);
-      }
-      this.cache.setValue("caminaContigo", caminaContigo);
-
-      if (caminaContigo) {
         return;
-      } else {
-        //ejecutar servicio para obtener series
-        const idEmitter: number = this.cache.getValue("multi-emitter") ?? 1;
-        const response: GlobalResponse2<ButtonData[]> = await this.emitterService.getButtons(this.customer.slug, this.emitter.idOficina, idEmitter);
-        if (!response.status) {
-          this.sweetAlertService.swalClose();
-          this.sweetAlertService.swalError("¡No se han podido cargar las series! Por favor comunícate con un administrador.");
-          return;
-        }
-
-        //extraer series que "tienen" subseries pero no poseen ninguna asignada
-        let series: ButtonData[] = response.data.filter((serie: ButtonData) => {
-          // Si tieneSS es 0, incluir la serie
-          if (serie.tieneSS === 0) {
-            return true;
-          } else if (serie.tieneSS === 1) {
-            return response.data.some((subserie: ButtonData) => subserie.idSerieM === serie.idSerie);
-          } else {
-            return false;
-          }
-        });
-
-        //valida que las series no posean una serie madre
-        const seriesM: ButtonData[] = series.filter((series: ButtonData) => {
-          return series.idSerieM == 0;
-        });
-
-        this.cache.setValue("series", series);
-        this.cache.setValue("seriesM", seriesM);
-        this.authService.idleUser(); // inicia el timer de inactividad
       }
+
+
+      //ejecutar servicio para obtener series
+      const idEmitter: number = this.cache.getValue("multi-emitter") ?? 1;
+      const response: GlobalResponse2<ButtonData[]> = await this.emitterService.getButtons(this.customer.slug, this.emitter.idOficina, idEmitter);
+      if (!response.status) {
+        this.sweetAlertService.swalClose();
+        this.sweetAlertService.swalError("¡No se han podido cargar las series! Por favor comunícate con un administrador.");
+        return;
+      }
+
+      //extraer series que "tienen" subseries pero no poseen ninguna asignada
+      let series: ButtonData[] = response.data.filter((serie: ButtonData) => {
+        // Si tieneSS es 0, incluir la serie
+        if (serie.tieneSS === 0) {
+          return true;
+        } else if (serie.tieneSS === 1) {
+          return response.data.some((subserie: ButtonData) => subserie.idSerieM === serie.idSerie);
+        } else {
+          return false;
+        }
+      });
+
+      //valida que las series no posean una serie madre
+      const seriesM: ButtonData[] = series.filter((series: ButtonData) => {
+        return series.idSerieM == 0;
+      });
+
       this.sweetAlertService.swalClose();
 
+      this.dataService.setValue("CaminaContigo", false);
+      this.dataService.setValue("Series", series);
+      this.dataService.setValue("SeriesM", seriesM);
+      this.authService.idleUser(); // inicia el timer de inactividad
+  
       //redireccionar a la siguiente vista
       this.router.navigate(["/series"]);
     } catch (error) {
       this.sweetAlertService.swalClose();
       this.sweetAlertService.swalError("¡No se han podido cargar las series! Por favor comunícate con un administrador.");
     }
-  }
-
-  async probarInternet(): Promise<boolean> {
-    //validar conexión a internet
-    const online: boolean = await this.internetService.checkApi(true);
-    if (!online) {
-      return false;
-    }
-    return true;
-  }
-  async probarImpresora(): Promise<boolean> {
-    //ejecutar servicio de impresora
-    const responseImp: GlobalResponse = await this.printerService.printerStatus();
-    if (!responseImp.status) {
-      return false;
-    }
-    return true;
   }
 
   async ObtenerOfertaUsuario(rut: string) {
@@ -181,14 +160,14 @@ export class DniComponent implements OnInit {
       dvCliente: splitR[1],
       rutCliente: splitR[0],
       idSerie: Config.idSerieCC,
-      sucursal: Config.codigoOficina,
+      sucursal: this.cache.getValue('codOficina'),
     };
 
     const response: GlobalResponse2<DataMensajeAtencion> = await this.consaludService.MensajeTicket(data);
     const oferta: string | null = response.status && response.data.data.tieneMensaje === "S" ? response.data.data.mensaje : "";
     const prioridad: number | null = response.status && response.data.data.prioridad ? response.data.data.prioridad : 0;
 
-    this.cache.setValue("oferta", oferta);
-    this.cache.setValue("prioridad", prioridad);
+    this.dataService.setValue("Oferta", oferta);
+    this.dataService.setValue("Prioridad", prioridad);
   }
 }

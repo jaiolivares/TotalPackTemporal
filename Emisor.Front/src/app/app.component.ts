@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
 
   title = 'emisor-tradicional';
   images: Images = this.customerService.images.value;
+  showImg: string[] = ['/dni', '/series', '/ticket', '/informative-ticket']
 
   constructor(
     public router: Router,

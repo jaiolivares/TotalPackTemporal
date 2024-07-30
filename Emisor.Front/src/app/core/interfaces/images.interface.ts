@@ -1,5 +1,4 @@
 export interface Images {
-    home: string;
-    background: string;
+    logo: string;
     ticket: string;
 }

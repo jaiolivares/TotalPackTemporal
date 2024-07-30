@@ -18,7 +18,7 @@ export class TurnService {
 
   async newTurn(body: TurnRequest, customerSlug: string): Promise<GlobalResponse2<TurnResponse[]>> {
     try {
-      const url = `${Settings.api_auxiliar.url}/api/v1/Turno/NuevoTurno?Slug=${customerSlug}`;
+      const url = `${Settings.api_auxiliar.url}api/v1/Turno/NuevoTurno2?Slug=${customerSlug}`;
       return await lastValueFrom(this.http.post<GlobalResponse2<TurnResponse[]>>(url, body, { headers: this.headers }));
     } catch (error) {
       return { status: false } as GlobalResponse2<TurnResponse[]>;

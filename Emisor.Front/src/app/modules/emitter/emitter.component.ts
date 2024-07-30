@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 //interfaces
 import { CustomerData } from 'src/app/core/interfaces/customer.interface';
@@ -67,13 +67,15 @@ export class EmitterComponent implements OnInit  {
       this.customer = customer[0];
       
   
-      //obtener el codigo de oficina para servicio de campaña (NO OK)
+      //obtener el codigo de oficina para servicio de consalud
       const result: GlobalResponse2<OfficeCodeResponse[]> = await this.customerService.getOfficeCode(this.customer.slug, this.emitter.idOficina);
-      if (result.status && result.data.length > 0) {
-        this.cache.setValue('codOficina', result.data[0].codOficina);
+      if(!result.status || result.data.length == 0) {
+        this.sweetAlertService.swalError("No se ha podido obtener el código de oficina");
+        return;
       }
 
       //GUARDAR LAS VARIABLES EN CACHE
+      this.cache.setValue('codOficina', result.data[0].codOficina);
       this.cache.setValue('emitter', this.emitter);
       this.cache.setValue('customer', this.customer);
       this.cache.setValue('id', splitter[0]);

@@ -4,7 +4,7 @@ import { ButtonData } from 'src/app/core/interfaces/emitter.interface';
 import { TurnResponse } from 'src/app/core/interfaces/turn.interface';
 //services
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { StorageService } from 'src/app/core/utils/storage.service';
+import { DataService } from 'src/app/core/utils/data.service';
 
 @Component({
   selector: 'app-informative-ticket',
@@ -14,19 +14,19 @@ import { StorageService } from 'src/app/core/utils/storage.service';
 export class InformativeTicketComponent implements OnInit, OnDestroy {
 
   //variables en cache
-  turn!: TurnResponse;
-  selectedSerie!: ButtonData;
+  turn!: TurnResponse | null;
+  selectedSerie!: ButtonData | null;
   //others
   timeoutVolver:any;
 
   constructor(
     private authService: AuthService,
-    private cache: StorageService
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
-    this.turn = this.cache.getValue('turn');
-    this.selectedSerie = this.cache.getValue('serie-selected') as ButtonData;
+    this.turn = this.dataService.getData().Turno;
+    this.selectedSerie = this.dataService.getData().SerieSelected;
     this.timeoutVolver = setTimeout(()=>{ this.regresar() },10000)
   }
 

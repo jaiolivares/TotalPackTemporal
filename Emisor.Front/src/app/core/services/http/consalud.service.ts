@@ -21,7 +21,7 @@ export class ConsaludService {
 
   async AsignarNumero(data: RequestAsignarNumero): Promise<GlobalResponse2<DataAsignarNumero>> {
     try {
-      const url = `${Settings.api_consalud.url}/api/v1/Emitter/AsignarNumero`;
+      const url = `${Settings.api_consalud.url}api/v1/Emitter/AsignarNumero`;
       const headers = this.headers.set("ApiKey", Settings.api_consalud.apiKey);
       return await lastValueFrom(this.http.post<GlobalResponse2<DataAsignarNumero>>(url, data, { headers }));
     } catch (error) {
@@ -31,7 +31,7 @@ export class ConsaludService {
 
   async CaminaContigo(data: RequestCaminaContigo): Promise<GlobalResponse2<DataCaminaContigo>> {
     try {
-      const url = `${Settings.api_consalud.url}/api/v1/Emitter/ListaBeneficiariosTTP`;
+      const url = `${Settings.api_consalud.url}api/v1/Emitter/ListaBeneficiariosTTP`;
       const headers = this.headers.set("ApiKey", Settings.api_consalud.apiKey);
       return await lastValueFrom(this.http.post<GlobalResponse2<DataCaminaContigo>>(url, data, { headers }));
     } catch (error) {
@@ -41,7 +41,7 @@ export class ConsaludService {
 
   async MensajeTicket(data: RequestMensajeAtencion): Promise<GlobalResponse2<DataMensajeAtencion>> {
     try {
-      const url = `${Settings.api_consalud.url}/api/v1/Emitter/MensajeAtencion`;
+      const url = `${Settings.api_consalud.url}api/v1/Emitter/MensajeAtencion`;
       const headers = this.headers.set("ApiKey", Settings.api_consalud.apiKey);
       return await lastValueFrom(this.http.post<GlobalResponse2<DataMensajeAtencion>>(url, data, { headers }));
     } catch (error) {
@@ -51,7 +51,7 @@ export class ConsaludService {
 
   async ObtenerNombreAfiliado(body: RequestDataAfiliado): Promise<GlobalResponse2<DataAfiliado>> {
     try {
-      const url = `${Settings.api_consalud.url}/api/v1/Emitter/ConsultaNombreAfiliado`;
+      const url = `${Settings.api_consalud.url}api/v1/Emitter/ConsultaNombreAfiliado`;
       const headers = this.headers.set("ApiKey", Settings.api_consalud.apiKey);
       return await lastValueFrom(this.http.post<GlobalResponse2<DataAfiliado>>(url, body, { headers }));
     } catch (error) {

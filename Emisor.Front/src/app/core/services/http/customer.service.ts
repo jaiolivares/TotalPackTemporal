@@ -16,10 +16,7 @@ import { StorageService } from "src/app/core/utils/storage.service";
   providedIn: "root",
 })
 export class CustomerService {
-  images: BehaviorSubject<Images> = new BehaviorSubject<Images>({ background: "", home: "", ticket: "" } as Images);
-
-  url_turno: string = Settings.api_turno.url;
-  url_auxiliar: string = Settings.api_auxiliar.url;
+  images: BehaviorSubject<Images> = new BehaviorSubject<Images>({ logo: "", ticket: "" } as Images);
 
   headers: HttpHeaders = new HttpHeaders({
     "Content-Type": "application/json",
@@ -30,7 +27,7 @@ export class CustomerService {
 
   async getCustomer(idCustomer: string): Promise<CustomerData[]> {
     try {
-      const url = `${this.url_turno}/Turno/v1/customer?id=${idCustomer}`;
+      const url = `${ Settings.api_turno.url }Turno/v1/customer?id=${idCustomer}`;
       return await lastValueFrom(this.http.get<CustomerData[]>(url, { headers: this.headers }));
     } catch (error) {
       return [];
@@ -39,7 +36,7 @@ export class CustomerService {
 
   async getOfficeCode(slug: string, idOffice: number): Promise<GlobalResponse2<OfficeCodeResponse[]>> {
     try {
-      const url = `${this.url_auxiliar}/api/v1/Totem/ObtenerCodigoOficina?Slug=${slug}&idOficina=${idOffice}`;
+      const url = `${ Settings.api_auxiliar.url }api/v1/Totem/ObtenerCodigoOficina?Slug=${slug}&idOficina=${idOffice}`;
       const headers = this.headers.set("ApiKey", Settings.api_auxiliar.apiKey);
       return await lastValueFrom(this.http.post<GlobalResponse2<OfficeCodeResponse[]>>(url, {}, { headers }));
     } catch (error) {
@@ -69,9 +66,8 @@ export class CustomerService {
 
     //RESCATAR IMAGENES
     const images: Images = {
-      home: "",
-      background: "../../../../assets/img/logo-cliente.svg",
-      ticket: "../../../../assets/img/ticket.gif",
+      logo: "assets/img/logo-cliente.svg",
+      ticket: "assets/img/ticket.gif",
     };
 
     this.images.next(images);

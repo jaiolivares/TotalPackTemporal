@@ -8,6 +8,7 @@ import { CustomerData } from 'src/app/core/interfaces/customer.interface';
 import { EmitService } from 'src/app/core/utils/emit.service';
 import { InternetService } from 'src/app/core/utils/internet.service';
 import { StorageService } from 'src/app/core/utils/storage.service';
+import { DataService } from 'src/app/core/utils/data.service';
 
 @Component({
   selector: 'app-series',
@@ -34,11 +35,12 @@ export class SeriesComponent implements OnInit, OnDestroy {
     private cache: StorageService,
     private emitService: EmitService,
     private internetService: InternetService,
-    private router: Router
+    private router: Router,
+    private dataService: DataService
   ) {
     this.customer = this.cache.getValue('customer') as CustomerData;
-    this.seriesMData = this.cache.getValue('seriesM') as ButtonData[];
-    this.seriesData = this.cache.getValue('series') as ButtonData[];
+    this.seriesMData = this.dataService.getData().SeriesM;
+    this.seriesData = this.dataService.getData().Series;
     this.seriesCargadas = true;
   }
 
@@ -63,8 +65,8 @@ export class SeriesComponent implements OnInit, OnDestroy {
     if(!response) { return; }
 
     this.selectedSubserie = serie;
-    this.cache.setValue('serie-selected', this.selectedSerie);
-    this.cache.setValue('subserie-selected', this.selectedSubserie);
+    this.dataService.setValue('SerieSelected', this.selectedSerie);
+    this.dataService.setValue('SubSerieSelected', this.selectedSubserie);
     this.router.navigate(['/ticket']);
     this.isButtonDisabled = false;
   }
@@ -79,8 +81,8 @@ export class SeriesComponent implements OnInit, OnDestroy {
       if(!online) { return }
 
       this.emitService.setSubSerie(false); //variable para ver hacia que parte redireccionar si finaliza por inactividad
-      this.cache.setValue('serie-selected', this.selectedSerie); //guarda localmente la variable en la sesión
-      this.cache.removeItem('subserie-selected') //se elimina esta variable por si poseia un valor anterior
+      this.dataService.setValue('SerieSelected', this.selectedSerie); //guarda localmente la variable en la sesión
+      this.dataService.setValue('SubSerieSelected', null) //se elimina esta variable por si poseia un valor anterior
       this.router.navigate(['/ticket']);
       return;
     }

@@ -57,7 +57,8 @@
 }
 
 body {
-  font-family: "Averta", sans-serif !important;
+  /* font-family: "Averta", sans-serif !important; */
+  font-family: var(--bs-font-sans-serif);
   overflow: hidden;
   color: #38474f;
   zoom: 100%;
@@ -324,7 +325,7 @@ button {
   color: white;
   font-weight: 700;
   font-size: 25px;
-  min-width: 200px;
+  min-width: 100px;
 }
 
 .swal2-confirm {
@@ -414,7 +415,7 @@ button {
   position: absolute;
   width: 350px;
   left: 34%;
-  top: 42%;
+  top: 52%;
   font-size: 170px;
   font-weight: bold;
   color: #666666;
@@ -598,10 +599,11 @@ mat-keyboard {
   border-radius: 15px !important;
   padding-left: 40px;
   border: 1px solid var(--color-llamado) !important;
-  height: 90px;
+  height: 110px;
   color: var(--color-llamado) !important;
   font-weight: bold;
   font-family: "Averta", sans-serif;
+  font-size: 3rem !important;
 }
 
 .rut-form-control:focus {
@@ -644,7 +646,6 @@ mat-keyboard {
 .txt-info-title {
   color: var(--color-llamado);
   font-size: 85px;
-  font-weight: 600;
 }
 
 .txt-info-secondary {
@@ -717,21 +718,6 @@ body div[class^="pulse"] {
 }
 
 @media screen and (max-width: 768px) {
-  .btn-teclado {
-    width: 81px !important;
-    height: 100px !important;
-    border-radius: 7px;
-    font-size: 65px !important;
-    margin: 3px !important;
-    background: var(--fondo-botones) !important;
-    border-color: var(--fondo-botones) !important;
-    font-weight: 200 !important;
-  }
-
-  .app-teclado-2 {
-    margin-top: 150px !important;
-  }
-
   .col-modified {
     flex: 0 0 auto;
     width: 100% !important;
@@ -766,12 +752,7 @@ body div[class^="pulse"] {
   .img-bar {
     margin-top: 25px;
   }
-  .series-container {
-    margin-top: 0px;
-    height: 920px;
-    overflow: scroll;
-    padding-bottom: 100px;
-  }
+  
   .series-container li {
     font-size: 21px;
     padding: 1rem 3rem;
@@ -796,21 +777,11 @@ body div[class^="pulse"] {
   .auth-content {
     top: 182px;
   }
-  .content-title {
-    font-size: 60px;
-    color: #6c6666;
-  }
   .content-subtitle {
     font-size: 40px;
   }
   .content-series-title {
     font-size: 70px;
-  }
-  .texto-turno {
-    left: 28%;
-    top: 41%;
-    font-size: 120px;
-    width: 341;
   }
   body div[class^="attack"] {
     margin-left: 383px;
@@ -828,70 +799,51 @@ body div[class^="pulse"] {
     font-size: 38px !important;
     padding: 1.5rem 2.5rem !important;
   }
-
-  .texto-turno-2 {
-    position: absolute !important;
-    width: 350px !important;
-    left: 27% !important;
-    top: 45% !important;
-    font-size: 122px !important;
-    font-weight: bold !important;
-    color: #666666 !important;
-  }
-
-  .texto-turno-3 {
-    position: absolute !important;
-    width: 350px !important;
-    left: 27% !important;
-    top: 47% !important;
-    font-size: 110px !important;
-    font-weight: bold !important;
-    color: #666666 !important;
-  }
 }
 
 .btn-teclado {
-  width: 81px;
-  height: 120px;
-  border-radius: 7px;
+  width: 150px;
+  height: 130px;
+  border-radius: 150px;
   box-shadow: 0 0.8rem 1rem rgba(0, 0, 0, 0.15) !important;
   font-size: 65px;
-  margin: 3px;
+  margin: 13px;
   border: 2px solid white;
   color: white;
   background: var(--fondo-botones) !important;
   border-color: var(--fondo-botones) !important;
   font-weight: 700;
+  margin-left: 40px;
+}
+
+.texto-turno-2 {
+  position: absolute !important;
+  width: 350px !important;
+  left: 34% !important;
+  top: 54% !important;
+  font-size: 140px !important;
+  font-weight: bold !important;
+  color: #666666 !important;
+}
+
+.texto-turno-3 {
+  position: absolute !important;
+  width: 350px !important;
+  left: 33% !important;
+  top: 56% !important;
+  font-size: 120px !important;
+  font-weight: bold !important;
+  color: #666666 !important;
 }
 
 @media screen and (max-width: 1080px) and (min-width: 1070px) {
   .app-teclado-2 {
-    margin-top: 300px !important;
+    margin-top: 100px !important;
   }
 
   .col-modified {
     flex: 0 0 auto;
     width: 66.66666667% !important;
-  }
-
-  .texto-turno-2 {
-    position: absolute !important;
-    width: 350px !important;
-    left: 34% !important;
-    top: 45% !important;
-    font-size: 140px !important;
-    font-weight: bold !important;
-    color: #666666 !important;
-  }
-
-  .texto-turno-3 {
-    position: absolute !important;
-    width: 350px !important;
-    left: 33% !important;
-    top: 47% !important;
-    font-size: 120px !important;
-    font-weight: bold !important;
-    color: #666666 !important;
   }
 }
 
@@ -953,4 +905,193 @@ body div[class^="pulse"] {
   top: 0px;
   left: 0px;
   z-index: 9999;
+}
+
+/* CONSALUD */
+.serie {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  text-decoration: none;
+  padding: 30px;
+  margin-top: 2rem;
+  height: 120px;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  /* color: #7E8A98; */
+  color: var(--color-llamado-texto);
+  border-radius: 100px!important;
+  border: none;
+  /* background: #e0e0e0; */
+  background: var(--color-llamado);
+  /* box-shadow: 8px 8px 24px #b1b1b1, -8px -8px 24px #ffffff !important; */
+  width: 400px;
+}
+
+.serie-key:hover,
+.serie-key-ingresar:hover,
+.btn-regresar:hover {
+    font-size: 2.8rem;
+}
+
+.serie-key-ingresar {
+    font-size: 3rem;
+    /* background-color: #01A8B3; */
+    color: var(--color-llamado) !important;
+    background-color: var(--fondo-pantalla) !important;
+    line-height: 100%;
+    margin-top: 40px;
+    /* color: var(--color-llamado-texto); */
+}
+
+input {
+  font-family: "Roboto", sans-serif !important;
+  width: 100%;
+  outline: none;
+  height: 100px;
+  margin-bottom: 30px !important;
+  border-radius: 15px;
+  border: none;
+  font-size: 2.7rem !important;
+  background-color: #e0e0e0;
+  box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #ffffff;
+  color: #7E8A98;
+  font-weight: 900;
+  padding-bottom: 1%;
+}
+
+.new-box {
+  /* box-shadow: inset 0px 0px 0px 0px rgba(255, 255, 255, 0.7), inset 0px 0px 0px 20px rgba(0, 0, 0, 0.2); */
+  background-color: white !important;
+  border-radius: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* sombra en el borde inferior */
+  padding-top: 15px !important;
+  height: auto;
+}
+
+.lt-button {
+  line-height: 1.3;
+}
+
+.btn-serie{
+  max-width: 700px;
+  border-radius: 10px;
+  background-color: #1a4a93;
+  font-family: 'Lato', sans-serif;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  /* margin-bottom: 10px; */
+  background: var(--color-llamado);
+  border: none;
+  height: 100%;
+  /* border-color: var(--color-llamado); */
+}
+
+.text-left {
+  text-align: left;
+}
+
+.box-serie {
+  font-size: 40px;
+}
+
+.img-icon-serie {
+  width: 75px;
+}
+
+@media screen and (max-width: 768px) { 
+  .content-title {
+    font-size: 50px;
+    color: var(--color-llamado) !important;
+  }
+
+  .img-background {
+    width: 75%;
+  }
+
+  .txt-info-title {
+    font-size: 70px;
+  }
+
+  .txt-info-secondary {
+    font-size: 35px;
+  }
+
+  .input-group .form-control {
+    height: 70px;
+    font-size: 2.3rem;
+  }
+
+  .btn-teclado {
+    width: 135px !important;
+    height: 90px !important;
+    font-size: 50px !important;
+    margin-top: 5px !important;
+    font-weight: 500 !important;
+  }
+
+  .app-teclado-2 {
+    margin-top: 50px !important;
+  }
+
+  .msg-errors {
+    margin-top: -80px;
+  }
+
+  .serie-key-ingresar {
+    font-size: 2.7rem;
+    margin-top: 30px;
+  }
+
+  .serie {
+    height: 100px;
+    width: 320px;
+    padding: 19px;
+  }
+
+  .box-serie {
+    font-size: 27px;
+  }
+
+  .series-container {
+    margin-top: 0px !important;
+    height: 850px;
+    overflow: scroll;
+  }
+
+  .new-box {
+    height: 93px;
+  }
+
+  .img-icon-serie {
+    width: 60px;
+  }
+
+  .ticket-container {
+    margin-top: 10px !important;
+  }
+
+  .texto-turno {
+    left: 28%;
+    top: 54%;
+    font-size: 100px;
+  }
+
+  .texto-turno-2 {
+    left: 27% !important;
+    top: 54% !important;
+    font-size: 95px !important;
+  }
+
+  .texto-turno-3 {
+    left: 27% !important;
+    top: 56% !important;
+    font-size: 80px !important;
+  }
+
+  .img-ticket {
+    height: 390px;
+  }
 }

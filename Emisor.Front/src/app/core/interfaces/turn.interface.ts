@@ -12,21 +12,21 @@ export interface TurnRequest {
 }
 
 export interface TurnResponse {
+  codError: number;
+  fInfo: number;
+  fhEmi: string; // formato "2024-06-13 13:31"
   idOficina: number;
   idSerie: number;
-  letra: string;
-  turno: number;
-  ticket: string;
-  fechaEmision: string; // formato "2024-06-13 13:31"
-  fInfo: number;
-  infoMsg: string;
-  tEspE: number;
   idTurno: string; //GUID
-  u1Letra: string;
-  u1Turno: number;
-  agenda: string | null;
-  priorizado: boolean;
-  codError: number;
+  infoMsg: string;
+  letra: string;
   msg: string;
+  priorizado: boolean;
+  qEspOfi: number;
   qEspSer: number; //cantidad de espera por serie
+  tEspe: number;
+  ticket: string;
+  turno: number;
+  ulLetra: string;
+  ulTurno: number;
 }

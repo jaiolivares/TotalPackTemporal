@@ -14,7 +14,7 @@ export class TicketService {
 
   async crearTicket(body: TicketRequest): Promise<TicketResponse> {
     try {
-      const url = `${Settings.api_ticket.url}/api/v1/Impresion/CrearTurno_Consalud`;
+      const url = `${Settings.api_ticket.url}api/v1/Impresion/CrearTurno_Consalud`;
       return await lastValueFrom(this.http.post<TicketResponse>(url, body));
     } catch (error) {
       throw error;
