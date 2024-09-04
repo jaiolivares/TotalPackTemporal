@@ -1,0 +1,119 @@
+{
+    "oficinas": [
+        {
+          "oficina": "Demo",
+          "promedio": "2:20:15",
+          "series": [
+            { "serie": "Atención General", "promedio": "00:27:15"},
+            { "serie": "Atención Especializada", "promedio": "00:20:15"},
+            { "serie": "Cambio de SIM Card",  "promedio": "1:50:15"},
+            { "serie": "Compra de Equipos",  "promedio": "00:15:15"}
+            ]
+        },
+        {
+          "oficina": "Maipú",
+          "promedio": "4:20:15",
+          "series": [
+            { "serie": "Atención General",  "promedio": "3:27:15"},
+            { "serie": "Atención Especializada", "promedio": "00:20:15"},
+            { "serie": "Cambio de SIM Card",  "promedio": "1:50:15"},
+            { "serie": "Compra de Equipos",  "promedio": "00:15:15"}
+            ]
+        },
+        {
+          "oficina": "Quilín",
+          "promedio": "5:20:15",
+          "series": [
+            { "serie": "Atención General",  "promedio": "1:27:15"},
+            { "serie": "Atención Especializada",  "promedio": "00:20:15"},
+            { "serie": "Cambio de SIM Card",  "promedio": "1:50:15"},
+            { "serie": "Compra de Equipos",  "promedio": "00:15:15"}
+            ]
+        },
+        {
+          "oficina": "Plaza Oeste",
+          "promedio": "1:20:15",
+          "series": [
+            { "serie": "Atención General",  "promedio": "1:27:15"},
+            { "serie": "Atención Especializada",  "promedio": "00:20:15"},
+            { "serie": "Cambio de SIM Card",  "promedio": "1:50:15"},
+            { "serie": "Compra de Equipos",  "promedio": "1:15:15"}
+            ]
+        },
+        {
+          "oficina": "Huérfanos",
+          "promedio": "4:20:15",
+          "series": [
+            { "serie": "Atención General",  "promedio": "1:27:15"},
+            { "serie": "Atención Especializada",  "promedio": "1:20:15"},
+            { "serie": "Cambio de SIM Card",  "promedio": "1:50:15"},
+            { "serie": "Compra de Equipos",  "promedio": "1:15:15"}
+            ]
+        },
+        {
+          "oficina": "Plaza Norte",
+          "promedio": "2:20:15",
+          "series": [
+            { "serie": "Atención General",  "promedio": "1:27:15"},
+            { "serie": "Atención Especializada",  "promedio": "1:20:15"},
+            { "serie": "Cambio de SIM Card",  "promedio": "1:50:15"},
+            { "serie": "Compra de Equipos",  "promedio": "1:15:15"}
+            ]
+        },
+        {
+          "oficina": "Plaza Vespucio",
+          "promedio": "2:20:15",
+          "series": [
+            { "serie": "Atención General",  "promedio": "1:27:15"},
+            { "serie": "Atención Especializada",  "promedio": "1:20:15"},
+            { "serie": "Cambio de SIM Card",  "promedio": "1:50:15"},
+            { "serie": "Compra de Equipos",  "promedio": "1:15:15"}
+            ]
+        }
+      ],
+
+   
+      "series": [
+        {
+          "serie": "Atención General",
+          "promedio": "25:30:45",
+          "oficinas": [
+            { "oficina": "Demo", "promedio": "12:27:15"},
+            { "oficina": "Maipú", "promedio": "14:27:15" },
+            { "oficina": "Quilín", "promedio": "8:27:15"},
+            { "oficina": "Plaza Oeste", "promedio": "6:27:15"}
+            ]
+        },
+        {
+          "serie": "Atención Especializada",
+          "promedio": "18:30:45",
+          "oficinas": [
+            { "oficina": "Demo", "promedio": "12:27:15" },
+            { "oficina": "Maipú", "promedio": "14:27:15" },
+            { "oficina": "Quilín", "promedio": "8:27:15" },
+            { "oficina": "Plaza Oeste", "promedio": "6:27:15" }
+            ]
+        },
+        {
+          "serie": "Cambio de SIM Card",
+          "promedio": "9:30:45",
+          "oficinas": [
+            { "oficina": "Demo", "promedio": "12:27:15"},
+            { "oficina": "Maipú", "promedio": "14:27:15"},
+            { "oficina": "Quilín", "promedio": "8:27:15"},
+            { "oficina": "Plaza Oeste", "promedio": "6:27:15"}
+            ]
+        },
+        {
+          "serie": "Compra de Equipos",
+          "promedio": "13:30:45",
+          "oficinas": [
+            { "oficina": "Demo", "promedio": "12:27:15"},
+            { "oficina": "Maipú", "promedio": "14:27:15"},
+            { "oficina": "Quilín", "promedio": "8:27:15"},
+            { "oficina": "Plaza Oeste", "promedio": "6:27:15"}
+            ]
+        }
+      ],
+      "status": true
+   }

@@ -1,0 +1,108 @@
+<div class="card box-success box">
+  <form [formGroup]="form" (submit)="enviarForm()">
+    <div class="row pb-0 p-3">
+      <div class="col-lg-12 col-12">
+        <h6 class="pt-n2"><i class="fas fa-file-signature"></i> {{ estado.selectedPerfilDetalle ? "Actualizar" : "Crear" }} perfil</h6>
+      </div>
+      <div class="col-lg-3 col-12">
+        <div class="box-input mb-3">
+          <div class="row">
+            <div class="col-sm-6 px-0 col-12">
+              <p class="text-input">Nombre del Perfil</p>
+            </div>
+            <div class="col-sm-6 pl-0 col-12">
+              <input type="text" formControlName="nombrePerfil" [ngClass]="{ 'input-error': this.isSubmitted && this.form.controls['nombrePerfil'].errors !== null }" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-12">
+        <div class="box-input mb-3">
+          <div class="row">
+            <div class="col-9 pr-0">
+              <p class="text-input sw-text">Habilitado</p>
+            </div>
+            <div class="col-3">
+              <label class="switch">
+                <input type="checkbox" formControlName="activo" />
+                <div class="slider round"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-12">
+        <div class="box-input mb-3">
+          <div class="row">
+            <div class="col-12 d-flex">
+              <p class="text-input sw-text mr-3">Horarios de Alarmas</p>
+            </div>
+            <div class="row col-xl-6">
+              <div class="col-12 row">
+                <div class="col-sm-3 pr-0 col-12">
+                  <p class="text-input mb-1">Día(s)</p>
+                </div>
+                <div class="col-sm-5 col-12">
+                  <select class="custom-select" formControlName="dias">
+                    <option value="0">Todos</option>
+                    <option value="1">Lunes a Viernes</option>
+                    <option value="2">Fin de semana</option>
+                    <option value="3">Lunes</option>
+                    <option value="4">Martes</option>
+                    <option value="5">Miercoles</option>
+                    <option value="6">Jueves</option>
+                    <option value="7">Viernes</option>
+                    <option value="8">Sabado</option>
+                    <option value="9">Domingo</option>
+                  </select>
+                </div>
+                <div class="col-4 px-0 pt-3">
+                  <div class="col-12 d-flex align-items-center">
+                    <button class="btn btn-ligth boton p-0" type="button" (click)="setHorarios()">Confirmar <i class="fa fa-check primary-text fa-lg"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="row col-12">
+                <div class="col-sm-3 pr-0 col-12">
+                  <p class="text-input mb-1">De</p>
+                </div>
+                <div class="col-sm-3 col-12">
+                  <timepicker formControlName="horarioDe" [showMeridian]="false" [showSpinners]="false"> </timepicker>
+                </div>
+                <div class="col-sm-3 pr-0 col-12">
+                  <p class="text-input mb-1">a</p>
+                </div>
+                <div class="col-sm-3 col-12">
+                  <timepicker formControlName="horarioHasta" [showMeridian]="false" [showSpinners]="false"></timepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 d-flex flex-wrap my-2">
+              <div class="mx-1" *ngFor="let element of horariosPorDiaAlarmas">
+                <app-day-card-simple [data]="element" (onDelete)="deleteHorarioAtencion($event)"></app-day-card-simple>
+              </div>
+            </div>
+            <div class="col-12 ml-3 mt-3">
+              <h6 class="primary-text">Nota: <small class="text-grey"> Recuerde confirmar los horarios antes de CREAR el perfil, pues de lo contrario sus cambios no quedarán registrados</small></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-10 text-right">
+        <button type="submit" class="btn btn-block btn-success m-1"><i class="far fa-save"></i> {{ estado.selectedPerfilDetalle ? "Actualizar" : "Crear" }} perfil</button>
+      </div>
+      <div class="col-2">
+        <button type="button" class="btn btn-secondary btn-fail m-1" (click)="onVolver()">
+          <i class="fas fa-ban"></i>
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<ng-container *ngIf="isLoading">
+  <div class="spinner-container component-only">
+    <ngx-spinner name="create-edit-loading" [fullScreen]="false" type="ball-scale-ripple" size="large"> </ngx-spinner>
+  </div>
+</ng-container>

@@ -1,0 +1,24 @@
+.confi {
+    position: absolute;
+    right: 19px;
+    top: 10px;
+    display: block;
+    color: var(--color-llamado);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.confi:hover {
+    color: #000;
+}
+
+.boton:hover {
+    box-shadow: none !important;
+    color: var(--color-llamado) !important;
+    font-weight: 600;
+    background: tranparent !important;
+}
+
+.tit-box {
+    font-size: 0.8rem;
+}

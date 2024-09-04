@@ -1,0 +1,277 @@
+<div class="row align-items-center">
+    <div class="col-md-4">
+        <div class="form-group">
+            <div class="input-group relative">
+                <input type="text" (keyup)="tecleado($event.target)" [formControl]="inputSearh" class="form-control form-control-md search" placeholder="Buscar oficinas..." />
+                <!-- <span class="delete-search-icon">
+          <i class="fa fa-search"></i>
+        </span> -->
+                <div class="input-group-append">
+                    <button type="button" (click)="limpiar()" class="btn btn-md btn-default">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-search"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="row form-group">
+            <div class="dropdown mr-2">
+                Mostrando:
+                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+          {{ mostrar }}
+        </button>
+                <div class="dropdown-menu">
+                    <a type="button" (click)="agrupar('', '')" class="dropdown-item" [ngClass]="{ 'active-dropdown': activeGroupBy === '' }">Todas las Oficinas</a
+          >
+          <a
+            type="button"
+            (click)="agrupar('estado', 1)"
+            class="dropdown-item"
+            [ngClass]="{ 'active-dropdown': activeGroupBy === 'estado-1' }"
+            >Oficinas Activas</a
+          >
+          <a
+            type="button"
+            (click)="agrupar('estado', 0)"
+            class="dropdown-item"
+            [ngClass]="{ 'active-dropdown': activeGroupBy === 'estado-0' }"
+            >Oficinas Inactivas
+          </a>
+                </div>
+            </div>
+            <div class="dropdown mr-2">
+                Ordenado por:
+                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+          {{ ordenadoPor }}
+        </button>
+                <div class="dropdown-menu">
+                    <a type="button" (click)="ordenar('personasEnFila', 'D', 'Personas en Espera - Descendente')" class="dropdown-item" [ngClass]="{
+              'active-dropdown': activeOrderBy === 'personasEnFila-D'
+            }">Personas en espera - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('personasEnFila', 'A', 'Personas en Espera - Ascendente')"
+            class="dropdown-item"
+            [ngClass]="{
+              'active-dropdown': activeOrderBy === 'personasEnFila-A'
+            }"
+            >Personas en espera - Ascendente
+          </a>
+                    <a type="button" (click)="ordenar('tiempoMaximoEspera', 'D', 'Máximo de espera - Descendente')" class="dropdown-item" [ngClass]="{
+              'active-dropdown': activeOrderBy === 'tiempoMaximoEspera-D'
+            }">Máximo de espera - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('tiempoMaximoEspera', 'A', 'Máximo de espera - Ascendente')"
+            [ngClass]="{
+              'active-dropdown': activeOrderBy === 'tiempoMaximoEspera-A'
+            }"
+            class="dropdown-item"
+            >Máximo de espera - Ascendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('ticketsEmitidos', 'D', 'Tickets emitidos - Descendente')"
+            [ngClass]="{
+              'active-dropdown': activeOrderBy === 'ticketsEmitidos-D'
+            }"
+            class="dropdown-item"
+            >Tickets emitidos - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('ticketsEmitidos', 'A', 'Tickets emitidos - Ascendente')"
+            [ngClass]="{
+              'active-dropdown': activeOrderBy === 'ticketsEmitidos-A'
+            }"
+            class="dropdown-item"
+            >Tickets emitidos - Ascendente</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 d-flex justify-content-end mr-3 mb-1">
+    <span class="text-success mr-1"><i class="fas fa-square"></i></span><small class="my-auto text-grey">Oficina Activa</small>
+    <span class="text-gris mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">Oficina Inactiva</small>
+  </div>
+</div>
+<div class="row">
+  <!-- ./col -->
+  <div
+    *ngFor="
+      let oficina of oficinas
+        | filtro
+          : { key: this.groupBy.key, value: this.groupBy.value }
+          : { key: this.orderBy.key, type: this.orderBy.type }
+        | buscador : searchText : ['nombre']
+    "
+    class="col-lg-4 col-12"
+  >
+    <!-- small box -->
+    <div (click)="modalOficina(oficina)" class="small-box bg-info grey pointer">
+      <div class="inner">
+        <div class="d-flex align-items-center">
+          <h6 class="pb-2">{{ oficina.nombre }}</h6>
+          <span
+            class="ml-auto"
+            [ngClass]="{
+              'text-success': oficina.estado === 1,
+              'text-gris': oficina.estado === 0
+            }"
+            ><i class="fas fa-square"></i
+          ></span>
+        </div>
+        <ng-container *ngIf="customer.slug!='ttp_afc'; else elseTemplate">
+          <div class="row">
+            <div class="col-4 pr-4">
+              <h3 class="num-popp">{{ oficina.personasEnFila }}</h3>
+              <p class="text-1">Personas en espera</p>
+            </div>
+            <div class="col-4 pr-4">
+              <h3 class="num-popp">{{ oficina.ticketsEmitidos }}</h3>
+              <p class="text-1">Tickets emitidos</p>
+            </div>
+            <div class="col-4 pr-4">
+              <h3 class="num-popp">{{ oficina.ticketsAtendidos }}</h3>
+              <p class="text-1">Tickets atendidos</p>
+            </div>
+            <div class="col-4 pr-1">
+              <h6>
+                <h3 class="num-popp">{{ oficina.ticketsPerdidos }}</h3>
+              </h6>
+              <p class="text-1">Tickets perdidos</p>
+            </div>
+            <div class="col-4 pr-1">
+              <h6>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-clock pb-1"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span class="text-grey ml-1">{{oficina.tiempoMaximoEspera}}</span>
+              </h6>
+              <p class="text-1">Tiempo máximo de espera</p>
+            </div>
+            <div class="col-4 pr-1">
+              <h6>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-clock pb-1"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span class="text-grey ml-1">{{oficina.tiempoMaximoAtencion}}</span>
+              </h6>
+              <p class="text-1" alt="atención promedio">
+                Tiempo máximo de atención
+              </p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="row">
+            <div class="col-3 pr-2">
+              <h4 class="num-popp">{{ oficina.personasEnFila }}</h4>
+              <p class="text-1">Personas en espera</p>
+            </div>
+            <div class="col-3 px-2">
+              <h4 class="num-popp">{{ oficina.sla }}</h4>
+              <p class="text-1">SLA (%)</p>
+            </div>
+            <div class="col-3 px-2">
+              <h4 class="num-popp">{{ oficina.ticketsEmitidos }}</h4>
+              <p class="text-1">Tickets emitidos</p>
+            </div>
+            <div class="col-3 px-2">
+              <h4 class="num-popp">{{ oficina.ticketsAtendidos }}</h4>
+              <p class="text-1">Tickets atendidos</p>
+            </div>
+            <div class="col-4 pr-1">
+              <h6>
+                <h3 class="num-popp">{{ oficina.ticketsPerdidos }}</h3>
+              </h6>
+              <p class="text-1">Tickets perdidos</p>
+            </div>
+            <div class="col-4 pr-1">
+              <h6>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-clock pb-1"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span class="text-grey ml-1">{{oficina.tiempoMaximoEspera}}</span>
+              </h6>
+              <p class="text-1">Tiempo máximo de espera</p>
+            </div>
+            <div class="col-4 pr-1">
+              <h6>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-clock pb-1"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span class="text-grey ml-1">{{oficina.tiempoMaximoAtencion}}</span>
+              </h6>
+              <p class="text-1" alt="atención promedio">
+                Tiempo máximo de atención
+              </p>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

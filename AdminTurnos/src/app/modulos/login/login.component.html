@@ -1,0 +1,66 @@
+<div class="login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <img src="assets/dist/img/logo.svg">
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Bienvenido</p>
+
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="input-group login-input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Usuario" formControlName="usuario" [ngClass]="{'is-invalid': isSubmitted && loginForm.get('usuario')!.errors}">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                        <!-- <div *ngIf="loginForm.controls['usuario'].invalid && (loginForm.controls['usuario'].dirty || loginForm.controls['usuario'].touched)" class="invalid-feedback">
+                            Debe ingresar un valor válido.
+                        </div> -->
+                        <div *ngIf="isSubmitted && loginForm.get('usuario')!.errors?.['required']" class="invalid-feedback">
+                            Por favor ingrese un usuario.
+                        </div>
+                        <div *ngIf="isSubmitted && loginForm.get('usuario')!.errors?.['pattern']" class="invalid-feedback">
+                            Debe ingresar un valor válido.
+                        </div>
+                        <div *ngIf="isSubmitted && loginForm.get('usuario')!.errors?.['maxlength']" class="invalid-feedback">
+                            El usuario debe contener máximo 15 caracteres
+                        </div>
+                        <div *ngIf="isSubmitted && loginForm.get('usuario')!.errors?.['minlength']" class="invalid-feedback">
+                            El usuario debe contener mínimo 3 caracteres
+                        </div>
+                    </div>
+                    <div class="input-group login-input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Contraseña" formControlName="password" [ngClass]="{ 'is-invalid': isSubmitted && loginForm.get('password')!.errors }">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <div *ngIf="isSubmitted && loginForm.get('password')!.invalid " class="invalid-feedback">
+                            ¡Este campo es obligatorio!
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- <div class="col-12">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember">
+                                <label for="remember" class="ml-1"> Recordarme</label>
+                            </div>
+                        </div> -->
+                        <!-- /.col -->
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-block btn-success w-100">
+                                Iniciar sesión<i class="fas fa-sign-in-alt ml-2"></i>
+                            </button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+</div>

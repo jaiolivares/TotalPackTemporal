@@ -1,0 +1,64 @@
+{
+    "data": {
+        "motivos": [
+            {
+                "id": 1,
+                "nombre": "Motivo Pausa 1"
+            },
+            {
+                "id": 2,
+                "nombre": "Motivo Pausa 2"
+            },
+            {
+                "id": 3,
+                "nombre": "Motivo Pausa 3"
+            },
+            {
+                "id": 4,
+                "nombre": "Motivo Pausa 4"
+            },
+            {
+                "id": 5,
+                "nombre": "Motivo Pausa 5"
+            },
+            {
+                "id": 6,
+                "nombre": "Motivo Pausa 6"
+            },
+            {
+                "id": 7,
+                "nombre": "Motivo Pausa 7"
+            },
+            {
+                "id": 8,
+                "nombre": "Motivo Pausa 8"
+            },
+            {
+                "id": 7,
+                "nombre": "Motivo Pausa 9"
+            }
+
+        ],
+
+        "motivosDeshabilitados": [
+            {
+                "id": 8,
+                "nombre": "Motivo Pausa 8"
+            },
+            {
+                "id": 9,
+                "nombre": "Motivo Pausa 9"
+            },
+            {
+                "id": 10,
+                "nombre": "Motivo Pausa 10"
+            },
+            {
+                "id": 11,
+                "nombre": "Motivo Pausa 11"
+            }
+        ],
+        "totalMotivos": 11
+    },
+    "status": true
+}

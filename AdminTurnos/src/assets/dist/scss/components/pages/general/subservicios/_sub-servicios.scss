@@ -1,0 +1,17 @@
+.listado {
+    height: 100%;
+    padding-block: 7%;
+}
+
+.subseries {
+    height: 100%;
+}
+
+.box-subserie {
+    height: 45px;
+    margin-bottom: 0.5rem !important;
+    &.bg-active {
+        color: #28a745!important;
+        background-color: rgba(49, 255, 0, 0.1);
+    }
+}

@@ -1,0 +1,86 @@
+<div class="card box-success box" *ngIf="estado && estado.selectedSerieDetalle">
+    <form [formGroup]="form" *ngIf="form" (submit)="null">
+        <div class="row pb-0 p-3">
+            <div class="col-xl-12 mb-3 d-flex justify-content-end">
+                <button type="button" class="btn btn-success btn-fail m-1" (click)="irAActualizar()">
+            <i class="fas fa-cogs"></i>
+            Actualizar serie
+          </button>
+            </div>
+            <div class="col-xl-3 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-12 col-xl-10 px-0">
+                            <p class="text-input">Semanas programación</p>
+                        </div>
+                        <div class="col-12 col-xl-2 pl-0 col-12 text-content">
+                            <p class="mb-0 font-weight-bold text-center mt-3 mt-xl-0">{{estado.selectedSerieDetalle.QSemana}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-12 col-xl-10 px-0 col-12">
+                            <p class="text-input">Tiempo de atención por escritorio (Min.)</p>
+                        </div>
+                        <div class="col-12 col-xl-2 pl-0 col-12 text-content">
+                            <p class="mb-0 font-weight-bold text-center mt-3 mt-xl-0">{{estado.selectedSerieDetalle.TAteEsc}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-12 col-xl-10 px-0 col-12">
+                            <p class="text-input">Tiempo de llamado previo (Min.)</p>
+                        </div>
+                        <div class="col-12 col-xl-2 pl-0 col-12 text-content">
+                            <p class="mb-0 font-weight-bold text-center mt-3 mt-xl-0">{{estado.selectedSerieDetalle.TAntes}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-12 col-xl-10 px-0">
+                            <p class="text-input">Tiempo de llamado post (Min.)</p>
+                        </div>
+                        <div class="col-12 col-xl-2 pl-0 col-12 text-content">
+                            <p class="mb-0 font-weight-bold text-center mt-3 mt-xl-0">{{estado.selectedSerieDetalle.TDespues}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="text-input sw-text">Horarios de Atención</p>
+                        </div>
+                        <div class="row col-12 mx-auto">
+                            <div class="col-12 col-md-6 col-xl-3  mb-1 mx-auto px-1" *ngFor="let element of horariosAtencionPorDia">
+                                <app-day-card [data]="element" (onDelete)="null" [hideDeleteBtn]="true"></app-day-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb-3 d-flex justify-content-end">
+                <button type="button" class="btn btn-danger btn-fail m-1" (click)="eliminarSerieAgenda()">
+            <i class="fas fa-trash"></i>
+            Eliminar serie
+          </button>
+            </div>
+        </div>
+    </form>
+</div>
+<ng-container *ngIf="isLoading">
+    <div class="spinner-container component-only">
+        <ngx-spinner name="servicio-loading" [fullScreen]="false" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

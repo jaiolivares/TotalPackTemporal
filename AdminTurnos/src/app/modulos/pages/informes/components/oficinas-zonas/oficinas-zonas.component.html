@@ -1,0 +1,639 @@
+<div class="row d-flex justify-content-between align-items-center mb-1">
+  <h5 class="p-2">Reporte de oficinas por zona</h5>
+</div>
+<!-- Main row -->
+
+<section class="col-lg-12 pl-3 pr-3 pb-2 connectedSortable">
+  <!-- <div class="row col-12 px-0 ml-0">
+      <div class="col-4 pl-0 pr-0">
+        <h5 class="pt-2">Reporte de oficinas por zona</h5>
+        <span></span>
+        <button class="btn btn-success m-1" (click)="volver = !volver">
+          {{ volver ? 'Mostrar Formulario' : 'Ocultar Formulario' }}
+        </button>
+      </div>
+    </div> -->
+
+  <div>
+    <div class="row mb-2">
+      <div class="col-xl-2 col-lg-4 col-sm-6 col-12" *ngFor="let zona of zonas">
+        <div class="bar-serie motivo">
+          <p class="mt-2 mb-0">{{ zona.zona }}</p>
+          <div class="conf-bar" (click)="irAReporteZona(zona)">
+            <img class="card-middle-img" src="assets/dist/icons/eye-primary.svg"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--botones de opciones-->
+  <div class="row d-flex justify-content-between" *ngIf="!soloZonas">
+    <div>
+      <h5 class="zona-activa">Zona: {{ nombreZona }}</h5>
+    </div>
+    <div>
+      <button class="btn btn-success m-1" *ngIf="!verSucursales" (click)="llamadoSucursales()">
+        Ver sucursales
+      </button>
+      <button class="btn btn-success m-1" *ngIf="!verDatosMensuales" (click)="llamadoDatosMensuales()">
+        Ver datos mensuales
+      </button>
+      <button class="btn btn-success m-1" *ngIf="!verReporteZona" (click)="llamadoReporteZona()">
+        Ver reporte zona
+      </button>
+    </div>
+  </div>
+
+  <!--    fin botones de opciones -->
+
+</section>
+
+<section class="connectedSortable" *ngIf="verReporteZona">
+  <div class="row">
+    <div class="col-xl-6 col-lg-6 col-sm-6 col-12">
+      <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+        <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">TURNOS</h6>
+
+        <div class="row mx-auto">
+          <ng-container>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-check-circle"></i><span>Emitidos</span></div>
+                <div class="result"> {{ selectedZona.qEmi }}</div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-users"></i><span>En espera</span></div>
+                <div class="result"> {{ selectedZona.qEsp }}</div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-face-frown-open"></i><span>Perdidos</span></div>
+                <div class="result"> {{ selectedZona.qPer }}</div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6 col-sm-6 col-12">
+      <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+        <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">CLIENTES ATENDIDOS</h6>
+
+        <div class="row mx-auto">
+          <ng-container>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-user"></i><span>Normal</span></div>
+                <div class="result"> {{ selectedZona.qAteN }}</div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-user-check"></i><span>Especial</span></div>
+                <div class="result"> {{ selectedZona.qAteE }}</div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-users-rectangle"></i><span>Totales</span></div>
+                <div class="result"> {{ selectedZona.qAteT }}</div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6 col-sm-6 col-12 estados">
+      <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+        <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">ESTADOS</h6>
+
+        <div class="row mx-auto">
+          <ng-container>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-play"></i><span>Activos</span></div>
+                <div class="result"> {{ selectedZona.qEjeA }}</div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-pause"></i><span>En Pausa</span></div>
+                <div class="result"> {{ selectedZona.qEjeP }}</div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-pause-circle"></i><span>Pausas totales</span></div>
+                <div class="result pt"> {{ selectedZona.qEjeD }}</div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6 col-sm-6 col-12 tiempos">
+      <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+        <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">TIEMPOS</h6>
+
+        <div class="row mx-auto">
+          <ng-container>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-user"></i><span>Prom. espera</span></div>
+                <div class="result"> {{ convertSecondsToString(selectedZona.tProEspM) }}</div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-user-check"></i><span>Prom. atención</span></div>
+                <div class="result">{{ convertSecondsToString(selectedZona.tProAteM) }}</div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-users-rectangle"></i><span>Acum. pausas</span></div>
+                <div class="result">{{ convertSecondsToString(selectedZona.tPauA) }}</div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-12 col-lg-12 col-sm-12 col-12">
+      <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+        <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">SLA</h6>
+        <div class="row mx-auto">
+          <ng-container>
+            <div class="col-xl-6 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-user"></i><span>Del día</span></div>
+                <div class="result sla">
+                  <!-- Reemplaza esta línea por la etiqueta de ApexCharts -->
+                  <apx-chart [series]="[selectedZona.nSerD]" [chart]="chartOptionsDia.chart"
+                             [plotOptions]="chartOptionsDia.plotOptions" [labels]="chartOptionsDia.labels"></apx-chart>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-sm-6 col-12 px-1">
+              <div class="bar-serie ofi-zon">
+                <div><i class="fas fa-user-check"></i><span>Acumulado del mes</span></div>
+                <div class="result sla">
+                  <!-- Reemplaza esta línea por la etiqueta de ApexCharts -->
+                  <apx-chart [series]="[selectedZona.nSerM]" [chart]="chartOptionsMes.chart"
+                             [plotOptions]="chartOptionsMes.plotOptions" [labels]="chartOptionsMes.labels"></apx-chart>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Inicio datos mensuales-->
+  </div>
+
+  <!-- tabla -->
+</section>
+<section class="col-xl-12 col-lg-12 col-sm-12 col-12" *ngIf="verDatosMensuales">
+  <div class="bar-serie bg-info grey mb-4 datos-mensuales" style="min-height: 210px;">
+    <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">DATOS MENSUALES</h6>
+
+    <div class="row">
+      <!-- Tabla de Números Emitidos -->
+      <div class="col-lg-4">
+        <h6>Números emitidos</h6>
+        <div class="overflow-auto">
+          <table class="table rounded table-bordered table-striped mt-2">
+            <thead class="table-head-verde">
+            <tr>
+              <th>Números Emitidos</th>
+              <th>Cantidad</th>
+              <th>Porcentaje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Atendidos</td>
+              <td>{{ selectedZona.qAteT }}</td>
+              <td>{{ ((selectedZona.qAteT / (selectedZona.qAteT + selectedZona.qPer)) * 100).toFixed(1) }}%</td>
+            </tr>
+            <tr>
+              <td>Perdidos</td>
+              <td>{{ selectedZona.qPer }}</td>
+              <td>{{ ((selectedZona.qPer / (selectedZona.qAteT + selectedZona.qPer)) * 100).toFixed(1) }}%</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>{{ selectedZona.qAteT + selectedZona.qPer }}</td>
+              <td>100%</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tabla de SLA -->
+      <div class="col-lg-4">
+        <h6>SLA</h6>
+        <div class="overflow-auto">
+          <table class="table rounded table-bordered table-striped mt-2">
+            <thead class="table-head-verde">
+            <tr>
+              <th>SLA</th>
+              <th>Cantidad</th>
+              <th>Porcentaje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Emitidos con espera menor o igual a 20 min</td>
+              <td>{{ selectedZona.qEmiM }}</td>
+              <td>{{ ((selectedZona.qEmiM / (selectedZona.qEmiM + selectedZona.qEmiEM)) * 100).toFixed(1) }}%</td>
+            </tr>
+            <tr>
+              <td>Emitidos con espera mayor a 20 min</td>
+              <td>{{ selectedZona.qEmiEM }}</td>
+              <td>{{ ((selectedZona.qEmiEM / (selectedZona.qEmiM + selectedZona.qEmiEM)) * 100).toFixed(1) }}%</td>
+            </tr>
+            <tr>
+              <td>Total Emitidos</td>
+              <td>{{ selectedZona.qEmiM + selectedZona.qEmiEM }}</td>
+              <td>100%</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Tabla de Tiempos del Mes -->
+      <div class="col-lg-4">
+        <h6>Tiempos del mes</h6>
+        <div class="overflow-auto">
+          <table class="table rounded table-bordered table-striped mt-2">
+            <thead class="table-head-verde">
+            <tr>
+              <th>Tiempos del Mes</th>
+              <th>Promedio</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Promedio de Atención</td>
+              <td>{{ convertSecondsToString(selectedZona.tAteP) }}</td>
+            </tr>
+            <tr>
+              <td>Promedio de Espera</td>
+              <td>{{ convertSecondsToString(selectedZona.tEspM) }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!--          Fin datos mensuales-->
+
+      <div class="col-lg-4">
+        <div class="bar-serie ofi-zon">
+          <div><span>Atendidos v/s Perdidos</span></div>
+          <div class="simbologia">
+            <p class="simb-text"><i class="fas fa-circle chart-color-1"></i> Atendidos</p>
+            <p class="simb-text"><i class="fas fa-circle chart-color-2"></i> Perdidos</p>
+          </div>
+          <div class="result mt-5">
+            <apx-chart [series]="[porcentajeAtendidos, porcentajePerdidos]"
+                       [chart]="chartOptionsAtendidosPerdidos.chart"
+                       [labels]="chartOptionsAtendidosPerdidos.labels"
+                       [colors]="chartOptionsAtendidosPerdidos.colors"></apx-chart>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráfico de SLA -->
+      <div class="col-lg-4">
+        <div class="bar-serie ofi-zon">
+          <div><span>SLA</span></div>
+          <div class="simbologia">
+            <p class="simb-text"><i class="fas fa-circle chart-color-1"></i>Con espera <= 20 min</p>
+            <p class="simb-text"><i class="fas fa-circle chart-color-2"></i>Con espera > 20 min</p>
+          </div>
+          <div class="result mt-5">
+            <apx-chart [series]="[porcentajeEmiM, porcentajeEmiEM]" [chart]="chartOptionsSLA.chart"
+                       [labels]="chartOptionsSLA.labels"
+                       [colors]="chartOptionsSLA.colors"></apx-chart>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráfico de Atendidos VS Perdidos -->
+
+
+            <!-- Gráfico de Espera VS Atención -->
+      <div class="col-lg-4">
+        <div class="bar-serie ofi-zon">
+          <div><span>Espera v/s Atención</span></div>
+          <div class="simbologia">
+            <p class="simb-text"><i class="fas fa-circle chart-color-1"></i> Promedio de atención</p>
+            <p class="simb-text"><i class="fas fa-circle chart-color-2"></i> Promedio de espera</p>
+          </div>
+          <div class="result mt-5">
+            <apx-chart [series]="[porcentajePromedioAtencion, porcentajePromedioEspera]"
+                       [chart]="chartOptionsEsperaAtencion.chart"
+                       [labels]="chartOptionsEsperaAtencion.labels"
+                       [colors]="chartOptionsEsperaAtencion.colors"></apx-chart>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<section class="connectedSortable" *ngIf="verSucursales">
+  <div class="pb-0 py-3">
+    <div class="row">
+
+      <div class="col-lg-12 col-12">
+        <div class="box-input mb-3">
+          <div class="row">
+            <div class="d-flex col-6">
+              <input type="text" (input)="tecleado($event.target, 'oficinas')" spellcheck="false"
+                     placeholder="Buscar oficina...">
+            </div>
+
+            <div class="col-12">
+
+              <table class="table table-xs table-striped table-hover tabla-edit ver-suc mt-2 mx-auto">
+                <thead class="table-head-verde">
+                <tr>
+                  <th class="col-1">Sucursal</th>
+                  <th class="col-1">Activos</th>
+                  <th class="col-1">N° Emitidos</th>
+                  <th class="col-1">En espera</th>
+                  <th class="col-1">Normal</th>
+                  <th class="col-1">Especial</th>
+                  <th class="col-1">Total</th>
+                  <th class="col-1">Perdidos</th>
+                  <th class="col-1">SLA del día</th>
+                  <th class="col-1">SLA Acumulado</th>
+                  <th class="col-1">T.Prom Espera</th>
+                  <th class="col-1">T.Prom Atención</th>
+                  <th class="col-1">Cantidad Pausas</th>
+                  <th class="col-1">Tiempo Acumulado Pausas</th>
+                  <th class="col-1">Max Espera</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngFor="let oficina of informeSucursales | buscador:searchOficina:['zona','zona']">
+                  <tr (click)="llamadoDetalleSucrusal(oficina)">
+                    <td class="col-1 hov-cur">{{ oficina.zona }}</td>
+                    <td class="col-1">{{ oficina.qEjeA }}</td>
+                    <td class="col-1">{{ oficina.qEmi }}</td>
+                    <td class="col-1">{{ oficina.qEsp }}</td>
+                    <td class="col-1">{{ oficina.qAteN }}</td>
+                    <td class="col-1">{{ oficina.qAteE }}</td>
+                    <td class="col-1">{{ oficina.qAteM }}</td>
+                    <td class="col-1">{{ oficina.qPer }}</td>
+                    <td class="col-1">{{ oficina.nSerD }}</td>
+                    <td class="col-1">{{ oficina.nSerM }}</td>
+                    <td class="col-1">{{ oficina.tProEspM }}</td>
+                    <td class="col-1">{{ oficina.tProAteM }}</td>
+                    <td class="col-1">{{ oficina.qPauA }}</td>
+                    <td class="col-1">{{ oficina.tPauA }}</td>
+                    <td class="col-1">{{ oficina.tEspM }}</td>
+                  </tr>
+                  <tr *ngIf="oficinaSeleccionada === oficina.idZona">
+                    <td colspan="15"> <!-- Asegúrate de que el 'colspan' cubra todas las columnas -->
+                      <div>
+
+
+                        <section class="connectedSortable">
+                          <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-6 col-12">
+                              <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+                                <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">TURNOS</h6>
+
+                                <div class="row mx-auto">
+                                  <ng-container>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-check-circle"></i><span>Emitidos</span></div>
+                                        <div class="result"> {{ selectedZona.qEmi }}</div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-users"></i><span>En espera</span></div>
+                                        <div class="result"> {{ selectedZona.qEsp }}</div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-face-frown-open"></i><span>Perdidos</span></div>
+                                        <div class="result"> {{ selectedZona.qPer }}</div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                </div>
+                                <div>
+                                  <div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-sm-6 col-12">
+                              <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+                                <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">CLIENTES ATENDIDOS</h6>
+
+                                <div class="row mx-auto">
+                                  <ng-container>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-user"></i><span>Normal</span></div>
+                                        <div class="result"> {{ selectedZona.qAteN }}</div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-user-check"></i><span>Especial</span></div>
+                                        <div class="result"> {{ selectedZona.qAteE }}</div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-users-rectangle"></i><span>Totales</span></div>
+                                        <div class="result"> {{ selectedZona.qAteT }}</div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                </div>
+                                <div>
+                                  <div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-sm-6 col-12 estados">
+                              <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+                                <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">ESTADOS</h6>
+
+                                <div class="row mx-auto">
+                                  <ng-container>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-play"></i><span>Activos</span></div>
+                                        <div class="result"> {{ selectedZona.qEjeA }}</div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-pause"></i><span>En Pausa</span></div>
+                                        <div class="result"> {{ selectedZona.qEjeP }}</div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-pause-circle"></i><span>Pausas totales</span></div>
+                                        <div class="result pt"> {{ selectedZona.qEjeD }}</div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                </div>
+                                <div>
+                                  <div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-sm-6 col-12 tiempos">
+                              <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+                                <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">TIEMPOS</h6>
+
+                                <div class="row mx-auto">
+                                  <ng-container>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-user"></i><span>Prom. espera</span></div>
+                                        <div class="result"> 00:03:41</div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-user-check"></i><span>Prom. atención</span></div>
+                                        <div class="result"> 00:05:54</div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-users-rectangle"></i><span>Acum. pausas</span></div>
+                                        <div class="result"> 201:03:41</div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                </div>
+                                <div>
+                                  <div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-xl-12 col-lg-12 col-sm-12 col-12">
+                              <div class="bar-serie bg-info grey mb-4" style="min-height: 210px;">
+                                <h6 class="pb-2 mb-0 pt-0 ofi-zon-title">SLA</h6>
+                                <div class="row mx-auto">
+                                  <ng-container>
+                                    <div class="col-xl-6 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-user"></i><span>Del día</span></div>
+                                        <div class="result sla">
+                                          <!-- Reemplaza esta línea por la etiqueta de ApexCharts -->
+                                          <apx-chart [series]="[selectedZona.nSerD]" [chart]="chartOptionsDia.chart"
+                                                     [plotOptions]="chartOptionsDia.plotOptions"
+                                                     [labels]="chartOptionsDia.labels"></apx-chart>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-sm-6 col-12 px-1">
+                                      <div class="bar-serie ofi-zon">
+                                        <div><i class="fas fa-user-check"></i><span>Acumulado del mes</span></div>
+                                        <div class="result sla">
+                                          <!-- Reemplaza esta línea por la etiqueta de ApexCharts -->
+                                          <apx-chart [series]="[selectedZona.nSerM]" [chart]="chartOptionsMes.chart"
+                                                     [plotOptions]="chartOptionsMes.plotOptions"
+                                                     [labels]="chartOptionsMes.labels"></apx-chart>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                </div>
+                                <div>
+                                  <div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--  Inicio datos mensuales-->
+                          </div>
+
+                          <!-- tabla -->
+                        </section>
+
+
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--<div class="row d-flex justify-content-between align-items-center " *ngIf="volver">-->
+<!--  <h5 class="p-2"></h5>-->
+<!--  <span></span>-->
+<!--  <button class="btn btn-success m-1" (click)="onVolver()">-->
+<!--    Volver-->
+<!--  </button>-->
+<!--</div>-->
+<ng-container>
+  <div class="spinner-container">
+    <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+    </ngx-spinner>
+  </div>
+</ng-container>

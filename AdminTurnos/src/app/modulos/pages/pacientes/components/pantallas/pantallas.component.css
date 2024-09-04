@@ -1,0 +1,28 @@
+.serie-asignada-container .close-bar {
+    right: 12px;
+    top: 8px;
+}
+
+.bar-serie {
+    padding: 8px 18px 8px 15px;
+}
+
+.conf-bar {
+    right: 10px;
+}
+
+.spacer {
+    margin-bottom: 10px; /* Ajusta el valor según tus preferencias */
+}
+.divider {
+    border: none;
+    border-top: 1px solid #e2e2e2;
+    width: 80%;
+  }
+
+  .w-20 {
+    width: 20%;
+  }
+  .fs-14{
+    font-size:14px;
+  }

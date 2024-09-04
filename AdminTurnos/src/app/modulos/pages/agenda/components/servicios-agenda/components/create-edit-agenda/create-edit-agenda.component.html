@@ -1,0 +1,174 @@
+<div class="card box-success box">
+    <form [formGroup]="form" (submit)="enviarForm()">
+        <div class="row pb-0 p-3">
+            <div class="col-lg-12 col-12">
+                <h6 class="pt-n2"><i class="fas fa-file-signature"></i> {{estado.selectedSerieDetalle ? 'Actualizar' :
+                    'Crear'}} servicio</h6>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-9 px-0 col-12">
+                            <p class="text-input">Semanas de programación</p>
+                        </div>
+                        <div class="col-sm-3 pl-0 col-12">
+                            <input type="text" formControlName="semanasProgramacion"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['semanasProgramacion'].errors !== null)}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-4 px-0 col-12">
+                            <p class="text-input">Tiempo de atención x Esc</p>
+                        </div>
+                        <div class="col-sm-8 col-12">
+                            <select class="custom-select" formControlName="tiempoAtencionxEsc"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['tiempoAtencionxEsc'].errors !== null)}">
+                                <option value="5">5 minutos</option>
+                                <option value="10">10 minutos</option>
+                                <option value="15">15 minutos</option>
+                                <option value="20">20 minutos</option>
+                                <option value="30">30 minutos</option>
+                                <option value="45">45 minutos</option>
+                                <option value="60">60 minutos</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-8 px-0">
+                            <p class="text-input sw-text">Tiempo de llamado previo cita</p>
+                        </div>
+                        <div class="pl-0 col-4" style="margin-left: -5%">
+                            <input type="text" formControlName="tiempoLlamadoPrevio"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['tiempoLlamadoPrevio'].errors !== null)}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-8 px-0">
+                            <p class="text-input sw-text">Tiempo de llamado post cita</p>
+                        </div>
+                        <div class="pl-0 col-4" style="margin-left: -5%">
+                            <input type="text" formControlName="tiempoLlamadoPost"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['tiempoLlamadoPost'].errors !== null)}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-12 d-flex">
+                            <p class="text-input sw-text mr-3">Horarios de Atención</p>
+                        </div>
+                        <div class="row col-xl-6">
+                            <div class="col-12 row">
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">Día(s)</p>
+                                </div>
+                                <div class="col-sm-5 col-12">
+                                    <select class="custom-select" formControlName="dias">
+                                        <option value="0">Todos</option>
+                                        <option value="1">Lunes a Viernes</option>
+                                        <option value="2">Fin de semana</option>
+                                        <option value="3">Lunes</option>
+                                        <option value="4">Martes</option>
+                                        <option value="5">Miercoles</option>
+                                        <option value="6">Jueves</option>
+                                        <option value="7">Viernes</option>
+                                        <option value="8">Sabado</option>
+                                        <option value="9">Domingo</option>
+                                        <option value="10">Feriados</option>
+                                    </select>
+                                </div>
+                                <div class="col-4 px-0 pt-3">
+                                    <div class=" col-12 d-flex align-items-center">
+                                        <button class="btn btn-ligth boton p-0" type="button" (click)="setHorarios()">
+                                            Confirmar <i class="fa fa-check primary-text fa-lg"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row col-12">
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">De</p>
+                                </div>
+                                <div class="col-sm-3 col-12">
+                                    <timepicker formControlName="horarioDe" [showMeridian]="false"
+                                        [showSpinners]="false">
+                                    </timepicker>
+                                </div>
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">a</p>
+                                </div>
+                                <div class="col-sm-3 col-12">
+                                    <timepicker formControlName="horarioHasta" [showMeridian]="false"
+                                        [showSpinners]="false"></timepicker>
+                                </div>
+                            </div>
+                            <div class="row col-12">
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">Y de</p>
+                                </div>
+                                <div class="col-sm-3 col-12">
+                                    <timepicker formControlName="horarioYDe" [showMeridian]="false"
+                                        [showSpinners]="false">
+                                    </timepicker>
+                                </div>
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">a</p>
+                                </div>
+                                <div class="col-sm-3 col-12">
+                                    <timepicker formControlName="horarioYHasta" [showMeridian]="false"
+                                        [showSpinners]="false"></timepicker>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class=" col-xl-6   d-flex flex-wrap my-2">
+                            <div class="mx-1" *ngFor="let element of horariosAtencionPorDia">
+                                <app-day-card [data]="element"
+                                    (onDelete)="deleteHorarioAtencion($event)"></app-day-card>
+                            </div>
+                        </div>
+                        <div class="col-12 ml-3 mt-3">
+                            <h6 class="primary-text">Nota: <small class="text-grey"> Recuerde confirmar los horarios
+                                    antes
+                                    de CREAR la serie, pues de lo contrario sus cambios no quedarán registrados</small>
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-10 text-right">
+                <button type="submit" class="btn btn-block btn-success m-1">
+                    <i class="far fa-save"></i> {{estado.selectedSerieDetalle ? 'Actualizar' : 'Crear'}} servicio
+                </button>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-secondary btn-fail m-1" (click)="onVolver()">
+                    <i class="fas fa-ban"></i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<ng-container *ngIf="isLoading">
+    <div class="spinner-container component-only">
+        <ngx-spinner name="servicio-loading" [fullScreen]="false" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

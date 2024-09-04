@@ -1,0 +1,64 @@
+<div class="card box-success box py-3">
+    <form [formGroup]="form" class="row col-12 mx-0 px-0 pb-0" (ngSubmit)="onSubmit()">
+
+        <div class="col-xl-12 col-lg-12  mx-0 pb-0">
+            <div class="box-input box-series col-12 row no-gutters">
+                <div class="col-xl-6">
+                    <div class="w-100 d-flex escritorios-title-container justify-content-between ">
+                        <p class="text-input sw-text">Series asignadas</p>
+                    </div>
+                    <div class="row px-0 no-gutters w-100 mt-2 mb-2 mx-auto">
+                        <div class="col-12" *ngFor="let serie of this.seriesAsignadas;let i=index">
+                            <div class="bar-serie serie-asignada-container" [ngClass]="{'grey-disabled': !serie.activo,'bg-active': !this.serie.edit,'text-dark': this.serie.edit}">
+                                <div class="serie-asignada-card">
+                                    <p class="mb-0 serie-asignada-card-serie">{{i+1}} - {{serie.serie}}</p>
+                                </div>
+                                <div class="close-bar" (click)="changeSelectedSerie(serie.idSerie,!serie.activo)">
+                                    <i class="fas fa-times" *ngIf="serie.activo"></i>
+                                    <i class="fa-solid fa-rotate" *ngIf="!serie.activo"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="row">
+                        <div class="col-sm-12 pr-0 col-12 escritorios-title-container">
+                            <p class="text-input mb-1">Asignar Serie</p>
+                        </div>
+                        <div class="col-sm-12 col-12 row my-2 mx-auto">
+                            <select class="custom-select" (change)="handleSelectSerie($event)">
+                                <option [value]="">Seleccionar</option>
+                                <option [value]="serie.id" *ngFor="let serie of renderSeriesSelect()">{{serie.valor}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row col-12 mt-2 mb-2 mx-auto">
+                        <div class="col-xl-12 d-flex justify-content-between px-0">
+                            <button type="submit" class="btn btn-block btn-success mr-2">
+                                    <i class="fas fa-save"></i> Actualizar pantalla
+                                </button>
+                            <button type="button" class="btn btn-block btn-secondary mt-0" (click)="volver()">
+                                    <i class="fas fa-ban"></i> Volver
+                                </button>
+                            <button type="button" class="btn btn-grey btn-fail" (click)="limpiarSeriesAsignadas()">
+                                <i class="fas fa-ban"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </form>
+    <ng-container>
+        <div class="spinner-container component-only">
+            <ngx-spinner [fullScreen]="false" name="pantalla-edit-loading" type="ball-scale-ripple" size="large">
+            </ngx-spinner>
+        </div>
+    </ng-container>
+</div>

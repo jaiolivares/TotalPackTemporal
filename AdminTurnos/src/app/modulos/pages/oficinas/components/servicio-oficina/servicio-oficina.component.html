@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row col-12" *ngIf="this.estado.selectedOficina">
+            <div class="col-9 pl-0 pr-0">
+                <h5 class="pt-2">Oficina: <span class="texto-customer">{{estado.selectedOficina?.oficina}}</span> </h5>
+            </div>
+
+
+        </div>
+        <section *ngIf="this.estado.selectedOficina && !editar" class="connectedSortable">
+            <div class="card box-success box">
+                <form class="h-100">
+                    <div class="row pb-0 p-3 ">
+
+                        <div class="col-lg-7 col-12">
+                            <div class="box-input box-series">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="text-input sw-text">Series asignadas</p>
+                                    </div>
+                                    <div *ngIf="series.length > 0 " class="row col-12 my-1 mx-auto">
+                                        <div *ngFor="let serie of series" class="col-xl-6 col-lg-6 col-sm-6 col-12">
+
+
+                                            <div class="bar-serie" [ngClass]="{'grey-disabled': serie.desactive == true, 'bg-active': serie.active === true }">
+                                                <p class="text-serie mt-2">{{ serie.valor }}</p>
+                                                <div class="conf-bar" (click)="editarSerieXOficina(serie)" *ngIf="permisosAdministracion.includes('sxo_set') && !serie.active && !serie.desactive == true">
+                                                    <img src="assets/dist/img/gear.svg" />
+                                                </div>
+                                                <div class="close-bar" (click)="editarSeries(serie.id,false,false,false)" *ngIf="permisosAdministracion.includes('sxo_set')">
+                                                    <i *ngIf="!serie.desactive && serie.active || !serie.desactive && !serie.active" class="fas fa-times"></i>
+                                                    <i *ngIf="!serie.active == true && serie.desactive || serie.active == true && serie.desactive" class="fa-solid fa-rotate"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div *ngIf="series.length < 1" class="row col-12 my-2 mx-auto">
+                                        <div class="col-12">
+                                            <div class="d-flex justify-content-center">
+                                                <h4>No hay series asignadas</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5 col-12" *ngIf="permisosAdministracion.includes('sxo_set')">
+                            <div class="box-input box-sel-series">
+                                <div class="row">
+                                    <div class="col-sm-12 pr-0 col-12">
+                                        <p class="text-input mb-1">Asignar Serie</p>
+                                    </div>
+                                    <div class="col-sm-12 col-12 row my-2 mx-auto">
+                                        <select (change)="editarSeries(0,$event.target,false,false)" class="custom-select">
+                                          <option value="0">Seleccionar</option>
+                                          <option *ngFor="let serie of listaSeries"  [value]="serie.id" >{{serie.valor}}</option>
+                                    </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row col-12 mt-4 mx-auto">
+                                <div class="col-xl-6 text-right">
+                                    <button type="button" (click)="editarSeries(0,false,false,true)" class="btn btn-grey btn-fail m-1">
+                                      <i class="fas fa-ban"></i> Limpiar
+                                    </button>
+                                </div>
+                                <div class="col-xl-6 text-right">
+                                    <button type="button" (click)="editarSeries(0,false,true,false)" class="btn btn-block btn-success m-1"><i class="far fa-save"></i>
+                                      Actualizar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="row col-lg-12 connectedSortable" [@openClose]="editar ? 'open' : 'closed'">
+            <app-servicios-edit *ngIf="editar" (volver)="volverADatos()" (recargarSeries)="recargarSeries()" [data]="this.selectedSerie"></app-servicios-edit>
+        </section>
+
+        <div class="row pb-0" *ngIf="!this.estado.selectedOficina">
+            <div class="col-xl-12 d-flex justify-content-center mt-3 font-weight-bold">
+                <h2 class="primary-text">No hay oficina seleccionada</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container>
+    <div class="spinner-container">
+        <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

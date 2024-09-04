@@ -1,0 +1,30 @@
+<div
+ *ngFor="
+   let atencion of atenciones
+     | buscador : searchText : filtrosBusqueda | paginate: { id:'paginacion-historico-atencion', itemsPerPage: 20, currentPage: p, totalItems:(this.atenciones  | buscador : searchText : filtrosBusqueda).length}
+ "
+ class="col-lg-3 col-12"
+>
+ <!-- small box -->
+ <div class="bar-serie">
+  <p class="primary-text p">{{ atencion.letra }}{{atencion.turno}}</p>
+  <p class="text-serie mt-n2">{{ atencion.serie }} - {{atencion.motivo}}</p>
+  <ng-container >
+    <p  class="little-font position-relative d-flex align-items-center  text-wrap  mb-1">
+      <img class="mr-1" tooltip="ID del turno" src="assets/dist/icons/info-primary.svg"> {{atencion.idTurno}}
+  </p>
+    <p  class="little-font position-relative d-flex align-items-center text-wrap   mb-1">
+        <img class="mr-1" tooltip="Oficina" src="assets/dist/icons/home-primary.svg"> {{atencion.oficina}} 
+    </p>
+      <p  class="little-font position-relative d-flex align-items-center  text-wrap  mb-1">
+          <img class="mr-1" tooltip="Fecha de motivo" src="assets/dist/icons/clock-primary.svg"> {{atencion.fH_Motivo && atencion.fH_Motivo != null ? formatearFecha(atencion.fH_Motivo.split('T')[0])+' - '+atencion.fH_Motivo.split('T')[1] : '-' }}
+      </p>
+      <p  class="little-font position-relative d-flex align-items-center  text-wrap  mb-1">
+          <img class="mr-1" tooltip="Cantidad" src="assets/dist/icons/alert-triangle-primary.svg"> {{atencion.cantidad}}
+      </p>
+  </ng-container>
+  <div class="conf-bar" style="right: 25px;" (click)="modalAtencion(atencion)">
+      <img src="assets/dist/icons/eye-primary.svg" />
+  </div>
+</div>
+</div>

@@ -1,0 +1,9 @@
+.isDisabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color:#e0e0e0; opacity: 0.7;
+}
+
+.isDisabled {
+  cursor: not-allowed;
+}

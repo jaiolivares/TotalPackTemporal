@@ -1,0 +1,43 @@
+<section class="content pl-0 pr-2 pt-0">
+  <div class="container-fluid mx-0">
+    <div class="row">
+      <section class="col-lg-12 pl-3 pr-3 connectedSortable">
+        <div class="row col-12 px-0 ml-0">
+          <div class="col-12 col-xl-3 pl-0 pr-0">
+            <ng-container *ngIf="estado.selectedPerfil">
+              <h5 class="pt-2" *ngIf="!agregarEditar">
+                Perfil: <span class="texto-customer">{{ estado.selectedPerfil.id }} - {{ estado.selectedPerfil.valor }}</span>
+              </h5>
+            </ng-container>
+          </div>
+        </div>
+
+        <section class="row col-lg-12 connectedSortable" [@openClose]="agregarEditar ? 'open' : 'closed'">
+          <app-create-edit-perfil *ngIf="agregarEditar" (volver)="volverADatos()" (recargarPerfiles)="recargarPerfiles($event)" (procesoCancelado)="ngProcesoCancelado($event)"></app-create-edit-perfil>
+        </section>
+
+        <div *ngIf="!agregarEditar && !isLoading">
+          <ng-container *ngIf="estado.selectedIdPerfil">
+            <ng-container *ngIf="estado.selectedPerfilDetalle">
+              <app-detalle-perfil (editar)="irAEditar()" (recargarPerfiles)="recargarPerfiles($event)"></app-detalle-perfil>
+            </ng-container>
+            <section class="row col-lg-12 d-flex justify-content-center flex-column align-items-center connectedSortable" *ngIf="error && !agregarEditar">
+              <h3>{{ errorMsg }}</h3>
+            </section>
+          </ng-container>
+
+          <div class="row mx-0 w-100 pb-0 mt-3" *ngIf="!estado.selectedIdPerfil">
+            <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+              <h2 class="primary-text text-center">No hay perfil seleccionado</h2>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="isLoading">
+          <div class="spinner-container component-only">
+            <ngx-spinner [fullScreen]="false" name="servicio-get-perfiles-loading" type="ball-scale-ripple" size="large"> </ngx-spinner>
+          </div>
+        </ng-container>
+      </section>
+    </div>
+  </div>
+</section>

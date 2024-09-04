@@ -1,0 +1,99 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row col-12">
+            <div class="col-9 pl-0 pr-0">
+                <h5 class="pt-2"><span class="texto-customer">Días Feriados</span> </h5>
+            </div>
+        </div>
+
+        <section class="connectedSortable">
+            <div class="card box-success box">
+                <form [formGroup]="form" (submit)="agregarFeriado()" class="h-100">
+                    <div class="row pb-0 p-3 ">
+
+                        <div class="col-lg-5 col-12">
+                            <div class="box-input box-sel-series">
+                                <div class="row">
+                                    <div class="col-sm-12 pr-0 col-12">
+                                        <p class="text-input mb-1">Agregar Feriado</p>
+                                    </div>
+                                    <div class="col-sm-12 col-12 row my-2 mx-auto">
+                                        <input type="date" formControlName="fecha" [min]="fechaActual"
+                                            class="form-control text-center"
+                                            [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['fecha'].errors !== null)}">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <button type="button" type="submit" class="btn btn-block btn-success mt-3 ml-1"><i
+                                    class="far fa-save"></i>
+                                Agregar
+                            </button>
+                        </div>
+
+
+                        <div class="col-lg-7 col-12 mt-5 mt-lg-0">
+                            <div class="box-input box-series">
+                                <div class="row">
+                                    <div class="col-12 d-flex align-items-center">
+                                        <p class="text-input sw-text">Días asignados</p>
+                                        <select (change)="consultar()" [formControl]="anio"
+                                            class="ml-auto w-20 text-center">
+                                            <option value="" selected disabled>Selecionar</option>
+                                            <option *ngFor="let anio of listaAnios" [value]="anio">{{anio}}</option>
+                                        </select>
+                                    </div>
+                                    <div *ngIf="feriados.length > 0" class="row col-12 mx-auto mt-4 mt-lg-0">
+                                        <div *ngFor="let feriado of feriados" class="col-xl-6 col-lg-6 col-sm-6 col-12">
+                                            <div
+                                                class="bar-serie d-flex align-items-center justify-content-between pr-1 pl-1 pt-1 pb-1">
+                                                <p class="text-serie m-2">{{feriado.F_Fer | date: 'dd/MM/yyyy'}}</p>
+                                                <div (click)="eliminarFeriado(feriado.Fecha)" class="close-bar">
+                                                    <i class="fas fa-times"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="feriados.length == 0 && anio.value == ''"
+                                        class="row col-12 my-2 mx-auto">
+                                        <div class="col-12">
+                                            <div class="d-flex justify-content-center">
+                                                <h5>Por favor seleccione un año para consultar.</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="feriados.length == 0 && anio.value != '' && !error"
+                                        class="row col-12 my-2 mx-auto">
+                                        <div class="col-12">
+                                            <div class="d-flex justify-content-center">
+                                                <h5 class="text-danger">El año {{anio.value}} no posee días registrados.
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="error"
+                                        class="row col-12 my-2 mx-auto">
+                                        <div class="col-12">
+                                            <div class="d-flex justify-content-center">
+                                                <h5 class="text-danger">Ha ocurrido un error al obtener los días asignados.
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+
+        <ng-container>
+            <div class="spinner-container">
+                <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+                </ngx-spinner>
+            </div>
+        </ng-container>

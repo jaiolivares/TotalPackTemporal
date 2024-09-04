@@ -1,0 +1,63 @@
+.info-turnos-espera-card-container{
+  font-family: "Poppins",sans-serif;
+  .inner{
+    h6{
+      font-size: 0.8rem !important;
+    }
+  }
+}
+.info-turnos-general{
+  min-height: 400px;
+}
+.info-turnos-espera-card-actions{
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:10px;
+  p.subtitle{
+    font-size: 1.3rem;
+  }
+ 
+}
+.info-turnos-oficina-data-card{
+  h3{
+    font-size: 0.8rem !important;
+  }
+  h6{
+    font-size: 0.8rem !important;
+    padding-top: 0rem;
+  }
+  &.derivar-container{
+    border: none;
+    margin-top: 1rem;
+    text-align: right;
+  }
+}
+.info-turnos-espera-card-actions{
+  h6{
+    font-size: 0.8rem !important;
+  }
+}
+.info-turnos-espera-card-row{
+  min-height: 300px;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+@include media-query(map-get($grid-breakpoints, "sm")) {
+  .info-turnos-espera-card-row{
+    margin: 0;
+  }
+ .info-series-oficina-data-card{
+   h3{
+     font-size: 1rem !important;
+   }
+ }
+ .info-turnos-espera-card-wrapper{
+  padding: 0;
+}
+ .info-turnos-espera-card-actions{
+   h6{
+     font-size: 1rem !important;
+   }
+ }
+}

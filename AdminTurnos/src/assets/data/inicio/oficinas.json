@@ -1,0 +1,85 @@
+{
+    "data": {
+        "oficinas": [
+            {
+            "nombre": "Demo",
+            "status": "A",
+            "personas":132,
+            "ticketsEmit":144,
+            "ticketsAtend":120,
+            "espera":"25:30:45",
+            "atencion":"2:20:15",
+            "escritoriosActivos":10,
+            "escritoriosTotales":25
+            },
+            {
+            "nombre": "Maipú",
+            "status": "I",
+            "personas":250,
+            "ticketsEmit":350,
+            "ticketsAtend":250,
+            "espera":"25:30:45",
+            "atencion":"2:20:15",
+            "escritoriosActivos":9,
+            "escritoriosTotales":10
+            },
+            {
+            "nombre": "Quilín",
+            "status": "A",
+            "personas":302,
+            "ticketsEmit":304,
+            "ticketsAtend":295,
+            "espera": "25:30:45",
+            "atencion": "2:20:15",
+            "escritoriosActivos":28,
+            "escritoriosTotales":30
+            },
+            {
+            "nombre": "Plaza Oeste",
+            "status": "I",
+            "personas":78,
+            "ticketsEmit":486,
+            "ticketsAtend":144,
+            "espera":"25:30:45",
+            "atencion":"2:20:15",
+            "escritoriosActivos":3,
+            "escritoriosTotales":10
+            },
+            {
+            "nombre": "Huérfanos",
+            "status": "A",
+            "personas":333,
+            "ticketsEmit":962,
+            "ticketsAtend":144,
+            "espera": "25:30:45",
+            "atencion":"2:20:15",
+            "escritoriosActivos":13,
+            "escritoriosTotales":17
+            }, 
+            {
+            "nombre": "Plaza Norte",
+            "status": "I",
+            "personas":16,
+            "ticketsEmit":222,
+            "ticketsAtend":144,
+            "espera":"25:30:45",
+            "atencion":"2:20:15",
+            "escritoriosActivos":13,
+            "escritoriosTotales":17
+            },
+            {
+            "nombre": "Plaza Vespucio",
+            "status": "I",
+            "personas":160,
+            "ticketsEmit":322,
+            "ticketsAtend":244,
+            "espera": "25:30:45",
+            "atencion":"2:20:15",
+            "escritoriosActivos":13,
+            "escritoriosTotales":17
+            }
+        ],
+        "totalOficinas": 7
+    },  
+        "status": true
+}

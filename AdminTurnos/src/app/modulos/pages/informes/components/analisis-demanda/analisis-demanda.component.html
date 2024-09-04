@@ -1,0 +1,121 @@
+<div class="row d-flex justify-content-between align-items-center ">
+  <h5 class="p-2">Análisis Demanda</h5>
+  <span></span>
+  <!-- <button class="btn btn-success m-1" *ngIf="informe.length > 0" (click)="isCollapsed = !isCollapsed">
+    {{ isCollapsed ? 'Mostrar Formulario' : 'Ocultar Formulario' }}
+  </button> -->
+</div>
+
+
+<div class="row" *ngIf="informe.length > 0">
+  <div class="col-xl-12 mt-3 d-flex  align-items-center">
+    <h5 class="subtitle mr-auto">Datos de Entrada</h5>
+  </div>
+  <div class="col-md-12">
+    <div class="overflow-auto">
+      <table class="table rounded-lg table-bordered table-sm table-striped table-hover mt-2">
+        <thead class="table-head-verde">
+        <tr>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let demanda of informe; let i = index">
+          <ng-container *ngIf="i === 0 || demanda.fecha1 !== informe[i - 1]?.fecha1">
+            <tr>
+              <td> {{ demanda.fecha1 }}</td>
+              <td> {{ demanda.fecha2 }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-xl-12 mt-3 d-flex  align-items-center">
+      <h5 class="subtitle mr-auto">Resultado</h5>
+
+      <!-- <div class="d-flex align-items-center">
+        <button (click)="exportarDataExcel()" class="btn btn-ligth boton px-0">
+          <i class="fa fa-file-excel ml-2 "></i>
+          <i class="fa fa-arrow-down-long "></i></button>
+      </div> -->
+
+    </div>
+    <div class="overflow-auto">
+      <table class="table rounded table-bordered table-striped mt-2">
+        <thead class="table-head-verde">
+        <tr>
+          <th>Oficinas</th>
+          <th colspan="2">8 a 9</th>
+          <th colspan="2">9 a 10</th>
+          <th colspan="2">10 a 11</th>
+          <th colspan="2">11 a 12</th>
+          <th colspan="2">12 a 13</th>
+          <th colspan="2">13 a 14</th>
+          <th colspan="2">14 a 15</th>
+          <th>Prom</th>
+          <th>Desv E</th>
+          <th>Limite</th>
+          <th>SLA</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Emi F1</td>
+          <td>Emi F2</td>
+          <td>Emi F1</td>
+          <td>Emi F2</td>
+          <td>Emi F1</td>
+          <td>Emi F2</td>
+          <td>Emi F1</td>
+          <td>Emi F2</td>
+          <td>Emi F1</td>
+          <td>Emi F2</td>
+          <td>Emi F1</td>
+          <td>Emi F2</td>
+          <td>Emi F1</td>
+          <td>Emi F2</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let demanda of informe">
+          <tr>
+            <td>{{ demanda.oficina }}</td>
+            <td>{{ demanda.qEmiF18 }}</td>
+            <td>{{ demanda.qEmiF28 }}</td>
+            <td>{{ demanda.qEmiF19 }}</td>
+            <td>{{ demanda.qEmiF29 }}</td>
+            <td>{{ demanda.qEmiF110 }}</td>
+            <td>{{ demanda.qEmiF210 }}</td>
+            <td>{{ demanda.qEmiF111 }}</td>
+            <td>{{ demanda.qEmiF211 }}</td>
+            <td>{{ demanda.qEmiF112 }}</td>
+            <td>{{ demanda.qEmiF212 }}</td>
+            <td>{{ demanda.qEmiF113 }}</td>
+            <td>{{ demanda.qEmiF213 }}</td>
+            <td>{{ demanda.qEmiF114 }}</td>
+            <td>{{ demanda.qEmiF214 }}</td>
+            <td>{{ demanda.promedio }}</td>
+            <td>{{ demanda.desvEst }}</td>
+            <td>{{ demanda.lim }}</td>
+            <td>{{ demanda.sla }}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<h3 *ngIf="informe!.length < 1" class="text-center subtitle">Una o ambas fechas sin datos de la(s) oficina(s)</h3>
+
+<ng-container>
+  <div class="spinner-container">
+    <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+    </ngx-spinner>
+  </div>
+</ng-container>

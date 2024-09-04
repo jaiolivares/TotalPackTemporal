@@ -1,0 +1,9 @@
+.input-error {
+  border-width: 1px !important;
+}
+
+input {
+  width: 60%;
+  margin: 1px auto;
+  float: none;
+}

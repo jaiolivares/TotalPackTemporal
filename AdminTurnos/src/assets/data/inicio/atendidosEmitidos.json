@@ -1,0 +1,130 @@
+{
+  "oficinas": [
+    {
+      "oficina": "Demo",
+      "totalAtendidos": 46,
+      "totalEmitidos":12,
+      "series": [
+        { "serie": "Atención General", "atendidos":16, "emitidos":20 },
+        { "serie": "Atención Especializada", "atendidos":12, "emitidos":11},
+        { "serie": "Cambio de SIM Card", "atendidos":14, "emitidos":15},
+        { "serie": "Compra de Equipos", "atendidos":20, "emitidos":30}
+        ]
+    },
+    {
+      "oficina": "Maipú",
+      "totalAtendidos": 50,
+      "totalEmitidos":9,
+      "series": [
+        { "serie": "Atención General", "atendidos":14, "emitidos":18 },
+        { "serie": "Atención Especializada", "atendidos":12, "emitidos":11},
+        { "serie": "Cambio de SIM Card", "atendidos":14, "emitidos":15},
+        { "serie": "Compra de Equipos", "atendidos":20, "emitidos":30}
+        ]
+    },
+    {
+      "oficina": "Quilín",
+      "totalAtendidos": 23,
+      "totalEmitidos":29,
+      "series": [
+        { "serie": "Atención General", "atendidos":6, "emitidos":10 },
+        { "serie": "Atención Especializada", "atendidos":12, "emitidos":11},
+        { "serie": "Cambio de SIM Card", "atendidos":14, "emitidos":15},
+        { "serie": "Compra de Equipos", "atendidos":20, "emitidos":30}
+        ]
+    },
+    {
+      "oficina": "Plaza Oeste",
+      "totalAtendidos": 5,
+      "totalEmitidos":7,
+      "series": [
+        { "serie": "Atención General", "atendidos":8, "emitidos":15 },
+        { "serie": "Atención Especializada", "atendidos":12, "emitidos":11},
+        { "serie": "Cambio de SIM Card", "atendidos":14, "emitidos":15},
+        { "serie": "Compra de Equipos", "atendidos":20, "emitidos":30}
+        ]
+    },
+    {
+      "oficina": "Huérfanos",
+      "totalAtendidos": 5,
+      "totalEmitidos":7,
+      "series": [
+        { "serie": "Atención General", "atendidos":78, "emitidos":89 },
+        { "serie": "Atención Especializada", "atendidos":12, "emitidos":11},
+        { "serie": "Cambio de SIM Card", "atendidos":14, "emitidos":15},
+        { "serie": "Compra de Equipos", "atendidos":20, "emitidos":30}
+        ]
+    },
+    {
+      "oficina": "Plaza Norte",
+      "totalAtendidos": 5,
+      "totalEmitidos":7,
+      "series": [
+        { "serie": "Atención General", "atendidos":18, "emitidos":21 },
+        { "serie": "Atención Especializada", "atendidos":12, "emitidos":11},
+        { "serie": "Cambio de SIM Card", "atendidos":14, "emitidos":15},
+        { "serie": "Compra de Equipos", "atendidos":20, "emitidos":30}
+        ]
+    },
+    {
+      "oficina": "Plaza Vespucio",
+      "totalAtendidos": 5,
+      "totalEmitidos":7,
+      "series": [
+        { "serie": "Atención General", "atendidos":5, "emitidos":6 },
+        { "serie": "Atención Especializada", "atendidos":12, "emitidos":11},
+        { "serie": "Cambio de SIM Card", "atendidos":14, "emitidos":15},
+        { "serie": "Compra de Equipos", "atendidos":20, "emitidos":30}
+        ]
+    }
+  ],
+
+
+  "series": [
+    {
+      "serie": "Atención General",
+      "totalAtendidos": 50,
+      "totalEmitidos":58,
+      "oficinas": [
+        { "oficina": "Demo", "atendidos":12, "emitidos":15 },
+        { "oficina": "Maipú", "atendidos":18, "emitidos":23 },
+        { "oficina": "Quilín", "atendidos":10, "emitidos":18 },
+        { "oficina": "Plaza Oeste", "atendidos":28, "emitidos":35 }
+      ]
+    },
+    {
+      "serie": "Atención Especializada",
+      "totalAtendidos": 30,
+      "totalEmitidos": 35,
+      "oficinas": [
+        { "oficina": "Demo", "atendidos":12, "emitidos":15 },
+        { "oficina": "Maipú", "atendidos":18, "emitidos":23 },
+        { "oficina": "Quilín", "atendidos":10, "emitidos":18 },
+        { "oficina": "Plaza Oeste", "atendidos":28, "emitidos":35 }
+      ]
+    },
+    {
+      "serie": "Cambio de SIM Card",
+      "totalAtendidos": 29,
+      "totalEmitidos": 28,
+      "oficinas": [
+        { "oficina": "Demo", "atendidos":12, "emitidos":15 },
+        { "oficina": "Maipú", "atendidos":18, "emitidos":23 },
+        { "oficina": "Quilín", "atendidos":10, "emitidos":18 },
+        { "oficina": "Plaza Oeste", "atendidos":28, "emitidos":35 }
+      ]
+    },
+    {
+      "serie": "Compra de Equipos",
+      "totalAtendidos": 48,
+      "totalEmitidos": 56,
+      "oficinas": [
+        { "oficina": "Demo", "atendidos":12, "emitidos":15 },
+        { "oficina": "Maipú", "atendidos":18, "emitidos":23 },
+        { "oficina": "Quilín", "atendidos":10, "emitidos":18 },
+        { "oficina": "Plaza Oeste", "atendidos":28, "emitidos":35 }
+      ]
+    }
+  ],
+  "status": true
+}

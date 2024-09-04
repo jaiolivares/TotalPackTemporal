@@ -1,0 +1,241 @@
+<!-- Main content -->
+<section class="content pl-2 pr-2">
+    <div *ngIf="!errorAlTraerResumen" class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-xl-12 mt-menos55">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn boton text-grey mb-0" (click)="refreshData()" [disabled]="!refrescarActivado">
+                      <ng-container *ngIf="refrescarActivado">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-refresh-cw">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <polyline points="1 20 1 14 7 14"></polyline>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                        </svg>
+                      </ng-container>
+                      <ng-container *ngIf="!refrescarActivado"
+                        ><svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-check-circle"
+                        >
+                          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                          <polyline points="22 4 12 14.01 9 11.01"></polyline></svg></ng-container>
+                    </button>
+                    <!-- <button class="btn btn-grey mr-3" (click)="irAOficinas()">
+                  Ir a la configuración de la oficina <i class="fa fa-building ml-2"></i>
+                </button> -->
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+                <!-- small box -->
+                <div (click)="modalEnEsperaAtendiendo()" class="small-box bg-info pointer box-repo">
+                    <div class="inner">
+                        <h6 class="text-md">Personas en espera | en atención</h6>
+                        <h3 class="num-popp">
+                            <span class="text-grey">{{ personasEnFila }}</span> | {{ atendiendo }}
+                        </h3>
+                        <small class="mb-0">En este momento</small>
+                    </div>
+                    <div class="icon">
+                        <div class="ico-box">
+                            <img src="assets/dist/img/fila.svg" />
+                            <!-- <i class="ion ion-bag"></i> -->
+                        </div>
+                    </div>
+                    <p class="text-grey text-center"><small class="text-grey mt-0 detalles">-- clic para ver detalles --</small></p>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-sm-6 col-12">
+                <!-- small box -->
+                <div (click)="modalFinalizadosEmitidos()" class="small-box bg-info pointer box-repo">
+                    <div class="inner">
+                        <h6 class="text-md">Turnos Finalizados | Emitidos</h6>
+                        <h3 class="num-popp">
+                            <span class="text-grey">{{ finalizados }} </span>| {{ emitidos }}
+                        </h3>
+                        <small class="mb-0">Hasta ahora</small>
+                    </div>
+                    <div class="icon">
+                        <div class="ico-box">
+                            <img src="assets/dist/img/receipt_long.svg" />
+                        </div>
+                    </div>
+                    <p class="text-grey text-center"><small class="text-grey mt-0 detalles">-- clic para ver detalles --</small></p>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-sm-6 col-12">
+                <!-- small box -->
+                <div (click)="modalEjecutivos()" class="small-box bg-info pointer box-repo">
+                    <div class="inner">
+                        <h6 class="text-md">Ejecutivos Conectados</h6>
+                        <h3 class="num-popp">{{ escritorios }}</h3>
+                        <small class="mb-0">Hoy</small>
+                    </div>
+                    <div class="icon">
+                        <div class="ico-box">
+                            <img src="assets/dist/img/monitor.svg" />
+                        </div>
+                    </div>
+                    <p class="text-grey text-center"><small class="text-grey mt-0 detalles">-- clic para ver detalles --</small></p>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div (click)="modalTiemposTurnos()" class="col-lg-3 col-sm-6 col-12">
+                <!-- small box -->
+                <div class="small-box bg-info pointer box-repo">
+                    <div class="inner">
+                        <h6 class="text-md">Mayor Tiempo de Espera</h6>
+                        <h3 class="num-popp">{{ maxTpo }}</h3>
+                        <small class="mb-0">
+                            En la oficina <strong>{{ ofiMaxTpo }}</strong>
+                        </small>
+                    </div>
+                    <div class="icon">
+                        <div class="ico-box">
+                            <img src="assets/dist/img/clock.svg" />
+                        </div>
+                    </div>
+                    <p class="text-grey text-center"><small class="text-grey mt-0 detalles">-- clic para ver detalles --</small></p>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12 connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="card box-success box">
+                    <div class="card-tools">
+                        <mat-tab-group mat-align-tabs="start" [dynamicHeight]="true" #tabGroup>
+                            <mat-tab md-active>
+                                <ng-template mat-tab-label>
+                                    <mat-icon>store</mat-icon> Información de oficinas
+                                </ng-template>
+                                <div class="card-body" *ngIf="resumenOfi">
+                                    <div class="tab-content p-0">
+                                        <app-info-filas [resumenOfi]="resumenOfi"></app-info-filas>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab *ngIf="permisosAdministracion.includes('bat_add')">
+                                <ng-template mat-tab-label>
+                                    <mat-icon>date_range</mat-icon> Histórico de atenciones
+                                </ng-template>
+                                <div class="card-body">
+                                    <div class="tab-content p-0">
+                                        <app-info-historico-atencion></app-info-historico-atencion>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab *ngIf="permisosAdministracion.includes('bat_add')">
+                                <ng-template mat-tab-label>
+                                    <mat-icon>date_range</mat-icon> Histórico de motivos de atención
+                                </ng-template>
+                                <div class="card-body">
+                                    <div class="tab-content p-0">
+                                        <app-info-historico-motivos-atencion></app-info-historico-motivos-atencion>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab *ngIf="permisosAdministracion.includes('bat_add')">
+                                <ng-template mat-tab-label>
+                                    <mat-icon>date_range</mat-icon> Histórico estados de ejecutivos
+                                </ng-template>
+                                <div class="card-body">
+                                    <div class="tab-content p-0">
+                                        <app-info-historico-estados-ejecutivos></app-info-historico-estados-ejecutivos>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </section>
+            <!-- /.Left col -->
+        </div>
+        <!-- /.row (main row) -->
+    </div>
+    <div *ngIf="errorAlTraerResumen" class="container-fluid row">
+        <div class="col-xl-12 mt-menos55">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn boton text-grey mb-0" (click)="refreshData()" [disabled]="!refrescarActivado">
+              <ng-container *ngIf="refrescarActivado">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-refresh-cw">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+              </ng-container>
+              <ng-container *ngIf="!refrescarActivado"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-check-circle"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline></svg></ng-container>
+            </button>
+                <!-- <button class="btn btn-grey mr-3" (click)="irAOficinas()">
+          Ir a la configuración de la oficina <i class="fa fa-building ml-2"></i>
+        </button> -->
+            </div>
+        </div>
+        <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+            <section class="col-lg-12 connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="card box-success box text-center">
+                    <h5 class="mt-5">Lo sentimos, el resumen general no puede ser mostrado en este momento.</h5>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+<ng-container>
+    <div class="spinner-container">
+        <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

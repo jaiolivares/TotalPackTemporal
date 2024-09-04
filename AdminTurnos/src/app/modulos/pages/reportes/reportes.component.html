@@ -1,0 +1,82 @@
+<section class="content pl-2 pr-2">
+    <div class="container-fluid">
+        <div class="col-12 row px-0">
+            <div class="col-12 col-xl-5">
+                <div class="form-group">
+                    <div class="input-group relative">
+                        <input type="text" (keyup)="tecleado($event.target)" [formControl]="inputSearh" class="form-control form-control-md search" placeholder="Buscar reportes..." />
+                        <!-- <span class="delete-search-icon">
+          <i class="fa fa-search"></i>
+        </span> -->
+                        <div class="input-group-append">
+                            <button type="button" (click)="limpiar()" class="btn btn-md btn-default">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-search"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-7 d-flex align-items-center justify-content-center">
+                <h5 class="detalles text-center">-- Selecciona un reporte haciendo clic en la tarjeta correspondiente --</h5>
+            </div>
+        </div>
+        <div class="row mb-2 lista-oficinas mt-4 mt-xl-0">
+
+            <div class="col-xl-3 col-lg-3 col-sm-4 col-12" *ngFor="let reporte of reportes | buscador : searchText : ['nombre']; let i = index" (click)="handleSelectReporte(reporte)">
+                <div class="bar-serie serie-box d-flex align-items-center justify-content-between cursor-pointer oficina-card serieAgenda-card mb-2" [ngClass]="{'bg-selected-serie text-white selected-serie':reporte.id == selectedReporte}" >
+                    <p class="text-oficina m-0 pb-0">{{reporte.id}} - {{ reporte.nombre }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12  connectedSortable">
+                <div class="card box-success box">
+                    <div class="card-header">
+                        <div class="card-tools">
+
+                            <div [ngSwitch]="selectedReporte">
+
+                                <div *ngSwitchCase="" class="text-center m-5 p-5 font-weight-bold">
+                                    <h2 class="primary-text">No hay informe seleccionado</h2>
+                                </div>
+
+                                <app-resumen-espera-agrupado *ngSwitchCase="1" [oficinas]="oficinas" [series]="series"></app-resumen-espera-agrupado>
+                                <app-resumen-espera-noagrupado *ngSwitchCase="2" [listaOficce]="oficinas" [listadoSeries]="series"></app-resumen-espera-noagrupado>
+                                <app-resumen-atencion-agrupado *ngSwitchCase="3" [oficinas]="oficinas" [series]="series"></app-resumen-atencion-agrupado>
+                                <app-atenciones-por-categoria *ngSwitchCase="4" [listaOficce]="oficinas"[listadoSeries]="series"></app-atenciones-por-categoria>
+                                <app-estado-ejecutivos *ngSwitchCase="5" [oficinas]="oficinas" ></app-estado-ejecutivos>
+                                <app-ranking-ejecutivos *ngSwitchCase="6" [oficinas]="oficinas" ></app-ranking-ejecutivos>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<ng-container>
+    <div class="spinner-container">
+        <ngx-spinner name="obtener-data-general-spinner" [fullScreen]="true" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>
+

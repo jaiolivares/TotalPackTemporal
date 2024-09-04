@@ -1,0 +1,23 @@
+{
+    "data": {
+        "tarjetas": [
+            {
+            "nombre": "Personas en fila",
+            "valor": 150
+            },
+            {
+            "nombre": "Tikets Atendidios / Emitidos",
+            "valor": "160/200"
+            },
+            {
+            "nombre": "Ticket perdidos",
+            "valor": 110
+            },
+            {
+            "nombre": "Espera máxima promedio",
+            "valor": "4:15:23"
+            }
+        ]
+    },  
+        "status": true
+}

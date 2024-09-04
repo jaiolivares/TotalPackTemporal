@@ -1,0 +1,9 @@
+{
+    "endpoint_reportes": "https://apientelchrepo.totalpack.cl/Datos/v1",
+    "endpoint_report": "https://adminv40.totalpack.cl/reporte/api/v1",
+    "endpoint_reportAFC": "https://adminv40.totalpack.cl/reporte/api/ReporteAfc",
+    "version": "1",
+    "ApiKey": "Q3VzdG9tZXJzVFRQ",
+    "apiKeyAgenda": "QXBpVjQwQWdlbmRhOlRUUFY0MCpBZ2VuZGEw",
+    "endpoint_cl": "https://apiaad.totalpack.cl/api/v1"
+}

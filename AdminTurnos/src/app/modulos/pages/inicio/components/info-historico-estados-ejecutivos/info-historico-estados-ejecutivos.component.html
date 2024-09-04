@@ -1,0 +1,85 @@
+<div class="row align-items-center">
+    <!-- <ng-container *ngIf="( fechaRango.length < 0) || submit == false">
+      <div class="col-xl-12 text-right">
+        <h3>Ingresa un rango de fechas para buscar en el histórico</h3>
+      </div>
+     </ng-container> -->
+    <div class="col-xl-4 col-lg-12 pt-1">
+        <div class="form-group mb-0">
+            <div class="input-group relative">
+                <input type="text" (keyup)="tecleado($event.target)" [formControl]="inputSearh" class="form-control form-control-md search" placeholder="Buscar estados..." [readOnly]="!submit" />
+                <div class="input-group-append">
+                    <button type="button" (click)="limpiar()" class="btn btn-md btn-default">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-search"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-12">
+        <div class="row form-group">
+            <div class="col-xl-12 d-flex align-items-center">
+                <div class="row w-100 mx-0">
+                    <div class="col-xl-6 d-flex info-historico-atencion-filters ">
+                        <div class="input-group relative  mr-2">
+                            <div>
+                                <p class="mb-0" for=""> Seleccione un rango de fechas</p>
+                            </div>
+                            <div class="d-flex w-100">
+                                <input type="text" class="form-control w-100" #dpRange="bsDaterangepicker" bsDaterangepicker [bsValue]="fechaRango" [(ngModel)]="fechaRango" [maxDate]="fechaMaxima" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  displayOneMonthRange: true, displayMonths:1 }">
+                            <div class="form-group mb-0">
+                                <div class="input-group-append">
+                                    <button type="button" (click)="dpRange.toggle()" class="btn btn-md btn-default" [attr.aria-expanded]="dpRange.isOpen">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 d-flex info-historico-atencion-actions-btns pt-4 px-0">
+                        <button class="btn btn-ligth boton ml-2 w-50 px-0" (click)="onSubmitFiltrosBusqueda()">Obtener datos <i class="fa fa-sort-numeric-asc ml-2"></i></button>
+                        <button class="btn btn-ligth boton ml-2 w-50 px-0" *ngIf="submit" placement="bottom" tooltip="Exporta los datos de acuerdo a los filtros aplicados" (click)="this.atenciones.length > 0 ? exportarDataExcel() : null">Exportar datos <i class="fa fa-file-excel ml-2"></i></button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="min-height: 400px;">
+    <ng-container *ngIf="(this.atenciones  | buscador:searchText:filtrosBusqueda).length > 0">
+        <app-historico-estados-ejecutivos-card class="row info-historico-card col-12" [atenciones]="atenciones" [filtrosBusqueda]="filtrosBusqueda" [p]="p" [orderBy]="orderBy" [groupBy]="groupBy" [searchText]="searchText"></app-historico-estados-ejecutivos-card>
+
+        <div class="row d-flex justify-content-end mt-4 col-12">
+            <pagination-controls id="paginacion-historico-atencion" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación" screenReaderPageLabel="página" screenReaderCurrentLabel="Estás en la página"></pagination-controls>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="(this.atenciones | buscador:searchText:filtrosBusqueda).length <= 0 && (fechaRango.length > 0 && submit == true)  ">
+        <div class="col-xl-12 text-center">
+            <h3>No se encontraron atenciones</h3>
+        </div>
+    </ng-container>
+
+
+    <ng-container>
+        <div class="spinner-container">
+            <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+            </ngx-spinner>
+        </div>
+    </ng-container>

@@ -1,0 +1,17 @@
+.box-series {
+    min-height: 265px;
+}
+
+.box-sel-series {
+    min-height: 195px;
+}
+
+.grey-disabled {
+    color: black;
+    background-color: #DFDFDF!important;
+}
+
+.bg-active {
+    color: var(--color-llamado)!important;
+    background-color: rgba(49, 255, 0, 0.1);
+}

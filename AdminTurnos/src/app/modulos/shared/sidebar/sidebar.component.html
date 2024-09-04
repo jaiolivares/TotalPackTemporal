@@ -1,0 +1,210 @@
+<aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
+    <a [routerLink]="['inicio']" class="brand-link bgc">
+        <img [src]="logo" (error)="handleLogoError()" alt="Logo" class="brand-image-xs logo-xl ml-2 my-auto" style="opacity: .8">
+        <!-- <img src="assets/dist/img/powered-ttp.svg" alt="Logo" class="brand-image-xl logo-xs" style="opacity: .8"> -->
+    </a>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                <li class="nav-item" *ngIf="permisosAdministracion.includes('rep_add')">
+                    <a [routerLink]="['inicio']" class="nav-link" [routerLinkActive]="['active']">
+                        <!-- <i class="fas fa-house-user"></i> -->
+                        <i class="fas fa-chart-line"></i>
+                        <p>
+                            Dashboard
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a [routerLink]="['reportes']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        <p>
+                            Reportería
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf="customer.slug == 'ttp_afc'">
+                    <a [routerLink]="['informes']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fa-solid fa-chart-gantt"></i>
+                        <p>
+                            Informes
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf="permisosAdministracion.includes('bat_edit')">
+                    <a [routerLink]="['general']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fas fa-cogs"></i>
+                        <p>
+                            General
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+
+                
+
+                <!-- <li class="nav-item">
+          <a [routerLink]="['principal']" class="nav-link" [routerLinkActive]="['active']">
+            <i class="fas fa-door-open"></i>
+            <p>
+              Principal
+              <i class="right fas fa-angle-down"></i>
+            </p>
+          </a>
+        </li>  -->
+
+
+
+                <li class="nav-item" *ngIf="permisosAdministracion.includes('bat_del')">
+                    <a [routerLink]="['oficinas']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fas fa-building"></i>
+                        <p>
+                            Oficinas
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a [routerLink]="['agenda']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <p>
+                            Agenda
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+
+
+
+                <ng-container *ngIf="customer.slug == 'TTP_UANDES'">
+                    <li class="nav-item" *ngIf="permisosAdministracion.includes('rep_del')">
+                        <a [routerLink]="['pacientes']" class="nav-link" [routerLinkActive]="['active']">
+                            <i class="fa-solid fa-briefcase-medical"></i>
+                            <p>
+                                Llamado Pacientes
+                                <i class="right fas fa-angle-down"></i>
+                            </p>
+                        </a>
+                    </li>
+                </ng-container>
+
+                <li class="nav-item" *ngIf="usaAlarmas">
+                    <a [routerLink]="['alarmas']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fa-solid fa-bell"></i>
+                        <p>
+                            Alarmas
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+
+
+
+                <!--   <li class="nav-item">
+                    <a [routerLink]="['reportes']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fas fa-table"></i>
+                        <p>
+                            Reportes
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a [routerLink]="['reportes/detalle-espera-sucursal']" class="nav-link" [routerLinkActive]="['active']">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Detalle de espera en sucursal</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li> -->
+
+
+                <!-- <li class="nav-item">
+          <a [routerLink]="['general']" class="nav-link" [routerLinkActive]="['active']">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              General
+              <i class="right fas fa-angle-down"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview" style="display: none;">
+            <li class="nav-item">
+              <a href="../tables/simple.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Simple Tables</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="../tables/data.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>DataTables</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="../tables/jsgrid.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>jsGrid</p>
+              </a>
+            </li>
+          </ul>
+        </li> -->
+
+                <!-- <li class="nav-item">
+                    <a [routerLink]="['modulos-escritorios']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fas fa-desktop"></i>
+                        <p>
+                            Módulos escritorios
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a [routerLink]="['codigo-qr-turnos']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fas fa-qrcode"></i>
+                        <p>
+                            Código QR Turnos
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a [routerLink]="['series']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fas fa-file-signature"></i>
+                        <p>
+                            Series
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a [routerLink]="['ajustes-consultora']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fas fa-people-arrows"></i>
+                        <p>
+                            Ajustes consultora
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a [routerLink]="['establecimientos']" class="nav-link" [routerLinkActive]="['active']">
+                        <i class="fas fa-building"></i>
+                        <p>
+                            Establecimientos
+                            <i class="right fas fa-angle-down"></i>
+                        </p>
+                    </a>
+                </li>-->
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

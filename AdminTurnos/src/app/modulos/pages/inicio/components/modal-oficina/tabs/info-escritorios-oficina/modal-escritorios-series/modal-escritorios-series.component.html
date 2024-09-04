@@ -1,0 +1,62 @@
+<div class="modal-info-oficinas-container container">
+    <div class="modal-info-oficinas-header-container">
+        <div class="modal-info-oficinas-header">
+            <h5 class="subtitle"><small>Escritorio #{{data.idEsc}} - {{ data.ejecutivo }}</small></h5>
+            <button type="button" class="btn btn-ligth boton mr-3" (click)="closeModal()">
+              Volver a información de escritorios <i class="fa fa-chevron-left ml-2"></i>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body px-0">
+        <div class="row">
+            <div class="col-xl-12">
+                <h5 class="subtitle">Atenciones por serie (Hoy)</h5>
+            </div>
+            <div class="col-md-12">
+                <div class="overflow-auto">
+                    <table class="table table-sm table-striped table-hover mt-2">
+                        <thead class="table-head-verde">
+                            <tr class="table-head-verde-principal">
+                                <th colspan="2">Serie</th>
+                                <th colspan="2">Atenciones</th>
+                                <th colspan="8">Última atención por serie</th>
+                            </tr>
+                            <tr>
+                                <th>Serie</th>
+                                <th>Estado</th>
+                                <th>Total atendidos</th>
+                                <th>Total anulados</th>
+                                <th>Letra-Turno</th>
+                                <th style="width: 10%;">Cliente</th>
+                                <th style="width: 8%;">Rut</th>
+                                <th>Tiempo de espera</th>
+                                <th>Tiempo de atención</th>
+                                <th>Hora de emisión</th>
+                                <th>Hora inicio de atención</th>
+                                <th>Hora fin de atención</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let serie of data.series | filtro:{}:{key:'fH_Evento',type:'D'}" [ngClass]="getClassOf(serie)">
+                                <td>{{serie.serie}}</td>
+                                <td>{{serie.estado == "" ? 'En pausa' : serie.estado}}</td>
+                                <td>{{serie.qAte}}</td>
+                                <td>{{serie.qNul}}</td>
+                                <td>{{serie.letra === null ? 'N/A' : serie.letra+serie.turno}} </td>
+                                <td>{{serie.cliente === null ? 'N/A' : serie.cliente }}</td>
+                                <td>{{serie.rut === null ? 'N/A' : formatRut(serie.rut)}}</td>
+                                <td [ngClass]="{'text-danger': serie.tpoEspA >= 1}">{{serie.tpoEsp === null ? '--:--:--' : serie.tpoEsp }}</td>
+                                <td [ngClass]="{'text-danger': serie.tpoEspA >= 1}">{{serie.tpoAte === null ? '--:--:--' : serie.tpoAte }}</td>
+                                <td>{{serie.emi === null ? '--:--:--' : serie.emi }}</td>
+                                <td>{{serie.ateIni === null ? '--:--:--' : serie.ateIni }}</td>
+                                <td>{{serie.ateFin === null ? '--:--:--' : serie.ateFin }}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

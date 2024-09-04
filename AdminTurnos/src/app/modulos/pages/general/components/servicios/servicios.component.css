@@ -1,0 +1,16 @@
+.actualizar {
+    margin: auto;
+    font-size: 1.5rem;
+    color: #808080;
+    font-weight: bolder;
+}
+
+.actualizar:hover {
+    font-size: 1.55rem;
+    color: var(--color-llamado);
+}
+
+.serie-box {
+    max-height: 180px;
+    min-height: 80px;
+}

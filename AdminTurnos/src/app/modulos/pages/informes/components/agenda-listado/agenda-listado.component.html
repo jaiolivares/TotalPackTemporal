@@ -1,0 +1,328 @@
+<div class="row d-flex justify-content-between align-items-center ">
+  <h5 class="p-2">Reporte Agenda Listado</h5>
+  <span></span>
+  <button class="btn btn-success m-1" *ngIf="informe.length > 0" (click)="isCollapsed = !isCollapsed">
+    {{ isCollapsed ? 'Mostrar Formulario' : 'Ocultar Formulario' }}
+  </button>
+
+</div>
+<section class="connectedSortable" [@openClose]="isCollapsed ? 'closed' : 'open'">
+  <div class="pb-0 py-3">
+    <form [formGroup]="form" (submit)="resumenAtencion()">
+      <div class="row">
+
+        <!-- <div class="col-lg-6 col-12">
+          <div class="box-input mb-3">
+            <div class="row">
+              <div class="col-3">
+                <p class="text-input sw-text"
+                [ngClass]="{'text-red': (form.get('listIdOficina')?.invalid && (form.get('listIdOficina')?.touched || submitted))}">Oficinas</p>
+              </div>
+              <div class="col-5">
+                <input type="text" class="form-control" placeholder="Buscar oficina..."
+                 (input)="filtrarOficinas($event)">
+              </div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-10">
+                    <p class="text-input sw-text">Seleccionar todas</p>
+                  </div>
+                  <div class="pl-0 col-2">
+                    <label class="switch">
+                      <input type="checkbox" [checked]="false" (change)="selectTodasOficinas($event)" >
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="table-scroll">
+                  <table class="table table-xs table-striped table-hover mt-2 tabla-edit mx-auto">
+                    <thead class="table-head-verde">
+                      <tr>
+                        <th colspan="1">Id</th>
+                        <th colspan="3">Oficina</th>
+                        <th colspan="2">Fecha Min</th>
+                        <th colspan="2">Fecha Max</th>
+                        <th colspan="1">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let oficina of oficinasFiltradas; let i = index">
+                        <td colspan="1">{{ oficina.idOficina }}</td>
+                        <td colspan="3">{{ oficina.oficina }}</td>
+                        <td colspan="2">{{ oficina.dataMin | date: 'dd/MM/yyyy'}}</td>
+                        <td colspan="2">{{ oficina.dataMax | date: 'dd/MM/yyyy'}}</td>
+                        <td colspan="1">
+                          <input type="checkbox" (change)="selecteIdOficina($event, oficina.idOficina)"
+                          [checked]="false" [value]="oficina.idOficina" class="mx-auto oficeCheck" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="col-lg-6 col-12">
+          <div class="box-input mb-3">
+            <div class="row">
+              <div class="col-3">
+                <p class="text-input sw-text"
+                [ngClass]="{'text-red': (form.get('listIdSerie')?.invalid && (form.get('listIdSerie')?.touched || submitted))}">Series</p>
+              </div>
+              <div class="col-5">
+                <input type="text" class="form-control" placeholder="Buscar serie..."
+                 (input)="filtrarSeries($event)">
+              </div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-10">
+                    <p class="text-input sw-text">Seleccionar todas</p>
+                  </div>
+                  <div class="pl-0 col-2">
+                    <label class="switch">
+                      <input type="checkbox" [checked]="false" (change)="selectTodasSeries($event)" >
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="table-scroll">
+                  <table class="table table-xs table-striped table-hover mt-2 tabla-edit mx-auto">
+                    <thead class="table-head-verde">
+                      <tr>
+                        <th colspan="1">Id</th>
+                        <th colspan="3">Serie</th>
+                        <th colspan="1">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let serie of seriesFiltradas; let i = index">
+                        <td colspan="1">{{serie.id}}</td>
+                        <td colspan="3">{{serie.valor}}</td>
+                        <td colspan="1">
+                          <input type="checkbox" (change)="selecteIdSerie($event, serie.id)" [checked]="false" [value]="serie.id" class="mx-auto serieCheck" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+        <div class="col-lg-6 col-12">
+          <label for="rangoFecha" class="text-input text-nowrap">Rango Fecha</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+                <!-- <label class="text-input text-nowrap"></label> -->
+              </div>
+              <div class="col-sm-10 col-12">
+                <input type="text" placeholder="Selección de fecha" (bsValueChange)="selectFecha($event)"
+                       placement="right"
+                       [bsConfig]="bsConfig" #dpRange="bsDaterangepicker" bsDaterangepicker
+                       [ngClass]="{'invalid-border': (form.get('fechaInicio')?.invalid && (form.get('fechaInicio')?.touched || submitted))}"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-12">
+          <label for="rut" class="text-input text-nowrap">Rut</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+                <!-- <label class="text-input text-nowrap"></label> -->
+              </div>
+              <div class="col-sm-8 col-12">
+                <input  #formRut type="text" [formControl]="rut" placeholder="Ingrese Rut"
+                       [ngClass]="{ 'is-invalid': isSubmitted && !validatedRut && rut.value !== '' || isSubmitted && rut.value === '' }"
+                       (input)="formatRut(rut.value);" autofocus required>
+
+                <div *ngIf="isSubmitted && rut.value === '' && isRutRequired" class="text-danger mb-3 mt-menos20">
+                  Por favor ingrese rut
+                </div>
+                <div *ngIf="isSubmitted && !idOk && rut.value !== ''  && isRutRequired"
+                     class="text-danger mb-3 mt-menos20">
+                  Por favor ingrese un rut válido.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-xl-2 col-lg-6 col-12">
+          <label class="text-input text-nowrap">Hora Inicio</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+              </div>
+              <div class="col-sm-10 col-12">
+                <select formControlName="horaInicio"
+                [ngClass]="{'invalid-border': (form.get('horaInicio')?.invalid && (form.get('horaInicio')?.touched || submitted))}" >
+                  <option value="" selected disabled>Selecionar</option>
+                  <option *ngFor="let hora of horas" [value]="hora.time/60">{{hora.valor}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="col-xl-2 col-lg-6 col-12">
+          <label class="text-input text-nowrap">Hora Final</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+              </div>
+              <div class="col-sm-10 col-12">
+                <select formControlName="horaFin"
+                [ngClass]="{'text-red': form.get('horaFin')?.errors?.['invalidRange']}"
+                [ngClass]="{'invalid-border': (form.get('horaFin')?.invalid && (form.get('horaFin')?.touched || submitted))}">
+                  <option value="" selected disabled>Selecionar</option>
+                  <option *ngFor="let hora of horas" [value]="hora.time/60">{{hora.valor}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div *ngIf="form.get('horaFin')?.errors?.['invalidRange']">
+          <small class="text-danger">
+           {{error}}
+          </small>
+        </div> -->
+        <!-- <div class="col-xl-2 col-lg-6 col-12">
+          <label class="text-input text-nowrap">Intervalo (min)</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+              </div>
+              <div class="col-sm-10 col-12">
+                <input type="number" placeholder="Entre 1 y 60" formControlName="intervalo"
+                [ngClass]="{'invalid-border': (form.get('intervalo')?.invalid && (form.get('intervalo')?.touched || submitted))}" min="1"/>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="col-xl-2 col-lg-6 col-12">
+          <label class="text-input text-nowrap">Límite (min)</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+              </div>
+              <div class="col-sm-10 col-12">
+                <input type="number" placeholder="Entre 1 y 240" formControlName="limite"
+                [ngClass]="{'invalid-border': (form.get('limite')?.invalid && (form.get('limite')?.touched || submitted))}" min="1" />
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+      </div>
+      <div>
+        <button type="submit" class="btn btn-success m-1">Consultar</button>
+        <br><br>
+      </div>
+    </form>
+  </div>
+</section>
+
+
+<div class="row" *ngIf="informe.length > 0">
+  <div class="col-xl-12 mt-3 d-flex  align-items-center">
+    <h5 class="subtitle mr-auto">Datos de Entrada</h5>
+  </div>
+  <div class="col-md-12">
+    <div class="overflow-auto" [@openClose]="isCollapsed ? 'open' : 'closed'">
+      <table class="table table-bordered table-sm table-striped table-hover mt-2">
+        <thead class="table-head-verde">
+        <tr>
+          <th>Oficina</th>
+          <th>Serie</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Hora Ini</th>
+          <th>Hora Fin</th>
+          <th>Intervalo</th>
+          <th>Límite</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td> {{ nombreOficinas }}</td>
+          <td> {{ nombreSerie }}</td>
+          <td> {{ form.value.fechaInicio | date: 'dd/MM/yyyy' }}</td>
+          <td> {{ form.value.fechaFin | date: 'dd/MM/yyyy' }}</td>
+          <td> {{ form.value.horaInicio }}</td>
+          <td> {{ form.value.horaFin }}</td>
+          <td> {{ form.value.intervalo }}</td>
+          <td> {{ form.value.limite }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-xl-12 mt-3 d-flex  align-items-center">
+      <h5 class="subtitle mr-auto">Resultado</h5>
+
+      <div class="d-flex align-items-center">
+        <button placement="bottom" tooltip="Exporta los datos de los usuarios filtrados" (click)="exportarDataExcel()"
+                class="btn btn-ligth boton px-0">
+          <i class="fa fa-file-excel ml-2 "></i>
+          <i class="fa fa-arrow-down-long "></i></button>
+      </div>
+
+    </div>
+    <div class="overflow-auto">
+      <table class="table table-bordered table-sm table-striped table-hover mt-2">
+        <thead class="table-head-verde">
+        <tr>
+          <th class="col-2">Rango Atención</th>
+          <th colspan="4">Clientes Atendidos</th>
+          <th colspan="2">Acumulado</th>
+          <th colspan="1">Atención</th>
+        </tr>
+        <tr>
+          <td class="col-1">Minutos</td>
+          <td class="col-1">Normal</td>
+          <!-- <td class="col-1">Tol</td> -->
+          <td class="col-1">Especial</td>
+          <td class="col-1">Total</td>
+          <td class="col-1">%</td>
+          <td class="col-1">#</td>
+          <td class="col-1">%</td>
+          <td class="col-2">Prom Acumulado</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of informe; let last = last">
+          <td
+            [ngClass]="{'table-head-verde font-weight-bold': last}">{{ data.rngtxt === 'TOT' ? 'Totales' : data.rngtxt }}
+          </td>
+          <td [ngClass]="{'table-head-verde font-weight-bold': last}">{{ data.qAteNOfi }}</td>
+          <!-- <td [ngClass]="{'table-head-verde font-weight-bold': last}">{{data.qAteTOL}}</td> -->
+          <td [ngClass]="{'table-head-verde font-weight-bold': last}">{{ data.qAteE }}</td>
+          <td [ngClass]="{'table-head-verde font-weight-bold': last}">{{ data.qAteT }}</td>
+          <td [ngClass]="{'table-head-verde font-weight-bold': last}">{{ data.pAte }}</td>
+          <td [ngClass]="{'table-head-verde font-weight-bold': last}">{{ data.qTotA }}</td>
+          <td [ngClass]="{'table-head-verde font-weight-bold': last}">{{ data.pAcu }}</td>
+          <td [ngClass]="{'table-head-verde font-weight-bold': last}">{{ data.tAteA }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-container>
+  <div class="spinner-container">
+    <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+    </ngx-spinner>
+  </div>
+</ng-container>

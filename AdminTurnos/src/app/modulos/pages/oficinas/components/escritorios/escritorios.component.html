@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row col-12" *ngIf="this.estado.selectedOficina">
+            <div class="col-xl-9 pl-0 pr-0">
+                <h5 class="pt-2">Oficina: <span class="texto-customer">{{estado.selectedOficina.oficina}}</span> </h5>
+            </div>
+            <div class="col-xl-3" *ngIf="!editar && !crear">
+                <button type="button" class="btn btn-block btn-success mb-2 float-right" (click)="irACrear()" *ngIf="permisosAdministracion.includes('esc_add')">
+                  <i class="fas fa-cogs"></i> Crear Escritorio
+                </button>
+            </div>
+        </div>
+        <div class="row col-12 d-flex justify-content-end mr-3 mt-1 mb-2" *ngIf="!editar && !crear && this.estado.selectedOficina">
+            <strong>Modo:</strong>
+            <span class="text-cyan mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">Rebalse</small>
+            <span class="text-blue mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">Alternado</small>
+            <span class="text-orange mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey mr-3"><i class="ri-file-forbid-fill"></i>FIFO</small>
+        </div>
+        <section class="row col-lg-12 connectedSortable" *ngIf="!editar && !crear">
+            <div class="col-md-12 pl-0">
+                <div class="row pb-0" *ngIf="this.estado.selectedOficina">
+                    <ng-container *ngIf="escritorios && escritorios.length > 0">
+                        <div class="col-xl-3 col-lg-3 col-sm-6 col-12" *ngFor="let escritorio of escritorios">
+                            <div class="bar-serie bg-info grey">
+                                <div class="d-flex align-items-center justify-content-between mt-2 text-cyan" [ngClass]="{'text-cyan': escritorio.valor == 'Rebalse','text-blue': escritorio.valor == 'Alternado','text-orange': escritorio.valor == 'FIFO'}">
+                                    <h6 class="pb-2 mb-0 pt-0">Escritorio N° {{escritorio.id}}</h6>
+                                    <div>
+                                        <span class="mr-1"><i class="fas fa-square"></i></span>
+                                    </div>
+                                </div>
+                                <div class="close-bar" (click)="deleteEscritorio(escritorio)" *ngIf="permisosAdministracion.includes('esc_del')">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                                <div class="conf-bar">
+                                    <img src="assets/dist/img/gear.svg" (click)="irAEditar(escritorio)" *ngIf="permisosAdministracion.includes('esc_edit')">
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="escritorios && escritorios.length <= 0">
+                        <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+                            <h4 class="primary-text mt-5">No hay escritorios asignados a esta oficina</h4>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="row pb-0" *ngIf="!this.estado.selectedOficina">
+                    <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+                        <h2 class="primary-text">No hay oficina seleccionada</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class=" connectedSortable" [@openClose]="crear ? 'open' : 'closed'">
+            <app-escritorios-create class="w-100" (onVolver)="volverADatos($event)" *ngIf="crear"></app-escritorios-create>
+        </section>
+        <section class=" connectedSortable" [@openClose]="editar ? 'open' : 'closed'">
+            <app-escritorios-edit class="w-100" (onVolver)="volverADatos($event)" [data]="selectedEscritorio" *ngIf="editar"></app-escritorios-edit>
+        </section>
+
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<section class="content pl-2 pr-2">
+  <div class="container-fluid">
+    <div class="col-12 row px-0">
+      <div class="col-12 col-xl-5">
+        <div class="form-group">
+          <div class="input-group relative">
+            <input type="text" (keyup)="tecleado($event.target)" [formControl]="inputSearh"
+              class="form-control form-control-md search" placeholder="Buscar informes..." />
+            <!-- <span class="delete-search-icon">
+          <i class="fa fa-search"></i>
+        </span> -->
+            <div class="input-group-append">
+              <button type="button" (click)="limpiar()" class="btn btn-md btn-default">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-search">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-xl-7 d-flex align-items-center justify-content-center">
+        <h5 class="detalles text-center">-- Selecciona un informe haciendo clic en la tarjeta correspondiente --</h5>
+      </div>
+    </div>
+    <div class="row mb-2 lista-oficinas mt-4 mt-xl-0">
+
+      <div class="col-xl-3 col-lg-3 col-sm-4 col-12"
+        *ngFor="let informe of informes | buscador : searchText : ['nombre']; let i = index"
+        (click)="handleSelectInforme(informe)">
+        <div
+          class="bar-serie serie-box d-flex align-items-center justify-content-between cursor-pointer oficina-card serieAgenda-card mb-2"
+          [ngClass]="{'bg-selected-serie text-white selected-serie':informe.id == selectedInforme}">
+          <p class="text-oficina m-0 pb-0">{{informe.id}} - {{ informe.nombre }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12  connectedSortable">
+        <div class="card box-success box">
+          <div class="card-header">
+            <div class="card-tools">
+
+              <div [ngSwitch]="selectedInforme">
+
+                <div *ngSwitchCase="" class="text-center m-5 p-5 font-weight-bold">
+                  <h2 class="primary-text">No hay informe seleccionado</h2>
+                </div>
+                <app-dwh *ngSwitchCase="1" [oficinas]="oficinas"> [listadoSeries]="series" ></app-dwh>
+                <app-dwh-pausa  *ngSwitchCase="2" ></app-dwh-pausa>
+                <app-dwh-atencion-proveedor *ngSwitchCase="3" ></app-dwh-atencion-proveedor>
+                <app-agenda-listado-reporte *ngSwitchCase="4"></app-agenda-listado-reporte>
+                
+                <app-atenciones-por-categoria *ngSwitchCase="5" [oficinas]="oficinas"> [listadoSeries]="series"></app-atenciones-por-categoria>
+                <app-pausas-por-sucursal *ngSwitchCase="6" [oficinas]="oficinas" [series]="series"></app-pausas-por-sucursal>
+                <app-nivel-de-servicio *ngSwitchCase="7" [oficinas]="oficinas" [series]="series"></app-nivel-de-servicio>
+                <app-nivel-de-servicio-por-region *ngSwitchCase="8" [oficinas]="oficinas" [series]="series"></app-nivel-de-servicio-por-region>
+                <!-- <app-agenda-listado *ngSwitchCase="9" [oficinas]="oficinas" [series]="series"></app-agenda-listado> -->
+                <app-oficinas-zonas *ngSwitchCase="9" [oficinas]="oficinas"></app-oficinas-zonas>
+                <app-analisis-demanda *ngSwitchCase="10" [oficinas]="oficinas"></app-analisis-demanda>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<ng-container>
+  <div class="spinner-container">
+    <ngx-spinner name="obtener-data-general-spinner" [fullScreen]="true" type="ball-scale-ripple" size="large">
+    </ngx-spinner>
+  </div>
+</ng-container>

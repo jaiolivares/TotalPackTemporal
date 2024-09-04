@@ -1,0 +1,157 @@
+<!-- Main content -->
+<section class="content pl-2 pr-2 pt-0">
+    <div class="container-fluid">
+        <div class="col-12 row px-0">
+            <div class="col-5">
+                <div class="form-group">
+                    <div class="input-group relative">
+                        <input type="text" (keyup)="tecleado($event.target)" [formControl]="inputSearh" class="form-control form-control-md search" placeholder="Buscar oficinas..." />
+                        <!-- <span class="delete-search-icon">
+          <i class="fa fa-search"></i>
+        </span> -->
+                        <div class="input-group-append">
+                            <button type="button" (click)="limpiar()" class="btn btn-md btn-default">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-search"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-7 d-flex align-items-center justify-content-center">
+                <h5 class="detalles text-center">-- Selecciona una oficina haciendo clic en la tarjeta correspondiente --</h5>
+            </div>
+        </div>
+        <div class="row mb-2 lista-oficinas">
+
+            <div class="col-xl-3 col-lg-3 col-sm-4 col-12" *ngFor="let oficina of oficinas | buscador : searchText : ['valor']; let i = index" (click)="handleSelectOficina(oficina)">
+                <div class="bar-serie serie-box d-flex align-items-center cursor-pointer oficina-card mb-2" [ngClass]="getClassOfBg(oficina.valor)">
+                    <p class="text-oficina m-0 pb-0">{{oficina.id}} - {{ oficina.valor }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <div class="col-lg-12  connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="card box-success box">
+                    <div class="card-header">
+                        <div class="card-tools">
+                            <mat-tab-group mat-align-tabs="start" [dynamicHeight]="true" #tabGroup>
+                                <mat-tab [disabled]="!estado?.selectedIdOficina">
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>room_preferences</mat-icon> Configuración Gral.
+                                    </ng-template>
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <!-- Main content -->
+                                            <app-crear-seleccionar></app-crear-seleccionar>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab [disabled]="!estado?.selectedIdOficina">
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>ballot</mat-icon> Series
+                                    </ng-template>
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <app-servicio-oficina></app-servicio-oficina>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <!--  <mat-tab>
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>local_offer</mat-icon> Configurar servicios
+                                    </ng-template>
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <app-servicios></app-servicios>
+                                        </div>
+                                    </div>
+                                </mat-tab> -->
+                                <mat-tab [disabled]="!estado?.selectedIdOficina">
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>dvr</mat-icon> Pantallas
+                                    </ng-template>
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <app-pantallas></app-pantallas>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab [disabled]="!estado?.selectedIdOficina">
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>laptop_chromebook</mat-icon> Escritorios
+                                    </ng-template>
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <app-escritorios></app-escritorios>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab [disabled]="!estado?.selectedIdOficina">
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>wysiwyg</mat-icon> Botones
+                                    </ng-template>
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <app-botones></app-botones>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <!-- <mat-tab>
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>aod</mat-icon> Botones servicios
+                                    </ng-template>
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <app-botones-servicios></app-botones-servicios>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab>
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>local_offer</mat-icon> Resumen configuracion
+                                    </ng-template>
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <app-resumen-configuracion></app-resumen-configuracion>
+                                        </div>
+                                    </div>
+                                </mat-tab> -->
+                            </mat-tab-group>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.Left col -->
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            </div>
+            <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+<ng-container>
+    <div class="spinner-container">
+        <ngx-spinner name="obtener-data-general-spinner" [fullScreen]="true" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

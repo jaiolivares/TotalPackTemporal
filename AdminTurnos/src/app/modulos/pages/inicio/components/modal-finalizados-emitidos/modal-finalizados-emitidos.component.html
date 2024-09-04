@@ -1,0 +1,887 @@
+<div class="modal-info-oficinas-container container">
+    <div class="modal-info-oficinas-header-container">
+        <div class="modal-info-oficinas-header-container mb-4">
+            <div class="modal-info-oficinas-header">
+                <h5 class="subtitle ml-3"> Turnos Finalizados | Emitidos
+                    <span>
+                    <button type="button" class="btn boton text-grey mb-0" (click)="refreshData()" [disabled]="!refrescarActivado">
+                      <ng-container *ngIf="refrescarActivado"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"> <polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path> </svg> </ng-container>
+                      <ng-container *ngIf="!refrescarActivado"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></ng-container>
+                    </button>
+                  </span>
+                </h5>
+                <button type="button" class="btn  btn-ligth boton mr-3" (click)="closeModal()">
+                  Volver al dashboard <i class="fa fa-chevron-left ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-sm-6 col-12">
+            <!-- small box -->
+            <div class="small-box bg-info mb-0 box-repo">
+                <div class="inner text-orange">
+                    <h6>Más Turnos Emitidos</h6>
+                    <h3 class="num-popp">{{masEmitidos.emitidosNormal}}</h3>
+                    <small>Oficina <strong>{{masEmitidos.nombre}}</strong></small>
+                </div>
+                <div class="icon">
+                    <div class="ico-box">
+                        <img src="assets/dist/img/ticket.svg">
+                        <!-- <i class="ion ion-bag"></i> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+            <!-- small box -->
+            <div class="small-box bg-info mb-0 box-repo">
+                <div class="inner text-gray">
+                    <h6>Mayor % Turnos Finalizados</h6>
+                    <h3 class="num-popp">{{mayorPorcentaje.promedio *100 | number:'1.2-2' }} %</h3>
+                    <small>Oficina <strong>{{mayorPorcentaje.nombre}}</strong></small>
+                </div>
+                <div class="icon">
+                    <div class="ico-box">
+                        <img src="assets/dist/img/fila.svg">
+                        <!-- <i class="ion ion-bag"></i> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6 col-12">
+            <!-- small box -->
+            <div class="small-box bg-info mb-0 box-repo">
+                <div class="inner text-cyan">
+                    <h6>Más turnos finalizados</h6>
+                    <h3 class="num-popp">{{masAtendidos.finalizadosNormal}}</h3>
+                    <small>Oficina <strong>{{masAtendidos.nombre}}</strong></small>
+                </div>
+                <div class="icon">
+                    <div class="ico-box">
+                        <img src="assets/dist/img/ticket.svg">
+                        <!-- <i class="ion ion-bag"></i> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+            <!-- small box -->
+            <div class="small-box bg-info mb-0 box-repo">
+                <div class="inner text-gray-dark">
+                    <h6>Promedio turnos finalizados</h6>
+                    <h3 class="num-popp">{{promedioAtendidos | number:'1.2-2' }} <small>({{promedioAtendidos / promedioEmitidos *100 | number:'1.2-2'}} %)</small></h3>
+                    <small>Todas las oficinas</small>
+                </div>
+                <div class="icon">
+                    <div class="ico-box">
+                        <img src="assets/dist/img/ticket.svg">
+                        <!-- <i class="ion ion-bag"></i> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body px-0 mt-3">
+        <div class="row no-gutters">
+            <div class="col-12 modal-body-content card">
+                <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onSelectTab($event)" [dynamicHeight]="true" #tabGroup>
+                    <mat-tab md-active>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Turnos Emitidos Normal por Oficinas ({{totalEmiNormal}})
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar oficinas...">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                                      <i class="fa fa-search"></i>
+                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                         {{ ordenadoPor }}
+                                      </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('emitidosNormal','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'emitidosNormal-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('emitidosNormal','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'emitidosNormal-A'}" class="dropdown-item">Ascendente</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==1">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.emitidosNormal}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.emitidosNormal}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==0 && oficina.emitidosNormal > 0">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey-disabled h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.emitidosNormal}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8 ">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.emitidosNormal}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Turnos Atendidos Normal por Oficinas ({{totalAtNormal}}&nbsp;<small>{{totalAtNormal/totalEmiNormal*100 | number:'1.2-2'}}%</small>)
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar oficinas...">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                                  <i class="fa fa-search"></i>
+                                </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                  {{ ordenadoPor }}
+                                  </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('finalizadosNormal','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'finalizadosNormal-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('finalizadosNormal','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'finalizadosNormal-A'}" class="dropdown-item">Ascendente</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==1">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <p class="ml-auto mb-0 mt-2 text-grey">{{oficina.finalizadosNormal/oficina.emitidosNormal*100 | number:'1.1-1'}}%</p>&nbsp;<span><h2 class="mb-0">{{oficina.finalizadosNormal}}</h2></span>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.finalizadosNormal}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==0 && oficina.finalizadosNormal > 0">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey-disabled h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <p class="ml-auto mb-0 mt-2 text-grey">{{oficina.finalizadosNormal/oficina.emitidosNormal*100 | number:'1.1-1'}}%</p>&nbsp;<span><h2 class="mb-0">{{oficina.finalizadosNormal}}</h2></span>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8 ">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.finalizadosNormal}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Turnos Emitidos Urgencia por Oficinas ({{totalEmiUrg}})
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar oficinas...">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                                    <i class="fa fa-search"></i>
+                                  </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                  {{ ordenadoPor }}
+                                    </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('emitidosUrgencia','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'emitidosUrgencia-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('emitidosUrgencia','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'emitidosUrgencia-A'}" class="dropdown-item">Ascendente</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==1">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.emitidosUrgencia}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.emitidosUrgencia}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==0 && oficina.emitidosUrgencia > 0">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey-disabled h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.emitidosUrgencia}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8 ">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.emitidosUrgencia}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <!-- <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Turnos Atendidos Urgencia por Oficinas ({{totalAtUrg}}&nbsp;<small>{{totalAtUrg/totalEmiUrg*100 | number:'1.2-2'}}%</small>)
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar oficinas...">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                                <i class="fa fa-search"></i>
+                              </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                  Ordenar por orden
+                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenarOfi('finalizadosUrgencia-D')" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenarOfi('finalizadosUrgencia-A')" class="dropdown-item">Ascendente</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <ng-container *ngFor="let oficina of oficinas | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==1">
+                                            <div class="card-body h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <p class="ml-auto mb-0 mt-2 text-grey">{{oficina.finalizadosUrgencia/oficina.emitidosUrgencia*100 | number:'1.1-1'}}%</p>&nbsp;<span><h2 class="mb-0">{{oficina.finalizadosUrgencia}}</h2></span>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.finalizadosUrgencia}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let oficina of oficinas | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==0 && oficina.finalizadosUrgencia > 0">
+                                            <div class="card-body h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey-disabled h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <p class="ml-auto mb-0 mt-2 text-grey">{{oficina.finalizadosUrgencia/oficina.emitidosUrgencia*100 | number:'1.1-1'}}%</p>&nbsp;<span><h2 class="mb-0">{{oficina.finalizadosUrgencia}}</h2></span>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8 ">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.finalizadosUrgencia}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab> -->
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Turnos Anulados por Oficinas ({{totalAnulados}}&nbsp;<small>{{totalAnulados/totalEmiNormal*100 | number:'1.2-2'}}%</small>)
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar oficinas...">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                              <i class="fa fa-search"></i>
+                            </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                  {{ ordenadoPor }}
+                              </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('anulados','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'anulados-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('anulados','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'anulados-A'}" class="dropdown-item">Ascendente</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==1">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <p class="ml-auto mb-0 mt-2 text-grey">{{oficina.anulados/oficina.emitidosNormal*100 | number:'1.1-1'}}%</p>&nbsp;<span><h2 class="mb-0">{{oficina.anulados}}</h2></span>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.anulados}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==0 && oficina.anulados > 0">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey-disabled h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <p class="ml-auto mb-0 mt-2 text-grey">{{oficina.anulados/oficina.emitidosNormal*100 | number:'1.1-1'}}%</p>&nbsp;<span><h2 class="mb-0">{{oficina.anulados}}</h2></span>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8 ">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.anulados}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Turnos Emitidos Normal por Series ({{totalEmiNormal}})
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar series...">
+
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                <i class="fa fa-search"></i>
+              </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                  {{ ordenadoPor }}
+                </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('emitidosNormal','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'emitidosNormal-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('emitidosNormal','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'emitidosNormal-A'}" class="dropdown-item">Ascendente </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row align-items-center">
+                                    <div class="col-12" *ngFor="let serie of series | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type }  | buscador:searchText:['serie']">
+                                        <div class="card-body px-0 pb-0 h-100">
+                                            <div class="p-0 h-100">
+
+                                                <div class="small-box bg-info grey h-100">
+                                                    <div class="inner">
+                                                        <div class="d-flex align-items-center">
+                                                            <h6 class="pb-2 mb-0 col-3"><span>{{serie.serie}}</span></h6>
+                                                            <h2 class="mr-auto mb-0"><span>{{serie.emitidosNormal}}</span></h2>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div *ngFor="let oficinas of serie.data" class="col-4 pr-0">
+                                                                <div class="row pr-0 mx-0 col-12" [ngClass]="oficinas.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div class="col-10 mx-0">
+                                                                        <span class="text-1">{{oficinas.oficina}}</span>
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        <div>
+                                                                            <h6 class="text-right mb-0 p-0">{{oficinas.emitidosNormal}}</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Turnos Atendidos Normal por Series ({{totalAtNormal}}&nbsp;<small>{{totalAtNormal/totalEmiNormal*100 | number:'1.2-2'}}%</small>)
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar series...">
+                                                <!-- <span class="delete-search-icon">
+          <i class="fa fa-search"></i>
+        </span> -->
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+            <i class="fa fa-search"></i>
+          </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                  {{ ordenadoPor }}
+            </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('finalizadosNormal','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'finalizadosNormal-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('finalizadosNormal','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'finalizadosNormal-A'}" class="dropdown-item">Ascendente </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row align-items-center">
+                                    <div class="col-12" *ngFor="let serie of series | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type }  | buscador:searchText:['serie']">
+                                        <div class="card-body px-0 pb-0 h-100">
+                                            <div class="p-0 h-100">
+
+                                                <div class="small-box bg-info grey h-100">
+                                                    <div class="inner">
+                                                        <div class="d-flex align-items-center">
+                                                            <h6 class="pb-2 mb-0 col-3"><span>{{serie.serie}}</span></h6>
+                                                            <!-- <h2 class="mr-auto mb-0"><span>{{serie.finalizadosNormal}}</span></h2> -->
+                                                            <p class="mb-0 mt-2 text-grey">{{serie.finalizadosNormal/serie.emitidosNormal*100 | number:'1.1-1'}}%</p>&nbsp;<span><h2 class="mb-0">{{serie.finalizadosNormal}}</h2></span>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div *ngFor="let oficinas of serie.data" class="col-4 pr-0">
+                                                                <div class="row pr-0 mx-0 col-12" [ngClass]="oficinas.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div class="col-10 mx-0">
+                                                                        <span class="text-1">{{oficinas.oficina}}</span>
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        <div>
+                                                                            <h6 class="text-right mb-0 p-0">{{oficinas.finalizadosNormal}}</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Turnos Emitidos Urgencia por Series ({{totalEmiUrg}})
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar series...">
+                                                <!-- <span class="delete-search-icon">
+        <i class="fa fa-search"></i>
+      </span> -->
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+          <i class="fa fa-search"></i>
+        </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                  {{ ordenadoPor }}
+          </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('emitidosUrgencia','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'emitidosUrgencia-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('emitidosUrgencia','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'emitidosUrgencia-A'}" class="dropdown-item">Ascendente </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row align-items-center">
+                                    <div class="col-12" *ngFor="let serie of series | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type }  | buscador:searchText:['serie']">
+                                        <div class="card-body px-0 pb-0 h-100">
+                                            <div class="p-0 h-100">
+
+                                                <div class="small-box bg-info grey h-100">
+                                                    <div class="inner">
+                                                        <div class="d-flex align-items-center">
+                                                            <h6 class="pb-2 mb-0 col-3"><span>{{serie.serie}}</span></h6>
+                                                            <h2 class="mr-auto mb-0"><span>{{serie.emitidosUrgencia}}</span></h2>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div *ngFor="let oficinas of serie.data" class="col-4 pr-0">
+                                                                <div class="row pr-0 mx-0 col-12" [ngClass]="oficinas.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div class="col-10 px-0">
+                                                                        <span class="text-1">{{oficinas.oficina}}</span>
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        <div>
+                                                                            <h6 class="text-right mb-0 p-0">{{oficinas.emitidosUrgencia}}</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Turnos Anulados por Series ({{totalAnulados}})
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar series...">
+                                                <!-- <span class="delete-search-icon">
+          <i class="fa fa-search"></i>
+        </span> -->
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+            <i class="fa fa-search"></i>
+          </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                  {{ ordenadoPor }}
+            </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('anulados','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'anulados-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('anulados','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'anulados-A'}" class="dropdown-item">Ascendente </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row align-items-center">
+                                    <div class="col-12" *ngFor="let serie of series | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type }  | buscador:searchText:['serie']">
+                                        <div class="card-body px-0 pb-0 h-100">
+                                            <div class="p-0 h-100">
+
+                                                <div class="small-box bg-info grey h-100">
+                                                    <div class="inner">
+                                                        <div class="d-flex align-items-center">
+                                                            <h6 class="pb-2 mb-0 col-3"><span>{{serie.serie}}</span></h6>
+                                                            <h2 class="mr-auto mb-0"><span>{{serie.anulados}}</span></h2>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div *ngFor="let oficinas of serie.data" class="col-4 pr-0">
+                                                                <div class="row pr-0 mx-0 col-12" [ngClass]="oficinas.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div class="col-10 px-0">
+                                                                        <span class="text-1">{{oficinas.oficina}}</span>
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        <div>
+                                                                            <h6 class="text-right mb-0 p-0">{{oficinas.anulados}}</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

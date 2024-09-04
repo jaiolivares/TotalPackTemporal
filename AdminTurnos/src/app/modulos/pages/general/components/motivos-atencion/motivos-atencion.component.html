@@ -1,0 +1,256 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row col-12">
+      <div class="col-9 pl-0 pr-0">
+        <h5 class="pt-2">Motivos Atención</h5>
+      </div>
+
+      <div class="col-3" *ngIf="!agregar && !series">
+        <button type="button" class="btn btn-block btn-success mb-2 float-right" (click)="agregar=true;"
+          *ngIf="permisosAdministracion.includes('mot_add')">
+          <i class="fas fa-cogs"></i> Agregar motivo
+        </button>
+      </div>
+    </div>
+    <section class="row col-lg-12 connectedSortable" [@openClose]="agregar ? 'open' : 'closed'">
+      <div class="card box-success box">
+        <form [formGroup]="form" (submit)="enviarForm()">
+          <div class="row pb-0 p-3 ">
+            <div class="col-lg-12 col-12">
+              <h6 class="pt-n2" *ngIf="actualizar"><i class="fas fa-pen"></i> Actualizar Motivo</h6>
+              <h6 class="pt-n2" *ngIf="!actualizar"><i class="fas fa-pen"></i> Agregar Motivo</h6>
+            </div>
+            <div *ngIf="actualizar" class="col-lg-3 col-12">
+              <div class="box-input">
+                <div class="row">
+                  <div class="col-sm-7 col-12">
+                    <p class="text-input ml-3">Id motivo</p>
+                  </div>
+                  <div class="col-sm-5 col-12">
+                    <p class="font-weight-bold mt-3">{{idMot}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-12">
+              <div class="box-input">
+                <div class="row">
+                  <div class="col-sm-4 col-12">
+                    <p class="text-input">Motivo</p>
+                  </div>
+                  <div class="col-sm-8 col-12">
+                    <input type="text" formControlName="motivo"
+                      [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['motivo'].errors !== null)}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-10 text-right">
+              <button *ngIf="!actualizar" type="submit" class="btn btn-block btn-success m-1">
+                <i class="far fa-save"></i> Agregar
+              </button>
+              <button *ngIf="actualizar" type="submit" class="btn btn-block btn-success m-1">
+                <i class="far fa-save"></i> Actualizar
+              </button>
+            </div>
+            <div class="col-2 text-right">
+              <button type="button" class="btn btn-secondary btn-fail m-1" (click)="cerrarForm()"><i
+                  class="fas fa-ban"></i>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+    <section class="row col-lg-12 connectedSortable" [@abrirCerrar]="series ? 'abrir' : 'cerrar'">
+      <div class="card box-success box">
+        <form [formGroup]="form" (submit)="enviarForm()" class="h-100">
+          <div class="row pb-0 p-3 ">
+            <div class="col-lg-12 col-12">
+              <h6 class="pt-n2"><i class="fas fa-pen"></i>Motivo: {{nombreMot}} ({{idMot}})</h6>
+            </div>
+            <div class="col-lg-7 col-12">
+              <div class="box-input box-series">
+                <div class="row">
+                  <div class="col-12">
+                    <p class="text-input sw-text">Series asignadas</p>
+                  </div>
+                  <div *ngIf="motivoSeries.length > 0 " class="row col-12 my-2 mx-auto">
+                    <div *ngFor="let seriemotivo of motivoSeries" class="col-xl-6 col-lg-6 col-sm-6 col-12">
+                      <div class="bar-serie mb-3"
+                        [ngClass]="{'grey-disabled': seriemotivo.desactive == true, 'bg-active': seriemotivo.active === true }">
+                        {{seriemotivo.serie}}
+                        <div class="close-bar" (click)="editarSeries(seriemotivo.idSerie,false,false)">
+                          <i *ngIf="!seriemotivo.desactive && seriemotivo.active || !seriemotivo.desactive && !seriemotivo.active"
+                            class="fas fa-times"></i>
+                          <i *ngIf="!seriemotivo.active == true && seriemotivo.desactive || seriemotivo.active == true && seriemotivo.desactive"
+                            class="fa-solid fa-rotate"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="motivoSeries.length < 1" class="row col-12 my-2 mx-auto">
+                    <div class="col-12">
+                      <div class="d-flex justify-content-center">
+                        <h4>No hay series asignadas</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5 col-12">
+              <div class="box-input box-series">
+                <div class="row">
+                  <div class="col-sm-12 pr-0 col-12">
+                    <p class="text-input mb-1">Asignar Serie</p>
+                  </div>
+                  <div class="col-sm-12 col-12 row my-2 mx-auto">
+                    <select (change)="editarSeries(0,$event.target,false)" class="custom-select">
+                      <option value="0">Seleccionar</option>
+                      <option *ngFor="let serie of listaSeries" [value]="serie.id">{{serie.valor}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row col-12 my-2 mx-auto">
+                  <div class="col-sm-6 text-center">
+                    <button type="button" class="btn btn-block btn-success m-1" (click)="editarSeries(0,false,true)"><i
+                        class="far fa-save"></i>
+                      Actualizar
+                    </button>
+                  </div>
+                  <div class="col-6 text-center">
+                    <button type="button" class="btn btn-secondary btn-fail m-1" (click)="CerrarSeries()">
+                      <i class="fas fa-ban"></i> Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <div class="row my-2" *ngIf="!agregar && !series">
+      <div class="col-xl-4 col-lg-4 col-sm-6 col-12 mb-2" *ngFor="let motivo of motivos">
+        <div class="bar-serie bg-info grey motivo-card">
+          <p class="mb-2 pt-3">{{motivo.valor}}</p>
+          <!-- <div class="row col-12 pr-0">
+                      <p *ngFor="let series of motivo.series" class="text-grey mb-1 col-6 px-0"><small>- {{series}}</small> </p>
+                  </div> -->
+          <div class="close-bar" (click)="eliminarMotivo(motivo)" *ngIf="permisosAdministracion.includes('mot_del')">
+            <i class="fas fa-times"></i>
+          </div>
+          <div class="conf-bar" (click)="mostrarMotivo(motivo)" *ngIf="permisosAdministracion.includes('mot_edit')">
+            <img src="assets/dist/img/gear.svg">
+          </div>
+          <div class="edit-series" (click)="mostrarSeriesMotivo(motivo)"
+            *ngIf="permisosAdministracion.includes('mot_add') || permisosAdministracion.includes('mot_edit')">
+            <i class="fas fa-clipboard-list"></i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-container>
+  <div class="spinner-container">
+    <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+    </ngx-spinner>
+  </div>
+</ng-container>
+<!-- <div class="row">
+
+  <div class="col-md-6">
+    <div class="col-12 form-group">
+        <h6 class="pt-n2"><i class="fas fa-chalkboard-teacher"></i> Crear Motivos</h6>
+      <div class="box-input">
+        <div class="row align-items-center">
+          <div class="col-sm-6">
+            <label class="text-input">ID :</label>
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="form-control pl-2">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 form-group">
+      <div class="box-input">
+        <div class="row align-items-center">
+          <div class="col-sm-6">
+            <label class="text-input">Glosa :</label>
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="form-control pl-2">
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-block btn-success">
+          <i class="fas fa-save"></i> Agregar Motivo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <h6 class="pt-n2"><i class="fas fa-tasks"></i> Atenciones</h6>
+    <table class="table  table-sm table-striped table-hover mt-2">
+      <thead class="table-head-verde">
+        <tr>
+          <th>Id</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Venta de producto</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <h6 class="pt-n2"><i class="fas fa-tasks"></i> Servicios</h6>
+    <table class="table  table-sm table-striped table-hover mt-2">
+      <thead class="table-head-verde">
+        <tr>
+          <th>Select</th>
+          <th>Id</th>
+          <th>Letra</th>
+          <th>Servicio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td>1</td>
+          <td>A</td>
+          <td>Atención general</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td>2</td>
+          <td>B</td>
+          <td>Atención al clente</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td>3</td>
+          <td>G</td>
+          <td>Caja</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<hr> -->

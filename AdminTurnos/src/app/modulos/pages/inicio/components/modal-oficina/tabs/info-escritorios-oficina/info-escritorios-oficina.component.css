@@ -1,0 +1,17 @@
+.nom-ejecutivo {
+    font-size: 0.75rem !important;
+    line-height: 15px;
+}
+
+.nom-serie {
+    font-size: 0.55rem !important;
+    line-height: 15px;
+}
+
+.alto-series {
+    height: 85px;
+}
+
+.altocard {
+    height: 226px;
+}

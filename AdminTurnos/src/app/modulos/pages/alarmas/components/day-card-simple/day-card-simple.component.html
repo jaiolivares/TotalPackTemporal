@@ -1,0 +1,9 @@
+<div class="bar-serie day-card position-relative px-2 text-center">
+  <p class="font-light">{{ data.dia }}</p>
+  <p class="text-serie mt-n2 mb-2" [ngClass]="{ 'primary-text': data.modificado === true }">
+    <i class="far fa-clock"></i> {{ data.activo ? (data.de === null ? "--:--" : data.de) : "--:--" }} a {{ data.activo ? (data.hasta === null ? "--:--" : data.hasta) : "--:--" }}
+  </p>
+  <div class="close-bar" *ngIf="!hideDeleteBtn">
+    <a type="button" (click)="deleteDay(data.dia)"><i class="fas fa-times"></i></a>
+  </div>
+</div>

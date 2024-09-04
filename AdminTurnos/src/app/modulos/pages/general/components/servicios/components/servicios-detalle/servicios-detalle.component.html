@@ -1,0 +1,265 @@
+<div class="card box-success box">
+    <form [formGroup]="form" *ngIf="form" (submit)="null">
+        <div class="row pb-0 p-3">
+            <div class="col-lg-12 col-12">
+                <h6 class="pt-n2"><i class="fas fa-file"></i> Detalles de la Serie: <strong class="text-green">{{ serie.serie }}</strong></h6>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-sm-10 px-0">
+                            <p class="text-input sw-text">Id Serie</p>
+                        </div>
+                        <div class="pl-0 col-2 text-content" style="margin-left: -5%">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.idSerie }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-lg-6 col-12">
+                <div class="box-input modal-presentation-card">
+                    <div class="row">
+                        <div class="col-sm-4 col-12">
+                            <p class="text-input">Nombre Serie</p>
+                        </div>
+                        <div class="col-sm-8 col-12 text-content">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.serie }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-lg-5 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-sm-4 px-0 col-12">
+                            <p class="text-input">Botón</p>
+                        </div>
+                        <div class="col-sm-8 col-12 text-content">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.serieBoton }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-sm-9 px-0 col-12">
+                            <p class="text-input">Letra</p>
+                        </div>
+                        <div class="col-sm-3 pl-0 col-12 text-content">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.letra }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-8 px-0">
+                            <p class="text-input sw-text">Exige Rut</p>
+                        </div>
+                        <div class="pl-0 col-4 text-content" style="margin-left: -5%">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.exigeId == '1' ? 'Si' : 'No' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-9 px-0">
+                            <p class="text-input sw-text">Informativo</p>
+                        </div>
+                        <div class="pl-0 col-3 text-content" style="margin-left: -5%">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.info == '1' ? 'Si' : 'No' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <div class="col-lg-2 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-9 px-0">
+                            <p class="text-input sw-text">Jornada</p>
+                        </div>
+                        <div class="pl-0 col-3 text-content" style="margin-left: -5%">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.jornada }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-9 px-0">
+                            <p class="text-input sw-text">VIP</p>
+                        </div>
+                        <div class="pl-0 col-3 px-0 text-content" style="margin-left: -5%">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.vip == '1' ? 'Si' : 'No' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-9 px-0">
+                            <p class="text-input sw-text">Valor</p>
+                        </div>
+                        <div class="pl-0 col-3 text-content" style="margin-left: -5%">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.valor }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-4 px-0">
+                            <p class="text-input">Derivación</p>
+                        </div>
+                        <div class="col-sm-8 col-12 text-content">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.posDeriva == 1 ? 'Al comienzo de la fila' : 'Al final de la fila' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-sm-9 col-12 px-0">
+                            <p class="text-input">Alarma tiempo Máx. Espera</p>
+                        </div>
+                        <div class="col-sm-3 col-12 px-0 text-content">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.tiempoMaximoEspera }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-sm-9 col-12 px-0">
+                            <p class="text-input">Alarma tiempo Máx. Atención</p>
+                        </div>
+                        <div class="col-sm-3 col-12 px-0 text-content">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.tiempoMaximoAtencion }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <div class="col-lg-3 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-sm-9 col-12 px-0">
+                            <p class="text-input">Tiempo mínimo Atención</p>
+                        </div>
+                        <div class="col-sm-3 col-12 px-0 text-content">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.tiempoMinimoAtencion }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-sm-4 col-12 px-0">
+                            <p class="text-input">Tipo</p>
+                        </div>
+                        <div class="col-sm-8 col-12 px-0 text-content">
+                            <p class="mb-0 font-weight-bold">{{ this.serie.tipo == '0' ? 'Normal' : this.serie.tipo == '1' ? 'Autopago' : 'Videollamada' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-12">
+                <div class="box-input mb-3 modal-presentation-card">
+                    <div class="row">
+                        <div class="col-sm-12 pr-0 col-12">
+                            <p class="text-input">Descripción</p>
+                        </div>
+                        <div class="col-sm-12 col-12 pb-3 ml-4 text-content">
+                            <p class="mb-0 text-label font-weight-bold">{{ this.serie.descripcion }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-input mb-3 modal-presentation-card" *ngIf="this.serie.info">
+                    <div class="row">
+                        <div class="col-sm-12 pr-0 col-12">
+                            <p class="text-input">Mensaje informativo</p>
+                        </div>
+                        <div class="col-sm-12 col-12 pb-3 ml-4 text-content">
+                            <p class="mb-0 text-label font-weight-bold">{{ this.serie.infoMsg }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="text-input sw-text">Horarios de Atención</p>
+                        </div>
+                        <div class="row col-12 mx-auto">
+                            <div class="col-3 mb-1 mx-auto px-1" *ngFor="let element of horariosAtencionPorDia">
+                                <app-day-card [data]="element" (onDelete)="null" [hideDeleteBtn]="true"></app-day-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-input pb-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="text-input sw-text">Motivos de atención asignados a la serie</p>
+                        </div>
+                        <div class="row mx-0 col-12 my-2 mx-auto" *ngIf="motivos">
+                            <div class="ml-3 mr-3" *ngFor="let element of motivos">
+                                <app-motivo-card [data]="element" (onDelete)="null"></app-motivo-card>
+                            </div>
+                        </div>
+                        <div class="row col-12 d-flex justify-content-center align-items-center flex-column y-2 mx-auto" *ngIf="sinMotivos">
+                            <h5>Esta serie no tiene motivos asociados.</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 mb-3 col-12">
+                <div class="box-input pb-3">
+                    <div class="row mx-0">
+                        <div class="col-sm-12 pr-0 col-12">
+                            <p class="text-input">Ticket</p>
+                        </div>
+                        <div class="col-sm-12 col-12 d-flex justify-content-center pt-3 my-auto" [innerHTML]="tablaTicket" *ngIf="tablaTicket">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-lg-12 mb-3 col-12">
+                <div class="box-input">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="text-input sw-text">Horarios de Atención</p>
+                        </div>
+                        <div class="row col-12 my-2 mx-auto">
+                            <div class="ml-3 mr-1" *ngFor="let element of horariosAtencionPorDia">
+                                <app-day-card [data]="element" (onDelete)="null" [hideDeleteBtn]="true"></app-day-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+            <div class="col-xl-12 d-flex justify-content-end">
+                <button type="button" class="btn btn-grey btn-fail m-1" (click)="onVolver()">
+            <i class="fas fa-ban"></i>
+            Cerrar
+          </button>
+            </div>
+        </div>
+    </form>
+</div>
+<ng-container *ngIf="isLoading">
+    <div class="spinner-container component-only">
+        <ngx-spinner name="servicio-loading" [fullScreen]="false" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

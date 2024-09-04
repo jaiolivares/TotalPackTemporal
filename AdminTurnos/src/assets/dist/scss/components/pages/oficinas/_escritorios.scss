@@ -1,0 +1,45 @@
+.serie-asignada-container{
+    &.grey-disabled{
+        color: black;
+        background-color: #DFDFDF!important;
+    }
+    
+    &.bg-active{
+      color: #28a745!important;
+      background-color: rgba(49, 255, 0, 0.1);
+    }
+    padding: 8px;
+    .serie-asignada-card{
+        display: flex;
+        flex-wrap: wrap;
+        &-serie{
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+            flex:1
+            
+        }
+        &-alternado{
+            display: flex;
+            align-items: center;
+            margin-right: 1.5rem;
+            input{
+                margin: 0 !important;
+                margin-left: 0.5rem !important;
+                width: 25px;
+            }
+        }
+    }
+    .close-bar{
+        right: 10px;
+        top: 1px;
+    }
+}
+.escritorios-title-container{
+    .text-input{
+        @include media-query(590px) {
+           margin-bottom: 22px !important;
+          }
+    }
+}
+

@@ -1,0 +1,96 @@
+<!-- Main content -->
+<section class="content pl-2 pr-2">
+    <div class="container-fluid">
+
+        <div class="d-flex mx-0 row flex-wrap">
+
+            <!-- ./col
+        <div class="col-xl-2">
+            <div class="mr-5 small-box bg-info px-1 py-2 w-100">
+                <div class="p-2 d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center mx-auto">
+                        <h6 class="pt-0 mb-0 text-gray tme tit-box">Médicos</h6>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center pb-2">
+                    <div class="icon-box-oficinas black mr-2">
+                        <mat-icon>medical_services</mat-icon>
+                    </div>
+                    <h3 class="num-popp mr-1 mb-0">{{estado.totalMedicos}}</h3>
+                </div>
+            </div>
+        </div>-->
+
+            <div class=" col-xl-2">
+                <!-- small box -->
+                <div class="mr-5 small-box bg-info px-1 py-2 w-100">
+                    <div class="p-2 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center mx-auto">
+                            <h6 class="pt-0 mb-0 text-gray tme tit-box">Pantallas</h6>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center pb-2">
+                        <div class="icon-box-oficinas black mr-2">
+                            <mat-icon>monitor</mat-icon>
+                        </div>
+                        <h3 class="num-popp mr-1 mb-0">{{estado.totalPantallas}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <div class="col-lg-12  connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="card box-success box">
+                    <div class="card-header">
+                        <div class="card-tools">
+                            <mat-tab-group mat-align-tabs="start" (selectedTabChange)="handleSelectedTabChange($event)" [dynamicHeight]="true" #tabGroup>
+
+                                <!-- <mat-tab>
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>medical_information</mat-icon> Médicos
+                                    </ng-template>
+                                    <div class="card-body" *ngIf="currentIndex == 0">
+                                        <div class="tab-content p-0">
+                                            <app-medicos></app-medicos>
+                                        </div>
+                                    </div>
+                                </mat-tab> -->
+
+                                <mat-tab>
+                                    <ng-template mat-tab-label>
+                                        <mat-icon>dvr</mat-icon> Pantallas
+                                    </ng-template>
+                                    <div class="card-body" *ngIf="currentIndex == 0">
+                                        <div class="tab-content p-0">
+                                            <app-pantallas></app-pantallas>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+
+
+                            </mat-tab-group>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.Left col -->
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            </div>
+            <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+<ng-container>
+    <div class="spinner-container">
+        <ngx-spinner name="obtener-data-general-spinner" [fullScreen]="true" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

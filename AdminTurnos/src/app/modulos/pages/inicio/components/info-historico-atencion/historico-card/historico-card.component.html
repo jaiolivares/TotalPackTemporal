@@ -1,0 +1,41 @@
+<div
+ *ngFor="
+   let atencion of atenciones
+     | buscador : searchText : filtrosBusqueda | paginate: { id:'paginacion-historico-atencion', itemsPerPage: 20, currentPage: p, totalItems:(this.atenciones  | buscador : searchText : filtrosBusqueda).length}
+ "
+ class="col-lg-3 col-12"
+>
+ <!-- small box -->
+ <div class="bar-serie">
+  <div class="d-flex align-items-center">
+    <p class="primary-text p mb-0 mr-1">{{ atencion.letra }}{{atencion.turno}}</p>
+  <p class="text-serie  mb-0 pb-0"> - {{ atencion.serie }}{{atencion.subSerie != "" ? ' - '+atencion.subSerie : ''}}</p>
+  </div>
+  <ng-container >
+    <p  class="little-font position-relative d-flex align-items-center text-wrap   mb-1">
+        <img class="mr-1" tooltip="Oficina" src="assets/dist/icons/home-primary.svg"> {{atencion.oficina}} 
+    </p>
+      <p  class="little-font position-relative d-flex align-items-center   text-wrap mb-1">
+          <img class="mr-1" tooltip="Información del ejecutivo" src="assets/dist/icons/users-primary.svg"> {{atencion.escritorio}} - {{atencion.ejecutivo}} 
+      </p>
+      <p  class="little-font position-relative d-flex align-items-center  text-wrap  mb-1">
+          <img class="mr-1" tooltip="Información del cliente" src="assets/dist/icons/user-primary.svg"> {{atencion.cliente}} ({{formatRut(atencion.rut)}})
+      </p>
+      <p  class="little-font position-relative d-flex align-items-center  text-wrap  mb-1">
+          <img class="mr-1" tooltip="Atención perdida" src="assets/dist/icons/phone-missed-primary.svg"> {{atencion.perdido == "N" ? 'No' : 'Si'}} 
+      </p>
+      <p  class="little-font position-relative d-flex align-items-center  text-wrap text-dark  mb-1">
+          <img class="mr-1" tooltip="Fecha" src="assets/dist/icons/clock-primary.svg"> {{atencion.fH_Emitido && atencion.fH_Emitido != null ? formatearFecha(atencion.fH_Emitido.split('T')[0]) : '-' }}
+      </p>
+      <p  class="little-font position-relative d-flex align-items-center  text-wrap  mb-1">
+        <img class="mr-1" tooltip="Hora de emisión (Tiempo de espera) / Hora de llamado (Tiempo de llamado)" src="assets/dist/icons/radio-primary.svg"> {{atencion.fH_Emitido && atencion.fH_Emitido != null ? atencion.fH_Emitido.split('T')[1]+' ('+convertSecondsToString(atencion.tiempoEspera)+')' : '-' }} / {{atencion.fH_Llama && atencion.fH_Llama != null ? atencion.fH_Llama.split('T')[1]+' ('+convertSecondsToString(atencion.tiempoLlamado)+')' : '-' }}
+    </p>
+      <p  class="little-font position-relative d-flex align-items-center  text-wrap  mb-1">
+          <img class="mr-1" tooltip="Hora inicio de atención / Hora fin de atención (Tiempo de atención)" src="assets/dist/icons/clock-primary.svg"> {{atencion.fH_AtencionIni && atencion.fH_AtencionIni != null ? atencion.fH_AtencionIni.split('T')[1] : '-' }} / {{atencion.fH_AtencionFin && atencion.fH_AtencionFin != null ? atencion.fH_AtencionFin.split('T')[1]+' ('+convertSecondsToString(atencion.tiempoAtencion)+')' : '-'}}
+      </p>
+  </ng-container>
+  <div class="conf-bar" style="right: 25px;" (click)="modalAtencion(atencion)">
+      <img src="assets/dist/icons/eye-primary.svg" />
+  </div>
+</div>
+</div>

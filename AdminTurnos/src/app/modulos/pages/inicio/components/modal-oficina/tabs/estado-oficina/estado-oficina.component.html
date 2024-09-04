@@ -1,0 +1,78 @@
+<div class="col-md-12">
+    <div class="overflow-auto">
+
+        <table class="table table-bordered table-sm table-striped table-hover mt-2">
+          <thead class="table-head-verde">
+            <tr>
+              <th colspan="1" rowspan="2">Serie</th>
+              <th colspan="1" rowspan="2">Emitidos</th>
+              <th colspan="2">Atendidos</th>
+              <th colspan="1" rowspan="2">Perdidos</th>
+              <th colspan="1">En Espera</th>
+              <th colspan="2">Tiempo Max Espera</th>
+              <th colspan="1" rowspan="2">Eje Act</th>
+            </tr>
+            <tr>
+              <th class="col-1">Normal</th>
+              <th class="col-1">Especial</th>
+              <th class="col-1">Oficina</th>
+              <th class="col-1">Espera</th>
+              <th class="col-1">Atención</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let serie of estado.series">
+                <td>{{serie.nombre}}</td>
+                <td>{{serie.ticketsEmitidos}}</td>
+                <td>{{serie.ticketsAtendidos}}</td>
+                <td>{{serie.ticketsAtendidosUrgente}}</td>
+                <td>{{serie.ticketsPerdidos}}</td>
+                <td>{{serie.personasEnFila}}</td>
+                <td>{{serie.tiempoMaximoEsperaActual}}</td>
+                <td>{{serie.tiempoMaximoAtencion}}</td>
+                <td>{{serie.ejecutivosActivos}}</td>
+              </tr>
+          </tbody>
+        </table>
+
+        <table class="table table-bordered table-sm table-striped table-hover mt-5">
+          <thead class="table-head-verde">
+            <tr>
+              <th colspan="1" rowspan="2">Esc</th>
+              <th colspan="1" rowspan="2">Eejecutivo</th>
+              <th colspan="1" rowspan="2">Serie</th>
+              <th rowspan="2">Atendidos</th>
+              <th colspan="3">Ultima Atención</th>
+              <th colspan="1" rowspan="2">Tpo Pro Atención</th>
+            </tr>
+            <tr>
+              <th class="col-1">Turno</th>
+              <th class="col-1">H Inicio</th>
+              <th class="col-1">Id Cliente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let escritorio of estado.escritorios; let i=index">
+              <ng-container *ngFor="let serie of escritorio.series; let j=index">
+                <tr>
+                  <ng-container *ngIf="j === 0">
+                    <td [attr.rowspan]="escritorio.series.length">{{escritorio.idEsc}}</td>
+                    <td [attr.rowspan]="escritorio.series.length">{{escritorio.ejecutivo}}</td>
+                  </ng-container>
+                  <td>{{serie.serie}}</td>
+                  <td>{{serie.qAte}}</td>
+                  <td>{{serie.turno}}</td>
+                  <td>{{serie.ateIni}}</td>
+                  <td>{{serie.rut}}</td>
+                  <td>{{serie.tpoAteP}}</td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </tbody>
+        </table>
+        
+
+      </div>
+</div>
+
+

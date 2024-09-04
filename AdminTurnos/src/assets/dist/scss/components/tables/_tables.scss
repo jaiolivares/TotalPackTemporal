@@ -1,0 +1,111 @@
+
+
+.table-responsive {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .table tr td{
+    font-size: 13px !important;
+  }
+  .table-head-verde-principal{
+    th{
+      border-right: 1px solid #fff;
+    }
+  }
+//Vista previa de ticket
+
+tr td.TKFA {
+    font-size: 12px;
+    font-family: courier;
+}
+
+tr td.TKFAW {
+    font-size: 12px;
+    font-family: courier;
+}
+
+tr td.TKFAH {
+    font-size: 12px;
+    font-family: courier;
+}
+
+tr td.TKFAWH {
+    font-size: 24px;
+    font-family: courier;
+}
+
+tr td.TKFAB {
+    font-weight: bold;
+    font-size: 12px;
+    font-family: courier;
+}
+
+tr td.TKFAWB {
+    font-weight: bold;
+    font-size: 15px;
+    font-family: courier;
+    letter-spacing: 5px;
+}
+
+tr td.TKFAHB {
+    font-weight: bold;
+    font-size: 12px;
+    font-family: courier;
+}
+
+tr td.TKFAWHB {
+    font-weight: bold;
+    font-size: 20px;
+    font-family: courier;
+}
+
+tr td.TKFB {
+    font-size: 9px;
+    font-family: courier;
+}
+
+tr td.TKFBW {
+    font-size: 9px;
+    font-family: courier;
+}
+
+tr td.TKFBH {
+    font-size: 9px;
+    font-family: courier;
+}
+
+tr td.TKFBWH {
+    font-size: 18px;
+    font-family: courier;
+}
+
+tr td.TKFBB {
+    font-weight: bold;
+    font-size: 9px;
+    font-family: courier;
+}
+
+tr td.TKFBWB {
+    font-weight: bold;
+    font-size: 9px;
+    font-family: courier;
+}
+
+tr td.TKFBHB {
+    font-weight: bold;
+    font-size: 9px;
+    font-family: courier;
+}
+
+tr td.TKFBWHB {
+    font-weight: bold;
+    font-size: 18px;
+    font-family: courier;
+}
+
+.TKFG {
+    font-weight: bold;
+    font-size: 20px;
+    font-family: Verdana
+}

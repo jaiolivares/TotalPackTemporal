@@ -1,0 +1,38 @@
+<div class="card box-success box">
+  <div class="box-input mb-3">
+    <div class="row">
+      <div class="col-12">
+        <div class="col-xl-12 mb-3 d-flex justify-content-end">
+          <button type="button" class="btn btn-success btn-fail m-1" (click)="irAActualizar()">
+            <i class="fas fa-cogs"></i>
+            Actualizar perfil
+          </button>
+        </div>
+
+        <table class="table table-xs table-striped table-hover mt-2 tabla-edit mx-auto">
+          <thead class="table-head-verde">
+            <tr>
+              <th colspan="1">Serie</th>
+              <th colspan="1">Cantidad de clientes en espera</th>
+              <th colspan="1">Límite de tiempo en espera</th>
+              <th colspan="1">Límite de tiempo en atención</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let serie of listaSeries" style="height: 2px">
+              <td>{{ serie.valor }}</td>
+              <td>{{ serie.cntEsp }}</td>
+              <td>{{ serie.tpoEsp }}</td>
+              <td>{{ serie.tpoAte | date : "mediumTime" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="isLoading">
+  <div class="spinner-container component-only">
+    <ngx-spinner name="eliminar-loading" [fullScreen]="false" type="ball-scale-ripple" size="large"> </ngx-spinner>
+  </div>
+</ng-container>

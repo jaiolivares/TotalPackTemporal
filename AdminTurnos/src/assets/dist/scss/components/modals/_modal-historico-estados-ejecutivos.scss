@@ -1,0 +1,16 @@
+.modal-historico-estados-ejecutivos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    .modal-content{
+      min-height: 90vh !important;
+      width: 70% !important;
+      border-radius: 0.25rem !important;
+      box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%) !important;
+      margin-bottom: 20px !important;
+      background-color: #fff !important;
+      margin-top: 3rem !important;
+    }
+  }
+  

@@ -1,0 +1,67 @@
+{
+    "data": {
+        "series": [{
+                "id": 1,
+                "serie": "Cheque / depósito",
+                "activo": 1
+            },
+            {
+                "id": 2,
+                "serie": "Evaluación crédito",
+                "activo": 1
+            },
+            {
+                "id": 3,
+                "serie": "Cotización",
+                "activo": 1
+            },
+            {
+                "id": 4,
+                "serie": "Atención general",
+                "activo": 1
+            },
+            {
+                "id": 5,
+                "serie": "Atención Especializada",
+                "activo": 1
+            },
+            {
+                "id": 6,
+                "serie": "Ventas",
+                "activo": 1
+            },
+            {
+                "id": 7,
+                "serie": "Ventas a Crédito",
+                "activo": 1
+            },
+            {
+                "id": 8,
+                "serie": "Ventas a Contado",
+                "activo": 1
+            },
+            {
+                "id": 9,
+                "serie": "Ventas al Mayor",
+                "activo": 1
+            },
+            {
+                "id": 10,
+                "serie": "Compras",
+                "activo": 0
+            },
+            {
+                "id": 11,
+                "serie": "Ventas al Mayor",
+                "activo": 0
+            },
+            {
+                "id": 12,
+                "serie": "Atención",
+                "activo": 0
+            }
+        ],
+        "totalSeries": 12
+    },
+    "status": true
+}

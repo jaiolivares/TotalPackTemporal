@@ -1,0 +1,31 @@
+.lista-oficinas {
+    max-height: 265px;
+    overflow-y: auto;
+}
+
+.lista-oficinas h5 {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.text-oficina {
+    line-height: 100%!important;
+    font-size: 11px;
+}
+
+.seleccionada {
+    font-weight: bolder;
+}
+
+.bg-seleccionada {
+    background-color: var(--color-llamado) !important;
+}
+
+.detalles {
+    font-size: 0.7rem !important;
+    font-weight: 400;
+}
+
+.oficina-card {
+    min-height: 38px;
+}
