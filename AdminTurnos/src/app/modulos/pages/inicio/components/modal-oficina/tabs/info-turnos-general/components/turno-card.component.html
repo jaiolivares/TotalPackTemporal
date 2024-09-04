@@ -1,0 +1,172 @@
+<ng-container *ngIf="
+    (
+      turnos
+      | filtro
+        : { key: this.groupBy.key, value: this.groupBy.value }
+        : { key: this.orderBy.key, type: this.orderBy.type }
+      | buscador
+        : searchText
+        : ['serie', 'ejecutivo', 'rut', 'cliente', 'letra-turno']
+    ).length > 0
+  ">
+    <!-- <div class="col-xl-12"><h3>{{ estado[0].toUpperCase()+estado.slice(1) }}</h3></div> -->
+    <div *ngFor="
+      let turno of turnos
+        | filtro
+          : { key: this.groupBy.key, value: this.groupBy.value }
+          : { key: this.orderBy.key, type: this.orderBy.type }
+        | buscador
+          : searchText
+          : ['serie', 'ejecutivo', 'rut', 'cliente', 'letra-turno']
+    " class="info-turnos-espera-card-wrapper col-xl-3 mb-4">
+        <!-- small box -->
+        <div class="small-box bg-info grey position-relative info-turnos-espera-card-container h-100">
+            <div class="d-flex align-items-center justify-content-between info-turnos-espera-card-actions" [ngClass]="getClassOf(turno.estado)">
+                <div>
+                    <p class="m-0 subtitle" [ngClass]="getClassOf(turno.estado)">
+                        {{ turno.letra }}{{ turno.turno }}
+                    </p>
+                </div>
+                <div>
+                    <h6 class="pt-1 mb-0">
+                        {{ turno.serie }}
+                    </h6>
+                </div>
+                <div>
+                    <span class="mr-1"><i class="fas fa-square"></i></span>
+                </div>
+            </div>
+
+            <div class="inner py-0">
+                <div class="row no-gutters">
+                    <div class="col-xl-8 col-sm-12 pr-1">
+                        <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+                            <h3 class="num-popp" [ngClass]="getClassOf(turno.estado)">
+                                {{ turno.cliente }}
+                            </h3>
+                            <p class="text-1">Nombre Cliente</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-12 pr-2">
+                        <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+                            <h3 class="num-popp" [ngClass]="getClassOf(turno.estado)">
+                                {{ formatRut(turno.rut) }}
+                            </h3>
+                            <p class="text-1">RUT</p>
+                        </div>
+                    </div>
+                    <div class="row col-12 mx-auto" style="height: 110px;">
+                        <div class="col-xl-6 col-sm-6 p-2">
+                            <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border text-center">
+                                <h3 class="num-popp text-dark">
+                                    <span class="text-dark"><svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="15"
+                                    height="15"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#000"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="feather feather-clock text-grey feather-icon-small"
+                                  ><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                  {{ turno.hora_Emision ? turno.hora_Emision : "-" }}
+                                </span>
+
+                                </h3>
+                                <p class="text-1">Emisión</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6 p-2" *ngIf="turno.estado != 'ANULADO' && turno.estado != 'EN ESPERA'">
+                            <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border text-center">
+                                <h3 class="num-popp text-dark">
+                                    <span class="text-dark"><svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="15"
+                                    height="15"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#000"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="feather feather-clock text-grey feather-icon-small"
+                                  ><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                  {{ turno.hora_llamado }}
+                                </span>
+                                </h3>
+                                <p class="text-1">Llamado</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6 px-2" *ngIf="turno.estado == 'ATENDIENDO' || turno.estado == 'FINALIZADO'">
+                            <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border text-center">
+                                <h3 class="num-popp text-dark">
+                                    <span class="text-dark"><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#000"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-clock text-grey feather-icon-small"
+                              ><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                              {{ turno.hora_Inicio_Ate }}
+                            </span>
+                                </h3>
+                                <p class="text-1">Inicio Atención</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6 px-2" *ngIf="turno.estado == 'FINALIZADO'">
+                            <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border text-center">
+                                <h3 class="num-popp text-dark">
+                                    <span class="text-dark"><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#000"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-clock text-grey feather-icon-small"
+                              ><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                              {{ turno.hora_Fin_Ate }}
+                            </span>
+                                </h3>
+                                <p class="text-1">Fin Atención</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-sm-12 ejecutivo" *ngIf="turno.estado != 'EN ESPERA'">
+                        <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+                            <h3 class="num-popp text-wrap nom-ejecutivo" [ngClass]="getClassOf(turno.estado)">
+                                {{ turno.ejecutivo }}
+                            </h3>
+                            <p class="text-1">Ejecutivo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="
+    (
+      turnos
+      | filtro
+        : { key: this.groupBy.key, value: this.groupBy.value }
+        : { key: this.orderBy.key, type: this.orderBy.type }
+      | buscador
+        : searchText
+        : ['serie', 'ejecutivo', 'rut', 'cliente', 'letra-turno']
+    ).length <= 0
+  ">
+    <div class="col-xl-12 text-center mt-5">
+        <h3 class="text-grey">No hay resultados en este momento</h3>
+    </div>
+</ng-container>

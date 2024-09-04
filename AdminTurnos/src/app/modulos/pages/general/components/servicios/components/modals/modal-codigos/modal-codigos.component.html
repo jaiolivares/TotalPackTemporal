@@ -1,0 +1,130 @@
+<div class="modal-info-oficinas-container container">
+    <div class="modal-info-oficinas-header-container">
+        <div class="modal-info-oficinas-header">
+            <h5 class="subtitle"><small>Códigos - Formato de ticket</small></h5>
+            <button type="button" class="btn btn-ligth boton mr-3" (click)="closeModal()">
+              Volver<i class="fa fa-chevron-left ml-2"></i>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body px-0">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="row mx-0">
+                    <div class="col-xl-12">
+                        <h5 class="subtitle">Alineación</h5>
+                        <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\01')">
+                            <p class="mb-0 text-dark codigo-text">\01</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Izquierda</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\02')">
+                            <p class="mb-0 text-dark codigo-text">\02</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Centro</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card no-border" (click)="selectCodigo('\\03')">
+                            <p class="mb-0 text-dark codigo-text">\03</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Derecha</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <h5 class="subtitle">Otros</h5>
+                        <div class="d-flex justify-content-between modal-codigos-card"(click)="selectCodigo('\\21')">
+                            <p class="mb-0 text-dark codigo-text">\21</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Letra Turno (texto)</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\22')">
+                            <p class="mb-0 text-dark codigo-text">\22</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Turno (texto)</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\23')">
+                            <p class="mb-0 text-dark codigo-text">\23</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Letra Turno (gráfico)</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\24')">
+                            <p class="mb-0 text-dark codigo-text">\24</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Turno (gráfico)</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\25')">
+                            <p class="mb-0 text-dark codigo-text">\25</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Fecha</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\26')">
+                            <p class="mb-0 text-dark codigo-text">\26</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Hora</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\28')">
+                            <p class="mb-0 text-dark codigo-text">\28</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Raya doble</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card no-border" (click)="selectCodigo('\\29')">
+                            <p class="mb-0 text-dark codigo-text">\29</p>
+                            <p class="mb-0 descripcion-text font-weight-normal">Raya simple</p>
+                        </div>
+                        <div class="d-flex justify-content-between modal-codigos-card no-border" (click)="selectCodigo('\n')">
+                            <p class="mb-0 text-dark codigo-text">Insertar Enter</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                    <h5 class="subtitle">Font</h5>
+                    <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\04')">
+                        <p class="mb-0 text-dark codigo-text">\04</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">A</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card" (click)="selectCodigo('\\05')">
+                        <p class="mb-0 text-dark codigo-text">\05</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">A Ancho</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card  " (click)="selectCodigo('\\06')">
+                        <p class="mb-0 text-dark codigo-text">\06</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">A Alto</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card " (click)="selectCodigo('\\07')">
+                        <p class="mb-0 text-dark codigo-text">\07</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">A Ancho Alto</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card " (click)="selectCodigo('\\08')">
+                        <p class="mb-0 text-dark codigo-text">\08</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">A Negrita</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card " (click)="selectCodigo('\\09')">
+                        <p class="mb-0 text-dark codigo-text">\09</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">A Negrita Ancho</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card " (click)="selectCodigo('\\10')">
+                        <p class="mb-0 text-dark codigo-text">\10</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">A Negrita Alto</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card " (click)="selectCodigo('\\11')">
+                        <p class="mb-0 text-dark codigo-text">\11</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">A Negrita Ancho Alto</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card " (click)="selectCodigo('\\12')">
+                        <p class="mb-0 text-dark codigo-text">\12</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">B</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card " (click)="selectCodigo('\\13')">
+                        <p class="mb-0 text-dark codigo-text">\13</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">B Ancho</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card " (click)="selectCodigo('\\14')">
+                        <p class="mb-0 text-dark codigo-text">\14</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">B Alto</p>
+                    </div>
+                    <div class="d-flex justify-content-between modal-codigos-card no-border" (click)="selectCodigo('\\15')">
+                        <p class="mb-0 text-dark codigo-text">\15</p>
+                        <p class="mb-0 descripcion-text font-weight-normal">B Ancho Alto</p>
+                    </div>
+            </div>
+            <div class="col-xl-12">
+                    <h5 class="subtitle"><small>Ticket</small></h5>
+            </div>
+            <div class="col-xl-12">
+                <form [formGroup]="form">
+                    <textarea #ticketTextArea formControlName="ticket" name="ticket"  rows="6" class="w-100"></textarea>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

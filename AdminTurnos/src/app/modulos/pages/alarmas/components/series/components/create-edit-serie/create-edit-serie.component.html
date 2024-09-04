@@ -1,0 +1,56 @@
+<div class="card box-success box">
+  <form [formGroup]="form" (submit)="enviarForm()">
+    <div class="col-lg-12 col-12" style="margin-block: 1rem">
+      <h6 class="pt-n2"><i class="fas fa-file-signature"></i> {{ estado.selectedPerfilDetalle ? "Actualizar" : "Crear" }} series</h6>
+    </div>
+
+    <div class="box-input mb-3">
+      <div class="row">
+        <div class="col-12">
+          <p style="color: gray; margin: 5px">* El tiempo de espera se debe ingresar en segundos, el valor máximo es de 86.400, correspondiente a un día.</p>
+          <table class="table table-xs table-striped table-hover mt-2 tabla-edit mx-auto">
+            <thead class="table-head-verde">
+              <tr>
+                <th colspan="1">Serie</th>
+                <th colspan="1">Cantidad de clientes en espera</th>
+                <th colspan="1">Límite de tiempo en espera *</th>
+                <th colspan="1">Límite de tiempo en atención *</th>
+                <th colspan="1">Limpiar</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="registros">
+              <tr *ngFor="let registro of registros.controls; let i = index" [formGroupName]="i">
+                <td>{{ registro.value.valor }}</td>
+                <td class="">
+                  <input class="form-control text-center" type="number" formControlName="cntEsp" [ngClass]="{ 'input-error': registro.get('cntEsp')?.invalid && (registro.get('cntEsp')?.touched || isSubmitted) }" (keydown)="validaNumero($event)" />
+                </td>
+                <td class="">
+                  <input class="form-control text-center" type="timer" formControlName="tpoEsp" [ngClass]="{ 'input-error': registro.get('tpoEsp')?.invalid && (registro.get('tpoEsp')?.touched || isSubmitted) }" (keydown)="validaNumero($event)" />
+                </td>
+                <td class="">
+                  <input class="form-control text-center" type="number" formControlName="tpoAte" [ngClass]="{ 'input-error': registro.get('tpoAte')?.invalid && (registro.get('tpoAte')?.touched || isSubmitted) }" (keydown)="validaNumero($event)" />
+                </td>
+                <td>
+                  <button type="button" class="btn btn-block btn-success" (click)="limpiarSerie(registro.value)">
+                    <i class="far fa-save"></i>
+                    Limpiar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex justify-content-end" style="grid-gap: 40px">
+      <button type="submit" class="btn btn-block btn-success m-1"><i class="far fa-save"></i> {{ estado.selectedPerfilDetalle ? "Actualizar" : "Crear" }} series</button>
+      <button type="button" class="btn btn-secondary btn-fail m-1" (click)="onVolver()"><i class="fas fa-ban"></i> Cancelar</button>
+    </div>
+  </form>
+</div>
+<ng-container *ngIf="isLoading">
+  <div class="spinner-container component-only">
+    <ngx-spinner name="create-edit-loading" [fullScreen]="false" type="ball-scale-ripple" size="large"> </ngx-spinner>
+  </div>
+</ng-container>

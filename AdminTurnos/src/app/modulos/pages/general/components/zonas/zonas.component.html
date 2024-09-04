@@ -1,0 +1,105 @@
+<!-- Main content -->
+<section class="content pl-0 pr-2 pt-0">
+  <div class="container-fluid">
+    <!-- Main row -->
+    <div class="row">
+      <!-- Left col -->
+      <section class="col-lg-12 pl-3 pr-3 connectedSortable">
+        <div class="row col-12 px-0 ml-0">
+          <div class="col-3 pl-0 pr-0">
+            <h5 class="pt-2">Zonas</h5>
+          </div>
+          <div class="col-9 px-0" *ngIf="!agregar">
+            <button
+              type="button"
+              class="btn btn-block btn-success mb-2 float-right"
+              (click)="agregar = true"
+            >
+              <i class="fas fa-cogs"></i> Agregar zona
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="!agregar">
+          <div class="row mb-2">
+            <div
+              class="col-xl-3 col-lg-4 col-sm-6 col-12"
+              *ngFor="let zona of zonas"
+            >
+              <div class="bar-serie motivo">
+                <p class="mt-2 mb-0">{{ zona.valor }}</p>
+                <div class="close-bar" (click)="borrarZona(zona.id, zona.valor)">
+                  <i class="fas fa-times"></i>
+                </div>
+                <div class="conf-bar" (click)="selectZona(zona.id)">
+                  <img src="assets/dist/img/gear.svg" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section
+          class="row col-lg-12 connectedSortable"
+          [@openClose]="agregar ? 'open' : 'closed'"
+        >
+          <div class="card box-success box">
+            <form [formGroup]="form" (submit)="enviarForm()">
+              <div class="row pb-0 p-3">
+                <div class="col-lg-12 col-12">
+                  <h6 class="pt-n2" *ngIf="!actualizar">
+                    <i class="fas fa-file-signature"  ></i> Agregar Zona
+                  </h6>
+                  <h6 class="pt-n2" *ngIf="actualizar">
+                    <i class="fas fa-file-signature"  ></i> Actualizar Zona
+                  </h6>
+                </div>
+                <div class="col-lg-6 col-12">
+                  <div class="box-input">
+                    <div class="row">
+                      <div class="col-sm-4 col-12">
+                        <p class="text-input">Zona</p>
+                      </div>
+                      <div class="col-sm-8 col-12">
+                        <input type="text" formControlName="nombre" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-10 text-right">
+                  <button *ngIf="!actualizar" type="submit" class="btn btn-block btn-success m-1">
+                    <i class="far fa-save"></i> Agregar
+                  </button>
+                  <button *ngIf="actualizar" type="submit" class="btn btn-block btn-success m-1">
+                    <i class="far fa-save"></i> Actualizar
+                  </button>
+                </div>
+                <div class="col-2">
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-fail m-1"
+                    (click)="cerrarForm()"
+                  >
+                    <i class="fas fa-ban"></i>
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+      </section>
+      <!-- /.Left col -->
+      <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<ng-container>
+  <div class="spinner-container">
+      <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+      </ngx-spinner>
+  </div>
+</ng-container>

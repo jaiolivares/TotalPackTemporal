@@ -1,0 +1,22 @@
+.modal-info-turnos-espera{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .modal-content{
+      min-height: 40vh !important;
+      width: 35% !important;
+      border-radius: 0.25rem !important;
+      box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%) !important;
+      margin-bottom: 20px !important;
+      background-color: #ededed!important;
+      margin-top: 3rem !important;
+    }
+  }
+  @include media-query(map-get($grid-breakpoints, "sm")) {
+    .modal-info-turnos-espera{
+        .modal-content{
+          min-height: 40vh !important;
+          width: 90% !important;
+        }
+      }
+  }

@@ -1,0 +1,239 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row col-12 px-0 ml-0">
+      <div class="col-2 pl-0 pr-0">
+        <h5 class="pt-2">Ejecutivos</h5>
+      </div>
+      <div class="col-md-3 pt-2" *ngIf="!agregar">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="search" class="form-control form-control-md" placeholder="Buscar ejecutivos..."
+              (input)="tecleado($event.target)" />
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-md btn-default">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3" *ngIf="!agregar">
+        <div class="row form-group">
+          <div class="dropdown">
+            Mostrar por :
+            <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown"
+              aria-expanded="false">
+              {{ mostrar }}
+            </button>
+            <div class="dropdown-menu">
+              <a type="button" (click)="agrupar('', '')" class="dropdown-item"
+                [ngClass]="{ 'active-dropdown': activeGroupBy === '' }">Todos</a>
+              <a type="button" (click)="agrupar('fgOk', true)" class="dropdown-item"
+                [ngClass]="{ 'active-dropdown': activeGroupBy === 'fgOk-true' }">Activos</a>
+              <a type="button" (click)="agrupar('fgOk', false)" class="dropdown-item"
+                [ngClass]="{ 'active-dropdown': activeGroupBy === 'fgOk-false' }">Inactivos
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1 px-0" *ngIf="!agregar">
+        <button class="btn btn-ligth boton ml-2 px-0" placement="bottom"
+          tooltip="Exporta los datos de los ejecutivos filtrados"
+          (click)="this.ejecutivos.length > 0 ? exportarDataExcel() : null"><i class="fa fa-file-excel ml-2"></i> <i
+            class="fa fa-arrow-down-long"></i></button>
+      </div>
+      <div class="col-3 px-0" *ngIf="!agregar">
+        <button type="button" class="btn btn-block btn-success mb-2 float-right" (click)="agregar=true;"
+          *ngIf="permisosAdministracion.includes('eje_add')">
+          <i class="fas fa-cogs"></i> Agregar ejecutivo
+        </button>
+      </div>
+    </div>
+    <section class="row col-lg-12 connectedSortable" [@openClose]="agregar ? 'open' : 'closed'">
+      <div class="card box-success box">
+        <form [formGroup]="form" (submit)="enviarForm()">
+          <div class="row pb-0 p-3 ">
+            <div class="col-lg-12 col-12">
+              <h6 *ngIf="!actualizar" class="pt-n2"><i class="fas fa-user"></i> Agregar Ejecutivo</h6>
+              <h6 *ngIf="actualizar" class="pt-n2"><i class="fas fa-user"></i> Actualizar Ejecutivo</h6>
+            </div>
+
+            <div *ngIf="actualizar" class="col-lg-3 col-12">
+              <div class="box-input mb-3">
+                <div class="row">
+                  <div class="col-sm-7 col-12">
+                    <p class="text-input ml-3">Id ejecutivo</p>
+                  </div>
+                  <div class="col-sm-5 col-12">
+                    <p class="font-weight-bold mt-3">{{idEje}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-12">
+              <div class="box-input mb-3">
+                <div class="row">
+                  <div class="col-sm-3 pr-0 col-12">
+                    <p class="text-input"
+                      [ngClass]="{'field-name-error': (this.isSubmitted && this.form.controls['nombre'].errors !== null)}">
+                      Nombre</p>
+                  </div>
+                  <div class="col-sm-9 col-12">
+                    <input type="text" formControlName="nombre"
+                      [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['nombre'].errors !== null)}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="actualizar" class="col-lg-3 col-12">
+              <div class="box-input mb-3">
+                <div class="row">
+                  <div class="col-sm-5 px-0 col-12">
+                    <p class="text-input"
+                      [ngClass]="{'field-name-error': (this.isSubmitted && this.form.controls['usuario'].errors !== null)}">
+                      User</p>
+                  </div>
+                  <div class="col-sm-7 col-12">
+                    <input type="text" formControlName="usuario"
+                      [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['usuario'].errors !== null)}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!actualizar" class="col-lg-6 col-12">
+              <div class="box-input mb-3">
+                <div class="row">
+                  <div class="col-sm-5 col-12">
+                    <p class="text-input"
+                      [ngClass]="{'field-name-error': (this.isSubmitted && this.form.controls['usuario'].errors !== null)}">
+                      User</p>
+                  </div>
+                  <div class="col-sm-7 col-12">
+                    <input type="text" formControlName="usuario"
+                      [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['usuario'].errors !== null)}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-12">
+              <div class="box-input mb-3">
+                <div class="row">
+                  <div class="col-sm-6 col-12">
+                    <p class="text-input"
+                      [ngClass]="{'field-name-error': (this.isSubmitted && this.form.controls['password'].errors !== null)}">
+                      Clave</p>
+                  </div>
+                  <div class="col-sm-6 col-12">
+                    <input type="password" formControlName="password"
+                      [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['password'].errors !== null)}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-12">
+              <div class="box-input mb-3">
+                <div class="row">
+                  <div class="col-sm-6 col-12">
+                    <p class="text-input"
+                      [ngClass]="{'field-name-error': (this.isSubmitted && this.form.controls['validatePassword'].errors !== null)}">
+                      Confirmar Clave</p>
+                  </div>
+                  <div class="col-sm-6 col-12">
+                    <input type="password" formControlName="validatePassword"
+                      [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['validatePassword'].errors !== null)}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-12">
+              <div class="box-input mb-3">
+                <div class="row">
+                  <div class="col-9">
+                    <p class="text-input sw-text">Habilitado</p>
+                  </div>
+                  <div class="col-3">
+                    <label class="switch">
+                      <input type="checkbox" formControlName="habilitado">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-sm-10 text-right">
+              <button *ngIf="!actualizar" type="submit" class="btn btn-block btn-success m-1"><i
+                  class="far fa-save"></i> Agregar</button>
+              <button *ngIf="actualizar" type="submit" class="btn btn-block btn-success m-1"><i
+                  class="fa-solid fa-pen-to-square"></i> Actualizar</button>
+            </div>
+            <div class="col-2 text-right">
+              <button type="button" class="btn btn-secondary btn-fail m-1" (click)="cerrarForm()"><i
+                  class="fas fa-ban"></i>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+
+    <div class="row my-2" *ngIf="!agregar">
+
+      <ng-container *ngIf="searchText.length > 0">
+
+        <div class="col-xl-4 col-lg-4 col-sm-6 col-12 mb-2"
+          *ngFor="let ejecutivo of ejecutivos | filtro :{ key: groupBy.key, value: groupBy.value } | buscador:searchText:['idEjecutivo','userName','ejecutivo']  | paginate: {  itemsPerPage: 12, currentPage: page, totalItems:(this.ejecutivos  | buscador:searchText:['idEjecutivo','userName','ejecutivo']).length, id: 'paginateEje'} | slice:0:12 ">
+          <div class="bar-serie bg-info grey" [ngClass]="{'grey-disabled': ejecutivo.fgOk === false}">
+            {{ejecutivo.idEjecutivo}} - {{ejecutivo.ejecutivo}}
+            <p class="text-grey mb-1">{{ejecutivo.userName}}</p>
+            <div class="close-bar" (click)="borrarEjecutivo(ejecutivo.idEjecutivo, ejecutivo.ejecutivo)"
+              *ngIf="permisosAdministracion.includes('eje_del')">
+              <i class="fas fa-times"></i>
+            </div>
+            <div class="conf-bar" (click)="selectEjecutivo(ejecutivo.idEjecutivo);"
+              *ngIf="permisosAdministracion.includes('eje_edit')">
+              <img src="assets/dist/img/gear.svg">
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+
+      <ng-container *ngIf="searchText.length < 1">
+        <div class="col-xl-4 col-lg-4 col-sm-6 col-12 mb-2"
+          *ngFor="let ejecutivo of ejecutivos | filtro :{ key: groupBy.key, value: groupBy.value }  | paginate: {  itemsPerPage: 12, currentPage: page, totalItems:(this.ejecutivos  | filtro :{ key: groupBy.key, value: groupBy.value }).length, id: 'paginateEje'} | slice:0:12 ">
+          <div class="bar-serie bg-info grey" [ngClass]="{'grey-disabled': ejecutivo.fgOk === false}">
+            {{ejecutivo.idEjecutivo}} - {{ejecutivo.ejecutivo}}
+            <p class="text-grey mb-1">{{ejecutivo.userName}}</p>
+            <div class="close-bar" (click)="borrarEjecutivo(ejecutivo.idEjecutivo, ejecutivo.ejecutivo)"
+              *ngIf="permisosAdministracion.includes('eje_del')">
+              <i class="fas fa-times"></i>
+            </div>
+            <div class="conf-bar" (click)="selectEjecutivo(ejecutivo.idEjecutivo);"
+              *ngIf="permisosAdministracion.includes('eje_edit')">
+              <img src="assets/dist/img/gear.svg">
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="row d-flex justify-content-end mt-4 col-12">
+        <pagination-controls (pageChange)="onPageChange(page = $event)" id="paginateEje" previousLabel="Anterior"
+          nextLabel="Siguiente" screenReaderPaginationLabel="Paginación" screenReaderPageLabel="página"
+          screenReaderCurrentLabel="Estás en la página"></pagination-controls>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-container>
+  <div class="spinner-container">
+    <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+    </ngx-spinner>
+  </div>
+</ng-container>

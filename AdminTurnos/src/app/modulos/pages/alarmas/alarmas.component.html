@@ -1,0 +1,75 @@
+<section class="content pl-2 pr-2">
+  <div class="container-fluid">
+    <div class="col-12 row px-0">
+      <div class="col-12 col-xl-5">
+        <div class="form-group">
+          <div class="input-group relative">
+            <input type="text" (keyup)="tecleado($event.target)" [formControl]="inputSearh" class="form-control form-control-md search" placeholder="Buscar perfiles..." />
+            <div class="input-group-append">
+              <button type="button" (click)="limpiar()" class="btn btn-md btn-default">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-xl-5 d-flex align-items-center justify-content-center">
+        <h5 class="detalles text-center">-- Selecciona un perfil haciendo clic en la tarjeta correspondiente --</h5>
+      </div>
+
+      <div class="col-12 col-xl-2 px-0" *ngIf="verAgregar">
+        <button type="button" class="btn btn-block btn-success mb-2 float-right" (click)="irACrear()"><i class="fa-solid fa-users"></i> Agregar perfil</button>
+      </div>
+    </div>
+    <div class="row mb-2 lista-oficinas mt-4 mt-xl-0">
+      <ng-container *ngIf="!error">
+        <div class="col-xl-3 col-lg-3 col-sm-4 col-12" *ngFor="let perfil of perfiles | buscador : searchText : ['valor']; let i = index" (click)="handleSelectSerie(perfil)">
+          <div class="bar-serie serie-box d-flex align-items-center justify-content-between cursor-pointer perfiles-card mb-2" [ngClass]="{ 'bg-selected-serie text-white selected-serie': perfil.id == selectedIdPerfil }">
+            <p class="text-oficina m-0 pb-0">{{ perfil.id }} - {{ perfil.valor }}</p>
+          </div>
+        </div>
+      </ng-container>
+      <div *ngIf="error" class="col-xl-12 justify-content-center align-items-center d-flex">
+        <h3>{{ errorMsg }}</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 connectedSortable">
+        <div class="card box-success box">
+          <div class="card-header">
+            <div class="card-tools">
+              <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="serviciosAlarmaTab" [dynamicHeight]="true" #tabGroup>
+                <mat-tab>
+                  <ng-template mat-tab-label> <mat-icon>manage_accounts</mat-icon> Configuración general</ng-template>
+                  <div class="card-body p-0 p-xl-4">
+                    <div class="tab-content p-0">
+                      <app-perfiles (procesoCancelado)="ngProcesoCancelado($event)"></app-perfiles>
+                    </div>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <ng-template mat-tab-label> <mat-icon>description</mat-icon> Series</ng-template>
+                  <div class="card-body">
+                    <div class="tab-content p-0">
+                      <app-series></app-series>
+                    </div>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-container>
+  <div class="spinner-container">
+    <ngx-spinner [fullScreen]="false" name="servicio-alarmas-loading" type="ball-scale-ripple" size="large"> </ngx-spinner>
+  </div>
+</ng-container>

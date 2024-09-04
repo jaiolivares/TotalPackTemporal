@@ -1,0 +1,7 @@
+.oficina-section{
+    .box-input{
+        @include media-query(map-get($grid-breakpoints, "md")) {
+            text-align: center;
+          }
+    }
+}

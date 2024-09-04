@@ -1,0 +1,311 @@
+<div class="row align-items-center">
+    <div class="col-md-4">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="search" (keyup)="tecleado($event.target)" class="form-control form-control-md" placeholder="Buscar series..." />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-md btn-default">
+            <i class="fa fa-search"></i>
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+
+            <div class="dropdown mr-2">
+                Ordenado por:
+                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+          {{nombreOrderBy}}
+        </button>
+                <div class="dropdown-menu">
+                    <a type="button" (click)="ordenar('personasEnFila', 'D','Personas en Espera - Descendente')" [ngClass]="{
+              'active-dropdown': activeOrderBy === 'personasEnFila-D'
+            }" class="dropdown-item">Personas en espera - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('personasEnFila', 'A','Personas en Espera - Ascendente')"
+            [ngClass]="{
+              'active-dropdown': activeOrderBy === 'personasEnFila-A'
+            }"
+            class="dropdown-item"
+            >Personas en espera - Ascendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('tiempoPromedioEspera', 'D','Promedio de espera - Descendente')"
+            [ngClass]="{
+              'active-dropdown': activeOrderBy === 'tiempoPromedioEspera-D'
+            }"
+            class="dropdown-item"
+            >Promedio de espera - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('tiempoPromedioEspera', 'A','Promedio de espera - Ascendente')"
+            [ngClass]="{
+              'active-dropdown': activeOrderBy === 'tiempoPromedioEspera-A'
+            }"
+            class="dropdown-item"
+            >Promedio de espera - Ascendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('ticketsEmitidos', 'D','Tickets emitidos - Descendente')"
+            [ngClass]="{
+              'active-dropdown': activeOrderBy === 'ticketsEmitidos-D'
+            }"
+            class="dropdown-item"
+            >Tickets emitidos - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('ticketsEmitidos', 'A','Tickets emitidos - Ascendente')"
+            [ngClass]="{
+              'active-dropdown': activeOrderBy === 'ticketsEmitidos-A'
+            }"
+            class="dropdown-item"
+            >Tickets emitidos - Ascendente</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- ./col -->
+  <div
+    *ngFor="
+      let serie of estado.series
+        | filtro : {} : { key: this.orderBy.key, type: this.orderBy.type }
+        | buscador : searchText : ['nombre']
+    "
+    class="col-xl-6 col-lg-6 col-12"
+  >
+    <!-- small box -->
+    <div class="small-box bg-info grey">
+      <div class="inner pb-4">
+        <div class="d-flex align-items-center">
+          <h6 class="pb-2">{{ serie.nombre }}</h6>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-3 pr-4 mt-1">
+            <div class="info-series-oficina-data-card no-b-border">
+              <h3 class="num-popp">{{ serie.ticketsEmitidos }}</h3>
+              <p class="text-1">Tickets emitidos Normal</p>
+            </div>
+          </div>
+          <div class="col-9 pr-2 mt-1">
+            <div class="row col-12 p-0 m-o">
+              <div class="col-3">
+                <div class="info-series-oficina-data-card no-b-border">
+                  <h3 class="num-popp">{{ serie.personasEnFila }}</h3>
+                  <p class="text-1">En espera</p>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="info-series-oficina-data-card no-b-border">
+                  <h3 class="num-popp">{{ serie.ticketsEnAtencion }}</h3>
+                  <p class="text-1">Atendiendo Normal</p>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="info-series-oficina-data-card no-b-border">
+                  <h3 class="num-popp">{{ serie.ticketsAtendidos }}</h3>
+                  <p class="text-1">Atendidos Normal</p>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="info-series-oficina-data-card no-b-border">
+                  <h3 class="num-popp">{{ serie.ticketsPerdidos }}</h3>
+                  <p class="text-1">Perdidos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-3 pr-4 mt-1">
+            <div class="info-series-oficina-data-card no-b-border">
+              <h3 class="num-popp">{{ serie.ticketsEmitidosUrgente }}</h3>
+              <p class="text-1">Tickets emitidos Urgentes</p>
+            </div>
+          </div>
+          <div class="col-3 pr-4 mt-1">
+            <div class="info-series-oficina-data-card no-b-border">
+              <h3 class="num-popp">{{ serie.ticketsEnAtencionUrgente }}</h3>
+              <p class="text-1">Atendiendo Urgentes</p>
+            </div>
+          </div>
+          <div class="col-3 pr-1 grey-disabled">
+            <div class="info-series-oficina-data-card no-b-border text-center">
+              <h3 class="num-popp mt-2">
+                <span class="text-dark"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-monitor text-grey feather-icon-small"
+                  >
+                    <rect
+                      x="2"
+                      y="3"
+                      width="20"
+                      height="14"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                  </svg>
+                  {{ serie.ejecutivosEnPausa }}</span
+                >
+              </h3>
+              <p class="text-1">Escritorios en pausa</p>
+            </div>
+          </div>
+          <div class="col-3 pr-1 bg-green">
+            <div class="info-series-oficina-data-card no-b-border text-center">
+              <h3 class="num-popp mt-2">
+                <span class="text-dark"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-monitor text-grey feather-icon-small"
+                  >
+                    <rect
+                      x="2"
+                      y="3"
+                      width="20"
+                      height="14"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                  </svg>
+                  {{ serie.ejecutivosActivos }}</span
+                >
+              </h3>
+              <p class="text-1">Escritorios activos</p>
+            </div>
+          </div>
+          <div class="col-3 pr-1">
+            <div class="info-series-oficina-data-card no-b-border text-center">
+              <h6>
+                <span class="text-dark"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-clock text-grey feather-icon-small"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  {{ serie.tiempoMaximoEsperaActual }}</span
+                >
+              </h6>
+              <p class="text-1" alt="atención promedio">Espera máxima</p>
+            </div>
+          </div>
+          <div class="col-3 pr-1">
+            <div class="info-series-oficina-data-card no-b-border text-center">
+              <h6>
+                <span class="text-dark"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-clock text-grey feather-icon-small"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  {{ serie.tiempoPromedioEspera }}</span
+                >
+              </h6>
+              <p class="text-1">Espera promedio</p>
+            </div>
+          </div>
+          <div class="col-3 pr-1">
+            <div class="info-series-oficina-data-card no-b-border text-center">
+              <h6>
+                <span class="text-dark"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-clock text-grey feather-icon-small"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  {{ serie.tiempoMaximoAtencion }}</span>
+              </h6>
+              <p class="text-1" alt="atención promedio">Atención máxima</p>
+            </div>
+          </div>
+          <div class="col-3 pr-1">
+            <div class="info-series-oficina-data-card no-b-border text-center">
+              <h6>
+                <span class="text-dark"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-clock text-grey feather-icon-small"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  {{ serie.tiempoPromedioAtencion }}</span
+                >
+              </h6>
+              <p class="text-1" alt="atención promedio">Atención promedio</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+{
+    "data": {
+        "usuarios": [{
+                "id": 7,
+                "usuario": "ignasi",
+                "nombre": "Ignasi Quintana",
+                "email": "ignasi@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 8,
+                "usuario": "josemaria",
+                "nombre": "Jose Maria Estrada",
+                "email": "josemaria@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 9,
+                "usuario": "david",
+                "nombre": "David Gracia",
+                "email": "david@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 10,
+                "usuario": "joseb",
+                "nombre": "Jose Benavides",
+                "email": "joseb@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 11,
+                "usuario": "josepm",
+                "nombre": "Josep Maria Cardona",
+                "email": "josepm@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 12,
+                "usuario": "toto",
+                "nombre": "Luis Antonio Castellano",
+                "email": "toto@gmail.com",
+                "activo": 0
+            }
+        ],
+        "totalUsuarios": 20
+    },
+    "status": true
+}

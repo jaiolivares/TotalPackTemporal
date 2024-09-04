@@ -1,0 +1,295 @@
+<div class="modal-info-oficinas-container container">
+    <div class="modal-info-oficinas-header-container">
+        <div class="modal-info-oficinas-header">
+            <h5 class="subtitle ml-3"> {{ data.nombre }} <small>- Oficina {{data.idOficina}}</small>
+                <span>
+                <button type="button" class="btn boton text-grey mb-0" (click)="refreshData()" [disabled]="!refrescarActivado">
+                  <ng-container *ngIf="refrescarActivado"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"> <polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path> </svg> </ng-container>
+                  <ng-container *ngIf="!refrescarActivado"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></ng-container>
+                </button>
+              </span>
+            </h5>
+            <button type="button" class="btn  btn-ligth boton mr-3" (click)="closeModal()">
+              Volver al dashboard <i class="fa fa-chevron-left ml-2"></i>
+            </button>
+        </div>
+        <div class="modal-info-oficinas-card-container">
+            <div class="row">
+                <div class="col-xl-2">
+                    <div class="small-box bg-info ">
+                        <div class="p-2 d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center mx-auto">
+                                <h6 class="pt-0 mb-0 text-gray tme">Tickets emitidos</h6>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center pb-2">
+                            <div class="icon-box-oficinas black mr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            </div>
+                            <h3 class="num-popp mr-1 mb-0">{{data.ticketsEmitidos}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="small-box bg-info ">
+                        <div class="row col-12 m-0 p-0">
+                            <div class="col-3">
+                                <div class="p-2 d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center mx-auto">
+                                        <h6 class="pt-0 mb-0 text-gray-dark  tme">En espera</h6>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center pb-2">
+                                    <h3 class="num-popp mr-1 mb-0">{{data.personasEnFila}} <small>({{data.personasEnFila / data.ticketsEmitidos *100 | number:'1.2-2'}} %)</small></h3>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="p-2 d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center mx-auto">
+                                        <h6 class="pt-0 mb-0 text-blue tme">Atendiendo</h6>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center pb-2">
+                                    <h3 class="num-popp mr-1 mb-0">{{data.ticketsEnAtencion}} <small>({{data.ticketsEnAtencion / data.ticketsEmitidos *100 | number:'1.2-2'}} %)</small></h3>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="p-2 d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center mx-auto">
+                                        <h6 class="pt-0 mb-0 text-orange tme">Perdidos</h6>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center pb-2">
+                                    <h3 class="num-popp mr-1 mb-0">{{data.ticketsPerdidos}} <small>({{data.ticketsPerdidos / data.ticketsEmitidos *100 | number:'1.2-2'}} %)</small></h3>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="p-2 d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center mx-auto">
+                                        <h6 class="pt-0 mb-0 text-indigo tme">Atendidos</h6>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center pb-2">
+                                    <h3 class="num-popp mr-1 mb-0">{{data.ticketsAtendidos}} <small>({{data.ticketsAtendidos / data.ticketsEmitidos *100 | number:'1.2-2'}} %)</small></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="small-box bg-info ">
+                        <div class="row col-12 m-0 p-0">
+                            <div class="col-6 grey-disabled">
+                                <div class="py-2 d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center mx-auto">
+                                        <h6 class="pt-0 mb-0 text-gray tme">Escritorios Pausa</h6>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center pb-2">
+                                    <h3 class="num-popp mr-1 mb-0 text-dark">{{data.ejecutivosEnPausa}}</h3>
+                                </div>
+                            </div>
+                            <div class="col-6 bg-green">
+                                <div class="p-2 d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center mx-auto">
+                                        <h6 class="pt-0 mb-0 text-gray tme">Escritorios Activos</h6>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center pb-2">
+                                    <h3 class="num-popp mr-1 mb-0 text-dark">{{data.ejecutivosActivos}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="customer.slug!='ttp_afc'; else elseTemplate">
+                    <div class="col-xl-12">
+                        <div class="small-box bg-info ">
+                            <div class="row col-12 m-0 p-0">
+                                <div class="col-3">
+                                    <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <h6 class="pt-0 mb-0 text-gray peso-letra tme">Tiempo máximo de espera</h6>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center pb-2">
+                                        <h3 class="num-popp mr-1 mb-0 text-dark">{{data.tiempoMaximoEspera}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <h6 class="pt-0 mb-0 text-gray tme">Tiempo promedio espera</h6>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center pb-2">
+                                        <h3 class="num-popp mr-1 mb-0 text-dark">{{data.tiempoPromedioEspera}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <h6 class="pt-0 mb-0 text-gray tme">Tiempo máximo de atención</h6>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center pb-2">
+                                        <h3 class="num-popp mr-1 mb-0 text-dark">{{data.tiempoMaximoAtencion}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <h6 class="pt-0 mb-0 text-gray tme">Tiempo promedio de atención</h6>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center pb-2">
+                                        <h3 class="num-popp mr-1 mb-0 text-dark">{{data.tiempoPromedioAtencion}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <div class="col-xl-1">
+                        <div class="small-box bg-info ">
+                            <div class="row col-12 m-0 p-0">
+                                <div class="col-12 p-0">
+                                    <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <h6 class="pt-0 mb-0 text-gray peso-letra tme">SLA %</h6>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center pb-2">
+                                        <h3 class="num-popp mr-1 mb-0 text-dark">{{data.sla}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-11">
+                        <div class="small-box bg-info ">
+                            <div class="row col-12 m-0 p-0">
+                                <div class="col-3">
+                                    <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <h6 class="pt-0 mb-0 text-gray peso-letra tme">Tiempo máximo de espera</h6>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center pb-2">
+                                        <h3 class="num-popp mr-1 mb-0 text-dark">{{data.tiempoMaximoEspera}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <h6 class="pt-0 mb-0 text-gray tme">Tiempo promedio espera</h6>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center pb-2">
+                                        <h3 class="num-popp mr-1 mb-0 text-dark">{{data.tiempoPromedioEspera}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <h6 class="pt-0 mb-0 text-gray tme">Tiempo máximo de atención</h6>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center pb-2">
+                                        <h3 class="num-popp mr-1 mb-0 text-dark">{{data.tiempoMaximoAtencion}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <h6 class="pt-0 mb-0 text-gray tme">Tiempo promedio de atención</h6>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center pb-2">
+                                        <h3 class="num-popp mr-1 mb-0 text-dark">{{data.tiempoPromedioAtencion}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </ng-template>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-body px-0">
+        <div class="row no-gutters">
+            <div class="col-12 modal-body-content card">
+                <mat-tab-group mat-align-tabs="start" (selectedTabChange)="handleSelectedTabChange($event)" [dynamicHeight]="true" #tabGroup>
+                    <mat-tab>
+                        <ng-template mat-tab-label id="modalOficinasInfoSeriesOficina">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag mr-2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>                            Información de series
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+                                <app-info-series-oficina *ngIf="this.estado.series"></app-info-series-oficina>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label id="modalOficinasInfoTurnosGeneral">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text mr-2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>                            Histórico de turnos ({{estado.turnosGeneral ? estado.turnosGeneral.length : 0}})
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+                                <app-info-turnos-general class="info-turnos-general" *ngIf="this.estado.turnosGeneral"></app-info-turnos-general>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <!-- <mat-tab *ngIf="permisosAdministracion.includes('rep_edit')">
+                        <ng-template mat-tab-label id="modalOficinasInfoTurnosEspera">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text mr-2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>                            Derivación de turnos ({{estado.turnosEspera ? estado.turnosEspera.length : 0}})
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+                                <app-info-turnos-espera (refrescarTurnos)="obtenerInfoTurnosEspera(true)" *ngIf="this.estado.turnosEspera"></app-info-turnos-espera>
+                            </div>
+                        </div>
+                    </mat-tab> -->
+
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monito mr-2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>                            Información de escritorios
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+                                <app-info-escritorios-oficina *ngIf="this.estado.escritorios"></app-info-escritorios-oficina>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+
+                    <mat-tab *ngIf="customer.slug=='ttp_afc' || customer.slug=='ttp_viajesfalabella'">
+                        <ng-template mat-tab-label>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 448 512" fill="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monito mr-2"><path d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"/></svg>                            Estado de la oficina
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+                                <app-estado-oficina *ngIf="this.estado.oficina"></app-estado-oficina>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container>
+    <div class="spinner-container">
+        <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

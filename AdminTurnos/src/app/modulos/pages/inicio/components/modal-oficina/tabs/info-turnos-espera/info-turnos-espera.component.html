@@ -1,0 +1,167 @@
+<div class="row align-items-center">
+    <div class="col-md-4">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="search" class="form-control form-control-md" placeholder="Buscar turnos..." (keyup)="tecleado($event.target)" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-md btn-default">
+            <i class="fa fa-search"></i>
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="dropdown mr-2">
+              Ordenado por:
+                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+          {{nombreOrderBy}}
+        </button>
+                <div class="dropdown-menu">
+                    <a type="button" (click)="ordenar('serie', 'D','Serie - Descendente')" class="dropdown-item" [ngClass]="{'active-dropdown':activeOrderBy === 'serie-D'}">Serie - Descendente</a
+          >
+          <a
+            type="button"
+          (click)="ordenar('serie', 'A','Serie - Ascendente')"
+            class="dropdown-item"
+            [ngClass]="{'active-dropdown':activeOrderBy === 'serie-A'}"
+            >Serie - Ascendente
+          </a>
+                    <a type="button" (click)="ordenar('letra-turno', 'D','Letra-Turno - Descendente')" class="dropdown-item" [ngClass]="{'active-dropdown':activeOrderBy === 'letra-turno-D'}">Letra-Turno - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('letra-turno', 'A','Letra-Turno - Ascendente')"
+            [ngClass]="{'active-dropdown':activeOrderBy === 'letra-turno-A'}"
+            class="dropdown-item"
+            >Letra-Turno - Ascendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('cliente', 'D','Cliente - Descendente')"
+            [ngClass]="{'active-dropdown':activeOrderBy === 'cliente-D'}"
+            class="dropdown-item"
+            >Cliente - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('cliente', 'A','Cliente - Ascendente')"
+            [ngClass]="{'active-dropdown':activeOrderBy === 'cliente-A'}"
+            class="dropdown-item"
+            >Cliente - Ascendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('rut', 'D','RUT - Descendente')"
+            [ngClass]="{'active-dropdown':activeOrderBy === 'rut-D'}"
+            class="dropdown-item"
+            >RUT - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('rut', 'A','RUT - Ascendente')"
+            [ngClass]="{'active-dropdown':activeOrderBy === 'rut-A'}"
+            class="dropdown-item"
+            >RUT - Ascendente</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 d-flex justify-content-end mr-3 mb-1">
+    <span class="text-gray-dark mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">En espera</small>
+    <span class="text-gray mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">Derivado</small>
+  </div>
+</div>
+
+<div class="row info-turnos-espera-card-row">
+  <!-- ./col -->
+ <ng-container *ngIf="(this.turnosEspera| buscador:searchText:['serie','turno','ejecutivo','cliente','rut']).length > 0">
+  <div
+  *ngFor="let turno of this.turnosEspera | filtro
+  : { key: this.groupBy.key, value: this.groupBy.value }
+  : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['serie','turno','ejecutivo','cliente','rut']"
+  class="col-lg-4 info-turnos-espera-card-wrapper col-12"
+>
+  <!-- small box -->
+  <div
+    class="small-box bg-info grey position-relative info-turnos-espera-card-container"
+  >
+  <div class="d-flex align-items-center justify-content-between info-turnos-espera-card-actions"  [ngClass]="turno.idEsc == null ? 'text-gray-dark' : 'text-grey'">
+    <div>
+        <p class="m-0 subtitle"  [ngClass]="turno.idEsc == null ? 'text-gray-dark' : 'text-grey'">
+            {{ turno.letra }}{{ turno.turno }}
+        </p>
+    </div>
+    <div>
+        <h6 class="pt-1 mb-0">
+            {{ turno.serie }}
+        </h6>
+    </div>
+    <div>
+        <span class="mr-1"><i class="fas fa-square"></i></span>
+    </div>
+</div>
+
+
+    <div class="inner pt-0 ">
+      <div class="row no-gutters">
+        <div class="col-xl-8 col-sm-12 pr-1">
+          <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+              <h3 class="num-popp"  [ngClass]="turno.idEsc == null ? 'text-gray-dark' : 'text-grey'">
+                  {{ turno.cliente }}
+              </h3>
+              <p class="text-1">Nombre Cliente</p>
+          </div>
+      </div>
+      <div class="col-xl-4 col-sm-12 pr-2">
+        <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+            <h3 class="num-popp"   [ngClass]="turno.idEsc == null ? 'text-gray-dark' : 'text-grey'">
+                {{ formatRut(turno.rut) }}
+            </h3>
+            <p class="text-1">RUT</p>
+        </div>
+    </div>
+    <div class="col-xl-12 col-sm-12 ejecutivo pt-2">
+      <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+          <h3 class="num-popp text-wrap nom-ejecutivo"  [ngClass]="turno.idEsc == null ? 'text-gray-dark' : 'text-grey'">
+              {{ turno.ejecutivo }}
+          </h3>
+          <p class="text-1">Ejecutivo</p>
+      </div>
+  </div>
+  <div class="col-xl-4 col-sm-6 pt-2">
+    <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+      <h3 class="num-popp"  [ngClass]="turno.idEsc == null ? 'text-gray-dark' : 'text-grey'">
+        {{ turno.horaEmicion }}
+      </h3>
+      <p class="text-1">Hora Emisión</p>
+    </div>
+  </div>
+        <div class="col-xl-4 col-sm-6 pt-2">
+          <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+            <h3 class="num-popp" [ngClass]="turno.idEsc == null ? 'text-gray-dark' : 'text-grey'">
+              {{ secondsToString(turno.tiempoEspera) }}
+            </h3>
+            <p class="text-1">Tiempo de espera</p>
+          </div>
+        </div>
+        <div class="col-xl-4 col-sm-12 d-flex justify-content-center pt-2">
+          <div class="info-series-oficina-data-card derivar-container info-turnos-oficina-data-card mt-0">
+            <button class="btn btn-ligth boton" (click)="derivarTurno(turno)">
+              Derivar <i class="fa fa-share"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ </ng-container>
+ <ng-container *ngIf="(this.turnosEspera| buscador:searchText:['serie','turno','ejecutivo','cliente','rut']).length <= 0">
+  <div class="col-xl-12 mt-5 text-center">
+    <h3 class="text-grey">Actualmente no hay turnos en espera en esta oficina</h3>
+  </div>
+ </ng-container>
+</div>

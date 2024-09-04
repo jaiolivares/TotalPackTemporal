@@ -1,0 +1,153 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="card box-success box py-3" *ngIf="this.estado.selectedOficina">
+    <div class="row pb-0">
+        <div class="col-2 form-group">
+            <div class="box-input">
+                <div class="row align-items-center">
+                    <div class="col-sm-8 px-0">
+                        <label class="text-input">Id Oficina:</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="font-weight-bold mb-0 mr-2">{{estado.selectedOficina.idOficina}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 form-group">
+            <div class="box-input">
+                <div class="row align-items-center">
+                    <div class="col-sm-3 px-0">
+                        <label class="text-input">Oficina:</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" formControlName="oficina" class="pl-2"
+                            [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['oficina'].errors !== null)}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 form-group">
+            <div class="box-input">
+                <div class="row align-items-center">
+                    <div class="col-sm-3 px-0">
+                        <label class="text-input">Dirección:</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" formControlName="direccion" class=" pl-2"
+                            [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['direccion'].errors !== null)}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 form-group">
+            <div class="box-input">
+                <div class="row align-items-center">
+                    <div class="col-sm-8 px-0">
+                        <label class="text-input">Cód. Oficina:</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="codOficina" class=" pl-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 form-group" style="display: none;">
+            <div class="box-input box-series">
+                <div class="row align-items-center">
+                    <div class="col-sm-4 px-0">
+                        <label class="text-input">Zona:</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class="custom-select" formControlName="idZona">
+                            <option [value]="zona.id" *ngFor="let zona of zonas">{{zona.valor}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 form-group">
+            <div class="box-input">
+                <div class="row align-items-center">
+                    <div class="col-sm-4 px-0">
+                        <label class="text-input">Latitud:</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" (input)="handleCordsChanged()" formControlName="latitud" class=" pl-2"
+                            [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['latitud'].errors !== null)}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 form-group">
+            <div class="box-input">
+                <div class="row align-items-center">
+                    <div class="col-sm-4 px-0">
+                        <label class="text-input">Longitud:</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" (input)="handleCordsChanged()" formControlName="longitud" class=" pl-2"
+                            [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['longitud'].errors !== null)}">
+                    </div>
+                </div>
+            </div>
+        </div>
+       <div class="col-3 form-group">
+            <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-5 px-0">
+                            <p class="text-input">Zonas</p>
+                        </div>
+                        <div class="col-sm-7 pl-0 col-12">
+                            <select class="custom-select" formControlName="idZona">
+                                <option value="Seleccione una zona" disabled>Seleccione una zona</option>
+                                <option [value]="zona.id" *ngFor="let zona of zonas">{{zona.valor}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="col-12 px-0">
+        <div class="row col-12 mx-0 px-0">
+
+            <div class="col-xl-6 form-group mx-0 px-0">
+                <div class="box-input">
+                    <div class="row align-items-center">
+                        <div class="col-sm-2 px-0">
+                            <label class="text-input">Ubicación:</label>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="map-container" id="editMap" style="height:210px;" leaflet
+                                [leafletOptions]="options" (leafletMapReady)="onMapReady($event)"
+                                (leafletClick)="mapClicked($event)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="d-flex justify-content-end mt-2">
+                    <button type="submit" class="btn btn-block btn-success">
+                        <i class="fas fa-save"></i> Actualizar Oficina
+                    </button>
+                </div>
+            </div>
+            <div class="col-xl-2">
+                <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-block btn-secondary" (click)="volver()">
+                        <i class="fas fa-ban"></i> Volver
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-container>
+        <div class="spinner-container component-only">
+            <ngx-spinner [fullScreen]="false" name="oficina-edit-loading" type="ball-scale-ripple" size="large">
+            </ngx-spinner>
+        </div>
+    </ng-container>
+</form>

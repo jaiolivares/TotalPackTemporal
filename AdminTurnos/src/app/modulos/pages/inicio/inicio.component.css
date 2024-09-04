@@ -1,0 +1,42 @@
+.mat-tab-label {
+    font-size: 1rem;
+    color: grey !important;
+    opacity: 0.8;
+}
+
+.mat-tab-label-active {
+    color: var(--color-llamado) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.material-icons {
+    font-size: 1.25rem;
+}
+
+.mat-tab-label-container {
+    padding-bottom: 7px;
+}
+
+.mat-ink-bar {
+    background-color: var(--color-llamado) !important;
+    height: 3px !important;
+}
+
+.mt-menos55 {
+    margin-top: -55px;
+}
+
+.boton:hover {
+    box-shadow: none !important;
+    color: var(--color-llamado) !important;
+    font-weight: 600;
+    background: tranparent !important;
+}
+
+.bg-green {
+    background-color: rgba(49, 255, 0, 0.1) !important;
+}
+
+.bg-orange {
+    background-color: rgba(253, 126, 20, 0.2) !important;
+}

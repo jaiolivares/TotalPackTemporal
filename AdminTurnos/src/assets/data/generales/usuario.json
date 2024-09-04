@@ -1,0 +1,16 @@
+{
+  "data": {
+    "usuario":
+      {
+        "id": 1,
+        "usuario": "admin",
+        "nombre": "Ivan manuel",
+        "email": "morillo864@gmail.com",
+        "activo": 1,
+        "permNew":2,
+        "permUpd":3,
+        "permDel":2
+      }
+  },
+  "status": true
+}

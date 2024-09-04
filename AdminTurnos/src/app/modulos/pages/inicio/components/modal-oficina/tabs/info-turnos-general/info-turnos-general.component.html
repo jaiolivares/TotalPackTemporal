@@ -1,0 +1,106 @@
+<div class="row align-items-center">
+    <div class="col-md-4">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="search" class="form-control form-control-md" placeholder="Buscar turnos..." (input)="tecleado($event.target)" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-md btn-default">
+            <i class="fa fa-search"></i>
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group d-flex">
+            <!-- <div class="dropdown mr-2">
+        <button
+          class="btn btn-block btn-outline-success dropdown-toggle"
+          type="button"
+          data-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Agrupar por
+        </button>
+        <div class="dropdown-menu">
+          <a type="button" (click)="agrupar('', '')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === ''}"
+            >Ninguno</a
+          >
+          <a type="button" (click)="agrupar('estado', 1)" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'estado-1'}"
+            >Estado - Activos</a
+          >
+          <a type="button" (click)="agrupar('estado', 0)" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'estado-0'}"
+            >Estado - Inactivos
+          </a>
+        </div>
+      </div> -->
+            <div class="dropdown mr-2">
+                Mostrando:
+                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+        {{nombreGroupBy}}
+      </button>
+                <div class="dropdown-menu">
+                    <a type="button" (click)="agrupar('','','Todos los turnos')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === ''}">Todos los turnos</a
+          >
+          <a type="button" (click)="agrupar('estado','EN ESPERA','En espera')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'estado-EN ESPERA'}"
+            >En espera</a
+          >
+          <a type="button" (click)="agrupar('estado','ATENDIENDO','Atendiendo')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'estado-ATENDIENDO'}"
+            >Atendiendo</a
+          >
+          <a type="button" (click)="agrupar('estado','FINALIZADO','Finalizado')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'estado-FINALIZADO'}"
+            >Finalizado</a
+          >
+          <a type="button" (click)="agrupar('estado','ANULADO','Anulado')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'estado-ANULADO'}"
+            >Anulado</a
+          >
+          <a type="button" (click)="agrupar('estado','LLAMANDO','Llamando')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'estado-LLAMANDO'}"
+            >Llamando</a
+          >
+        </div>
+      </div>
+      <div class="dropdown mr-2">
+        <div class="dropdown mr-2">
+          Ordenado por:
+            <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+      {{nombreOrderBy}}
+    </button>
+        <div class="dropdown-menu">
+          <a
+            type="button"
+            (click)="ordenar('serie', 'D','Serie - Descendente')"
+            class="dropdown-item"
+            [ngClass]="{'active-dropdown':activeOrderBy === 'serie-D'}"
+            >Serie - Descendente</a
+          >
+          <a
+            type="button"
+            (click)="ordenar('serie', 'A','Serie - Ascendente')"
+            class="dropdown-item"
+            [ngClass]="{'active-dropdown':activeOrderBy === 'serie-A'}"
+            >Serie - Ascendente
+          </a>
+                    <a type="button" (click)="ordenar('letra-turno', 'D','Letra-turno - Descendente')" class="dropdown-item" [ngClass]="{'active-dropdown':activeOrderBy === 'letra-turno-D'}">Letra-turno - Descendente
+          </a>
+                    <a type="button" (click)="ordenar('letra-turno', 'A','Letra-turno - Ascendente')" class="dropdown-item" [ngClass]="{'active-dropdown':activeOrderBy === 'letra-turno-A'}">Letra-turno - Ascendente
+          </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="col-md-12 d-flex justify-content-end mr-3 mb-1">
+    <span class="text-gray-dark mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">En espera</small>
+    <span class="text-gray mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">Llamando</small>
+    <span class="text-blue mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">Atendiendo</small>
+    <span class="text-orange mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">Perdidos</small>
+    <span class="text-indigo mr-1 ml-3"><i class="fas fa-square"></i></span><small class="my-auto text-grey">Atendidos</small>
+</div>
+<div class="row info-turnos-espera-card-row">
+    <ng-container>
+        <div class="col-xl-12 px-0">
+            <app-turno-card class="row info-turnos-espera-card-row" [searchText]="searchText" [turnos]="this.turnos" [orderBy]="this.orderBy" [groupBy]="this.groupBy"></app-turno-card>
+        </div>
+    </ng-container>
+</div>

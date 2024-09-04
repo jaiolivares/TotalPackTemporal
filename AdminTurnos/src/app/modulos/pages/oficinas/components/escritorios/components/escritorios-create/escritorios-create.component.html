@@ -1,0 +1,107 @@
+<div class="card box-success box py-3">
+    <form [formGroup]="form" class="row col-12 mx-0 px-0 pb-0" (ngSubmit)="onSubmit()">
+        <div class="col-xl-4 mx-0  col-lg-12 mb-2">
+            <div class="w-100 form-group">
+                <div class="box-input">
+                    <div class="row align-items-center">
+                        <div class="col-smfa-rotate-180">
+                            <label class="text-input">N° del escritorio a crear:</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" formControlName="idEscritorio"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['idEscritorio'].errors !== null)}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 form-group">
+                <div class="box-input">
+                    <div class="row align-items-center">
+                        <div class="col-sm-3">
+                            <label class="text-input">Modo:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <select formControlName="modo">
+                                <option value="0">Rebalse</option>
+                                <option value="1">Alternado</option>
+                                <option value="2">FIFO</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-between mt-2 ">
+                <button type="submit" class="btn btn-block btn-success">
+                    <i class="fas fa-save"></i> Crear Escritorio
+                </button>
+                <button type="button" class="btn btn-block btn-secondary mt-0" (click)="volver()">
+                    <i class="fas fa-ban"></i> Volver
+                </button>
+            </div>
+        </div>
+        <div class="col-xl-8 col-lg-12  mx-0 pb-0">
+            <div class="box-input box-series col-12 row no-gutters">
+                <div class="col-xl-6">
+                    <div class="w-100 d-flex justify-content-between escritorios-title-container">
+                        <p class="text-input sw-text">Series asignadas</p>
+                        <p class="text-input sw-text" *ngIf="this.form.get('modo')?.value == '1'">Alternado</p>
+                    </div>
+                    <div class="row px-0 no-gutters w-100 my-2 mx-auto" cdkDropList #list [id]="'list'"
+                        [cdkDropListData]="this.seriesAsignadas" (cdkDropListDropped)="handleDrop($event)">
+                        <div class="col-12" *ngFor="let serie of this.seriesAsignadas;let i=index" cdkDrag>
+                            <div class="bar-serie cursor-move serie-asignada-container">
+                                <div class="serie-asignada-card">
+                                    <p class="mb-0 serie-asignada-card-serie">{{i+1}} - {{serie.serie}}</p>
+                                    <div class="serie-asignada-card-alternado"
+                                        *ngIf="this.form.get('modo')?.value == '1'">
+                                        <input type="text" [value]="serie.alternado"
+                                            (input)="handleAlternado($event,serie)" />
+                                    </div>
+                                </div>
+
+                                <div class="close-bar" (click)="deleteSelectedSerie(serie.idSerie)">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="row">
+                        <div class="col-sm-12 pr-0 col-12 escritorios-title-container">
+                            <p class="text-input mb-1">Asignar Serie</p>
+                        </div>
+                        <div class="col-sm-12 col-12 row my-2 mx-auto">
+                            <select class="custom-select" (change)="handleSelectSerie($event)">
+                                <option [value]="">Seleccionar</option>
+                                <option [value]="serie.id" *ngFor="let serie of renderSeriesSelect()">{{serie.valor}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row col-12 mt-4 mx-auto">
+                        <div class="col-xl-8 text-right">
+                            <button type="button" class="btn btn-grey btn-fail m-1" (click)="limpiarSeriesAsignadas()">
+                                <i class="fas fa-ban"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+
+
+
+
+    <ng-container>
+        <div class="spinner-container component-only">
+            <ngx-spinner [fullScreen]="false" name="escritorios-create-loading" type="ball-scale-ripple" size="large">
+            </ngx-spinner>
+        </div>
+    </ng-container>
+</div>

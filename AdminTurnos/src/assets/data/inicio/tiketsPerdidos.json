@@ -1,0 +1,120 @@
+{
+    "oficinas": [
+       {
+        "oficina": "Demo",
+         "totalTikets": 46,
+         "series": [
+           { "serie": "Atención General", "perdidos":16 },
+           { "serie": "Atención Especializada", "perdidos":8},
+           { "serie": "Cambio de SIM Card", "perdidos":12},
+           { "serie": "Compra de Equipos", "perdidos":10}
+           ]
+       },
+       {
+        "oficina": "Maipú",
+         "totalTikets": 64,
+         "series": [
+           { "serie": "Atención General", "perdidos":16 },
+           { "serie": "Atención Especializada", "perdidos":8},
+           { "serie": "Cambio de SIM Card", "perdidos":12},
+           { "serie": "Compra de Equipos", "perdidos":10}
+           ]
+       },
+       {
+          "oficina": "Quilín",
+         "totalTikets": 32,
+         "series": [
+           { "serie": "Atención General", "perdidos":16 },
+           { "serie": "Atención Especializada", "perdidos":8},
+           { "serie": "Cambio de SIM Card", "perdidos":12},
+           { "serie": "Compra de Equipos", "perdidos":10}
+           ]
+       },
+       {
+        "oficina": "Plaza Oeste",
+         "totalTikets": 98,
+         "series": [
+           { "serie": "Atención General", "perdidos":16 },
+           { "serie": "Atención Especializada", "perdidos":8},
+           { "serie": "Cambio de SIM Card", "perdidos":12},
+           { "serie": "Compra de Equipos", "perdidos":10}
+           ]
+       },
+       {
+        "oficina": "Huérfanos",
+         "totalTikets": 18,
+         "series": [
+           { "serie": "Atención General", "perdidos":16 },
+           { "serie": "Atención Especializada", "perdidos":8},
+           { "serie": "Cambio de SIM Card", "perdidos":12},
+           { "serie": "Compra de Equipos", "perdidos":10}
+           ]
+       },
+       {
+        "oficina": "Plaza Norte",
+         "totalTikets": 25,
+         "series": [
+           { "serie": "Atención General", "perdidos":16 },
+           { "serie": "Atención Especializada", "perdidos":8},
+           { "serie": "Cambio de SIM Card", "perdidos":12},
+           { "serie": "Compra de Equipos", "perdidos":10}
+           ]
+       },
+       {
+        "oficina": "Plaza Vespucio",
+         "totalTikets": 30,
+         "series": [
+           { "serie": "Atención General", "perdidos":16 },
+           { "serie": "Atención Especializada", "perdidos":8},
+           { "serie": "Cambio de SIM Card", "perdidos":12},
+           { "serie": "Compra de Equipos", "perdidos":10}
+           ]
+       }
+     ],
+   
+   
+   
+     "series": [
+       {
+         "serie": "Atención General",
+         "totalTikets": 150,
+         "oficinas": [
+           { "oficina": "Demo", "perdidos":16 },
+           { "oficina": "Maipú", "perdidos":8},
+           { "oficina": "Quilín", "perdidos":12},
+           { "oficina": "Plaza Oeste", "perdidos":10}
+           ]
+       },
+       {
+         "serie": "Atención Especializada",
+         "totalTikets": 25,
+         "oficinas": [
+           { "oficina": "Demo", "perdidos":16 },
+           { "oficina": "Maipú", "perdidos":8},
+           { "oficina": "Quilín", "perdidos":12},
+           { "oficina": "Plaza Oeste", "perdidos":10}
+         ]
+       },
+       {
+         "serie": "Cambio de SIM Card",
+         "totalTikets": 17,
+         "oficinas": [
+           { "oficina": "Demo", "perdidos":16 },
+           { "oficina": "Maipú", "perdidos":8},
+           { "oficina": "Quilín", "perdidos":12},
+           { "oficina": "Plaza Oeste", "perdidos":10}
+         ]
+       },
+       {
+         "serie": "Compra de Equipos",
+         "totalTikets": 82,
+         "oficinas": [
+           { "oficina": "Demo", "perdidos":16 },
+           { "oficina": "Maipú", "perdidos":8 },
+           { "oficina": "Quilín", "perdidos":12 },
+           { "oficina": "Plaza Oeste", "perdidos":10 }
+         ]
+       }
+     ],
+     "status": true
+   }

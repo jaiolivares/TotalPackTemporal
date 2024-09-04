@@ -1,0 +1,73 @@
+{
+    "data": {
+        "series": [
+            {
+                "id": 1,
+                "nombreSerie": "Cheque / depósito",
+                "subSeries": []
+            },
+            {
+                "id": 2,
+                "nombreSerie": "Evaluación crédito",
+                "subSeries": []
+            },
+            {
+                "id": 3,
+                "nombreSerie": "Cotización",
+                "subSeries": [
+                    "Mayoristas",
+                    "Particulares",
+                    "Gobierno"
+                ]
+            },
+            {
+                "id": 4,
+                "nombreSerie": "Atención Especializada",
+                "subSeries": []
+            },
+            {
+                "id": 5,
+                "nombreSerie": "Ventas",
+                "subSeries": [
+                    "Subserie 7",
+                    "Subserie 8",
+                    "Subserie 9",
+                    "Subserie 10"
+                ]
+            },
+            {
+                "id": 6,
+                "nombreSerie": "Ventas a Crédito",
+                "subSeries": []
+            },
+            {
+                "id": 7,
+                "nombreSerie": "Ventas a Contado",
+                "subSeries": []
+            },
+            {
+                "id": 8,
+                "nombreSerie": "Ventas al Mayor",
+                "subSeries": [
+                    "Subserie 1",
+                    "Subserie 2"
+                ]
+            }
+
+        ],
+        "seriesNoAsignada": [
+            {
+            "id": 1,
+            "nombreSerie": "Sin asignar",
+            "subSeries": [
+                "Subserie 3",
+                "Subserie 4",
+                "Subserie 5",
+                "Subserie 6"
+            ]
+        }
+    ],
+        "totalSeries": 8
+    },
+    "status": true
+}

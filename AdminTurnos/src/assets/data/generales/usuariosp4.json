@@ -1,0 +1,21 @@
+{
+    "data": {
+        "usuarios": [{
+                "id": 19,
+                "usuario": "juandiegop",
+                "nombre": "Juan Diego Puerto",
+                "email": "juandiegop@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 20,
+                "usuario": "antonio",
+                "nombre": "José Antonio Tovar",
+                "email": "jantonio@gmail.com",
+                "activo": 1
+            }
+        ],
+        "totalUsuarios": 20
+    },
+    "status": true
+}

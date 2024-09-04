@@ -1,0 +1,27 @@
+.evento-o {
+  background-color: #d3cdcd;
+  /* Color para eventos "O" */
+}
+
+.evento-p {
+  background-color: #f06f6f;
+  /* Color para eventos "P" */
+}
+
+.evento-a {
+  background-color: #49c049;
+  /* Color para eventos "A" */
+}
+
+:root {
+  --color-evento-a: #49c049;
+  --color-evento-p: #f06f6f;
+  --color-evento-o: #848585;
+  /* Color para eventos "O" */
+}
+.text-red {
+  color: red;
+}
+.invalid-border {
+  border: 2px solid red;
+}

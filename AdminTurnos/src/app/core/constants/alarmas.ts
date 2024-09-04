@@ -1,0 +1,51 @@
+export const HORARIOS_POR_DIA_ALARMAS = [
+  {
+    id: 1,
+    dia: "Lunes",
+    de: null,
+    hasta: null,
+    activo: 0,
+  },
+  {
+    id: 2,
+    dia: "Martes",
+    de: null,
+    hasta: null,
+    activo: 0,
+  },
+  {
+    id: 3,
+    dia: "Miércoles",
+    de: null,
+    hasta: null,
+    activo: 0,
+  },
+  {
+    id: 4,
+    dia: "Jueves",
+    de: null,
+    hasta: null,
+    activo: 0,
+  },
+  {
+    id: 5,
+    dia: "Viernes",
+    de: null,
+    hasta: null,
+    activo: 0,
+  },
+  {
+    id: 6,
+    dia: "Sábado",
+    de: null,
+    hasta: null,
+    activo: 0,
+  },
+  {
+    id: 7,
+    dia: "Domingo",
+    de: null,
+    hasta: null,
+    activo: 0,
+  },
+];

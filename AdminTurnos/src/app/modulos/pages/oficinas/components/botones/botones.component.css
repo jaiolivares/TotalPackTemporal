@@ -1,0 +1,17 @@
+.text-clock {
+    font-family: Roboto, sans-serif;
+    color: #7e8a98;
+}
+
+.logo-emisor {
+    width: 70px;
+}
+
+.version {
+    color: #ccc;
+    font-size: 0.5rem;
+}
+
+.series-box {
+    min-height: 200px;
+}

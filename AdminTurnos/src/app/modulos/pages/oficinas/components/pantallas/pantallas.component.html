@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row col-12">
+            <div class="col-xl-9 pl-0 pr-0">
+                <h5 class="pt-2" *ngIf="estado.selectedOficina && !editar">Pantallas de la Oficina: <span class="texto-customer">{{estado.selectedOficina.oficina}}</span> </h5>
+                <h5 class="pt-2" *ngIf="editar">Pantalla: <span class="texto-customer">{{selectedPantalla.nombre}}</span> </h5>
+            </div>
+        </div>
+
+
+        <section class="row col-lg-12 connectedSortable" *ngIf="!editar && !crear">
+            <div class="col-md-12 pl-0">
+                <div class="row pb-0">
+                    <ng-container *ngIf="pantallas">
+                        <ng-container *ngIf="pantallas.length > 0">
+                            <div class="col-xl-4 col-lg-3 col-sm-6 col-12" *ngFor="let pantalla of pantallas">
+                                <div class="bar-serie bg-info grey">
+                                    <h6 class="pb-2 mb-0 pt-0">Pantalla "{{pantalla.nombre}}"</h6>
+                                    <p class="text-grey mb-1">{{pantalla.idPantallaTurno}}</p>
+                                    <p class="primary-text mb-1">Series asignadas</p>
+                                    <div class="mx-0" *ngIf="pantalla.series && pantalla.series.length > 0">
+                                        <div *ngFor="let serie of pantalla.series" class="text-grey bar-serie px-3 py-1 bar-serie px-3 py-1 text-center">
+                                            {{serie.serie}}
+                                        </div>
+                                    </div>
+                                    <p class="mx-0 text-grey" *ngIf="pantalla.series && pantalla.series.length <= 0">
+                                        No hay series asignadas a esta pantalla.
+                                    </p>
+                                    <div class="conf-bar" (click)="irAEditar(pantalla)" style="right: 20px; top: 6px;" *ngIf="permisosAdministracion.includes('pan_edit')">
+                                        <img src="assets/dist/img/gear.svg">
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="pantallas.length <= 0">
+                            <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+                                <h4 class="primary-text mt-5">No hay pantallas asignadas a esta oficina</h4>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </section>
+
+        <section class=" connectedSortable" [@openClose]="editar ? 'open' : 'closed'">
+            <app-pantallas-edit class="w-100" (onVolver)="volverADatos($event)" [pantalla]="selectedPantalla" *ngIf="editar"></app-pantallas-edit>
+        </section>
+
+    </div>
+</div>
+
+<ng-container>
+    <div class="spinner-container component-only">
+        <ngx-spinner [fullScreen]="false" name="obtener-data-pantallas-spinner" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

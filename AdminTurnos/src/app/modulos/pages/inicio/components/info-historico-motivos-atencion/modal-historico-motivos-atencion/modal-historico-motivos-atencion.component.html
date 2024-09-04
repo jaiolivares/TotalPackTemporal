@@ -1,0 +1,133 @@
+<div class="modal-info-oficinas-container container">
+    <div class="modal-info-oficinas-header-container">
+      <div class="modal-info-oficinas-header">
+        <h5 class="subtitle"><small>Turno {{data.letra}}{{ data.turno }}</small></h5>
+      </div>
+      <div class="text-right">
+        <button
+          type="button"
+          class="btn btn-ligth boton mr-3"
+        (click)="closeModal()"
+      >
+        Volver al histórico de motivos de atención <i class="fa fa-chevron-left ml-2"></i>
+      </button>
+      </div>
+    </div>
+    <div class="modal-body px-0">
+      <div class="row">
+        <div class="col-xl-12"><h5 class="subtitle">Información general</h5></div>
+        <div class="col-xl-12 d-flex flex-wrap">
+            <div class="modal-presentation-card-container">
+                  <div class="box-input modal-presentation-card">
+                    <div>
+                      <div>
+                        <p class="text-label">Oficina</p>
+                      </div>
+                      <div class="text-content">
+                        <p class="mb-0 font-weight-bold">{{ data.oficina }}</p>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            <div class="modal-presentation-card-container">
+                  <div class="box-input modal-presentation-card">
+                    <div>
+                      <div>
+                        <p class="text-label">Serie</p>
+                      </div>
+                      <div class="text-content">
+                        <p class="mb-0 font-weight-bold">{{ data.serie }}</p>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            <div class="modal-presentation-card-container">
+                  <div class="box-input modal-presentation-card">
+                    <div>
+                      <div>
+                        <p class="text-label">Motivo</p>
+                      </div>
+                      <div class="text-content">
+                        <p class="mb-0 font-weight-bold">{{ data.motivo }}</p>
+                      </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+       
+       
+        <div class="col-xl-12 mt-3"><h5 class="subtitle">Identificadores</h5></div>
+        <div class="col-xl-12 d-flex flex-wrap">
+            <div class="modal-presentation-card-container">
+                  <div class="box-input modal-presentation-card">
+                    <div>
+                      <div>
+                        <p class="text-label">ID turno</p>
+                      </div>
+                      <div class="text-content">
+                        <p class="mb-0 font-weight-bold">{{ data.idTurno }}</p>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            <div class="modal-presentation-card-container">
+                  <div class="box-input modal-presentation-card">
+                    <div>
+                      <div>
+                        <p class="text-label">ID motivo</p>
+                      </div>
+                      <div class="text-content">
+                        <p class="mb-0 font-weight-bold">{{ data.idMotivo }}</p>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            <div class="modal-presentation-card-container">
+                  <div class="box-input modal-presentation-card">
+                    <div>
+                      <div>
+                        <p class="text-label">ID oficina</p>
+                      </div>
+                      <div class="text-content">
+                        <p class="mb-0 font-weight-bold">{{ data.idOficina }}</p>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            <div class="modal-presentation-card-container">
+                  <div class="box-input modal-presentation-card">
+                    <div>
+                      <div>
+                        <p class="text-label">ID serie</p>
+                      </div>
+                      <div class="text-content">
+                        <p class="mb-0 font-weight-bold">{{ data.idSerie }}</p>
+                      </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+       
+        <div class="col-xl-12 mt-3"><h5 class="subtitle">Información de atención</h5></div>
+        <div class="col-md-12">
+            <table class="table  table-sm table-striped table-hover mt-2">
+              <thead class="table-head-verde">
+                <tr>
+                  <th>Motivo</th>
+                  <th>Serie</th>
+                  <th>Cantidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let motivo of data.motivos">
+                  <td>{{motivo.motivo}}</td>
+                  <td>{{motivo.serie}}</td>
+                  <td>{{motivo.cantidad}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,39 @@
+.modal-codigos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .modal-content {
+        min-height: 90vh !important;
+        width: 600px !important;
+        border-radius: 0.25rem !important;
+        box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%) !important;
+        margin-bottom: 20px !important;
+        background-color: #fff !important;
+        margin-top: 3rem !important;
+    }
+}
+
+.modal-codigos-card {
+    cursor: pointer;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid lightgrey;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    &.no-border {
+        border-bottom: none;
+    }
+    .codigo-text {
+        font-weight: bold;
+    }
+    .codigo-text,
+    .descripcion-text {
+        font-size: 14px;
+    }
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        transition: all 0.3s ease-in-out;
+        background-color: #f4f4f4;
+    }
+}

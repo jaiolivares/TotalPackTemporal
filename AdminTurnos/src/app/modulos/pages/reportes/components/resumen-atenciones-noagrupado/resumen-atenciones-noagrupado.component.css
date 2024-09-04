@@ -1,0 +1,6 @@
+.text-red {
+    color: red;
+}
+.invalid-border {
+    border: 2px solid red;
+  }

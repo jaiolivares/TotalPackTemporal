@@ -1,0 +1,7 @@
+<svg id="Icons_Navigation_icon_12_states_" data-name="Icons / Navigation icon (12 states)" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <g id="ic_setting">
+    <path id="Trazado_386" data-name="Trazado 386" d="M0,0H18V18H0Z" fill="none"/>
+    <path id="Trazado_387" data-name="Trazado 387" d="M8.494,3.988a1.293,1.293,0,0,1,2.512,0,1.293,1.293,0,0,0,1.93.8,1.294,1.294,0,0,1,1.778,1.777,1.293,1.293,0,0,0,.8,1.929,1.293,1.293,0,0,1,0,2.512,1.293,1.293,0,0,0-.8,1.93,1.294,1.294,0,0,1-1.777,1.778,1.293,1.293,0,0,0-1.929.8,1.293,1.293,0,0,1-2.513,0,1.293,1.293,0,0,0-1.93-.8,1.294,1.294,0,0,1-1.778-1.777,1.293,1.293,0,0,0-.8-1.929,1.293,1.293,0,0,1,0-2.513,1.293,1.293,0,0,0,.8-1.93A1.294,1.294,0,0,1,6.565,4.787a1.293,1.293,0,0,0,1.929-.8Z" transform="translate(-0.75 -0.75)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <circle id="Elipse_2" data-name="Elipse 2" cx="2" cy="2" r="2" transform="translate(7 7)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

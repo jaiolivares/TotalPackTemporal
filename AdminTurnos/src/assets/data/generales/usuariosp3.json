@@ -1,0 +1,49 @@
+{
+    "data": {
+        "usuarios": [{
+                "id": 13,
+                "usuario": "cristobale",
+                "nombre": "Cristobal Escobar",
+                "email": "cristobale@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 14,
+                "usuario": "josecarlos",
+                "nombre": "Jose Carlos Vizcaino",
+                "email": "josecarlos@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 15,
+                "usuario": "marcelinoh",
+                "nombre": "Marcelino Holgado",
+                "email": "marcelinoh@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 16,
+                "usuario": "alanr",
+                "nombre": "Alan Robles",
+                "email": "alanr@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 17,
+                "usuario": "marcoantonio",
+                "nombre": "Marcos Antonio Tovar",
+                "email": "marcoantonio@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 18,
+                "usuario": "luifi",
+                "nombre": "Fernándo Azócar",
+                "email": "fcastellano@gmail.com",
+                "activo": 1
+            }
+        ],
+        "totalUsuarios": 20
+    },
+    "status": true
+}

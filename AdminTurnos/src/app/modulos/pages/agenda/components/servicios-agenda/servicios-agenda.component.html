@@ -1,0 +1,61 @@
+<section class="content pl-0 pr-2 pt-0">
+    <div class="container-fluid mx-0">
+        <div class="row">
+            <section class="col-lg-12 pl-3 pr-3 connectedSortable">
+                <div class="row col-12 px-0 ml-0">
+                    <div class="col-12 col-xl-3 pl-0 pr-0">
+                        <ng-container *ngIf="!estado.selectedIdSerie">
+                            <h5 class="pt-2" *ngIf="!agregarEditar">Servicios configurados</h5>
+                            <h5 class="pt-2" *ngIf="agregarEditar">Servicios</h5>
+                        </ng-container>
+                        <ng-container *ngIf="estado.selectedSerie">
+                            <h5 class="pt-2" *ngIf="!agregarEditar">Serie: {{estado.selectedSerie.Serie}}</h5>
+                        </ng-container>
+                    </div>
+                    <div class="col-12 col-xl-9 px-0"
+                        *ngIf="!agregarEditar && estado.selectedSerie && !estado.selectedSerie.Agenda">
+                        <button type="button" class="btn btn-block btn-success mb-2 float-right"
+                            (click)="irACrear()">
+                            <i class="fas fa-cogs"></i> Agregar serie agenda
+                        </button>
+                    </div>
+                </div>
+                <section class="row col-lg-12 connectedSortable" [@openClose]="agregarEditar? 'open' : 'closed'">
+                    <app-create-edit-agenda *ngIf="agregarEditar" (volver)="volverADatos()"
+                        (recargarSeries)="recargarServicio($event)"></app-create-edit-agenda>
+                </section>
+                <div *ngIf="!agregarEditar && !isLoading">
+                    <ng-container *ngIf="estado.selectedIdSerie">
+                        <ng-container *ngIf="estado.selectedSerie.Agenda && estado.selectedSerieDetalle">
+                            <app-detalle-agenda (editar)="irAEditar()"
+                                (recargarSeries)="recargarServicio($event)"></app-detalle-agenda></ng-container>
+                        <section
+                            class="row col-lg-12 d-flex justify-content-center flex-column align-items-center connectedSortable"
+                            *ngIf="error && !agregarEditar && estado.selectedSerie?.Agenda">
+                            <h3>{{errorMsg}}</h3>
+                        </section>
+
+                        <div class="row mx-0 w-100 pb-0  mt-3" *ngIf="!estado.selectedSerie?.Agenda">
+                            <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+                                <h2 class="primary-text text-center">La serie seleccionada no corresponde a una serie agenda</h2>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <div class="row mx-0 w-100 pb-0  mt-3" *ngIf="!estado.selectedIdSerie">
+                        <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+                            <h2 class="primary-text text-center">No hay serie seleccionada</h2>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="isLoading">
+                    <div class="spinner-container component-only">
+                        <ngx-spinner [fullScreen]="false" name="servicio-get-series-loading" type="ball-scale-ripple"
+                            size="large">
+                        </ngx-spinner>
+                    </div>
+                </ng-container>
+            </section>
+        </div>
+    </div>
+</section>

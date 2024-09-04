@@ -1,0 +1,119 @@
+<div class="row align-items-center">
+    <div class="col-md-4">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="search" (keyup)="tecleado($event.target)" class="form-control form-control-md" placeholder="Buscar escritorios por ejecutivo..." />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-md btn-default">
+            <i class="fa fa-search"></i>
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group d-flex">
+            <div class="dropdown mr-2">
+                Mostrando:
+                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+          {{nombreGroupBy}}
+        </button>
+                <div class="dropdown-menu">
+                    <a type="button" (click)="agrupar('', '','')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === ''}">Todos los estados</a
+          >
+          <a type="button" (click)="agrupar('ejeEstado', 'Activo','Estado - Activo')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'ejeEstado-Activo'}"
+          >Estado - Activo
+        </a>
+                    <a type="button" (click)="agrupar('ejeEstado', 'Desconectado', 'Estado - Desconectado')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'estado-Desconectado'}">Estado - Desconectado</a
+          >
+          <a type="button" (click)="agrupar('ejeEstado', 'Pausa','Estado - Pausa')" class="dropdown-item" [ngClass]="{'active-dropdown':activeGroupBy === 'estado-Pausa'}"
+            >Estado - Pausa
+          </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 d-flex justify-content-end mr-3 mb-1">
+        <span class="text-success mr-1 ml-3"><i class="fas fa-square"></i></span
+      ><small class="my-auto text-grey">Atendiendo (tiempo de atención inferior al máximo)</small>
+    <span class="text-maroon mr-1 ml-3"><i class="fas fa-square"></i></span
+      ><small class="my-auto text-grey">Atendiendo (tiempo de atención superior al máximo)</small>
+    <span class="text-cyan mr-1 ml-3"><i class="fas fa-square"></i></span
+      ><small class="my-auto text-grey">Llamando</small>
+    <span class="text-blue mr-1 ml-3"><i class="fas fa-square"></i></span
+      ><small class="my-auto text-grey">En espera</small>
+    <span class="text-gray mr-1 ml-3"><i class="fas fa-square"></i></span
+      ><small class="my-auto text-grey">En Pausa</small>
+    <span class="text-orange mr-1 ml-3"><i class="fas fa-square"></i></span
+      ><small class="my-auto text-grey">Desconectado</small>
+  </div>
+</div>
+
+<div class="row">
+  <!-- ./col -->
+  <div
+    *ngFor="
+      let escritorio of this.escritorios| filtro
+      : { key: this.groupBy.key, value: this.groupBy.value }
+      : { key: 'orden', type: 'A' } | buscador : searchText : ['ejecutivo']
+    "
+    class="col-xl-4 col-md-6 col-12 h-100"
+  >
+    <!-- small box -->
+    <div
+      (click)="modalEscritorios(escritorio)"
+      class="small-box bg-info pointer altocard"
+      [ngClass]="getClassOfCard(escritorio.ejeEstado)"
+    >
+      <div class="inner pb-0">
+        <div
+          class="d-flex align-items-center justify-content-between"
+          [ngClass]="getClassOf(escritorio.ejeEstado, escritorio.series)"
+        >
+          <h6 class="pb-2 mb-0 pt-0">Escritorio #{{ escritorio.idEsc }}</h6>
+          <div>
+            <span class="mr-1"><i class="fas fa-square"></i></span>
+    </div>
+</div>
+<div class="row no-gutters">
+    <div class="col-xl-12 col-sm-12 ejecutivo">
+        <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+            <div class="row col-12 mx-0 px-0 alto-series">
+                <h3 class="num-popp text-wrap nom-serie col-6" [ngClass]="getClassOf(escritorio.ejeEstado, escritorio.series)" *ngFor="let serie of escritorio.series; let i=index">
+                    {{i+1}}) {{ serie.serie }}&nbsp;({{serie.qAte}}<span *ngIf="customer.slug=='ttp_afc'"> - {{tpoprom(serie.tpoAteP)}}</span>)
+                </h3>
+            </div>
+
+            <p class="text-1 pb-2" style="font-size: 10px !important;">Series asignadas al escritorio&nbsp;(# Atenciones<span *ngIf="customer.slug=='ttp_afc'"> - T. Prom. Ate</span>)</p>
+        </div>
+    </div>
+    <div class="col-xl-12 col-sm-12 ejecutivo" *ngIf="escritorio.ejeEstado != 'Desconectado'">
+        <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+            <h3 class="num-popp text-wrap nom-ejecutivo" [ngClass]="getClassOf(escritorio.ejeEstado, escritorio.series)">
+                {{ escritorio.ejecutivo }}
+            </h3>
+            <p class="text-1 pb-2">Ejecutivo</p>
+        </div>
+    </div>
+    <div class="col-xl-6 col-sm-12 ejecutivo" *ngIf="escritorio.ejeEstado != 'Desconectado'">
+        <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border">
+            <h4 class="num-popp text-wrap my-0" [ngClass]="getClassOf(escritorio.ejeEstado, escritorio.series)">
+                {{ estadoSerie(escritorio.series) }}
+            </h4>
+            <p class="text-1 pb-2">Turnos atendidos hoy</p>
+        </div>
+    </div>
+    <div class="col-xl-6 col-sm-12 ejecutivo" *ngIf="escritorio.ejeEstado != 'Desconectado' && escritorio.ejeEstado != 'Activo'">
+        <div class="info-series-oficina-data-card info-turnos-oficina-data-card no-b-border pt-2">
+            <h3 class="num-popp text-wrap my-0" [ngClass]="getClassOf(escritorio.ejeEstado, escritorio.series)" style="font-size: 10px !important;">
+                {{ motivoPausa(escritorio.ejeEstado) }}
+            </h3>
+            <p class="text-1 pb-2" style="font-size: 10px !important;">Motivo de Pausa <span *ngIf="escritorio.ejeEstado!='Pausa'"><span *ngIf="customer.slug=='ttp_afc'"> (hora pausa)</span></span>
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,190 @@
+<div class="modal-info-oficinas-container container">
+    <div class="modal-info-oficinas-header-container">
+        <div class="modal-info-oficinas-header">
+            <h5 class="subtitle">
+                <small>Turno {{ data.letra }}{{ data.turno }} -
+            {{ data.perdido == "N" ? "Atendido" : "Perdido" }}</small>
+            </h5>
+            <div class="text-right">
+                <button type="button" class="btn btn-ligth boton mr-3" (click)="closeModal()">
+                  Volver al histórico de atenciones
+                  <i class="fa fa-chevron-left ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body px-0">
+
+        <div class="col-xl-12 d-flex flex-wrap">
+            <div class="col-xl-12 mt-3">
+                <h5 class="subtitle">Información General del Turno</h5>
+            </div>
+            <div class="col-xl-12 d-flex flex-wrap">
+                <div class="modal-presentation-card-container">
+                    <div class="box-input modal-presentation-card">
+                        <div>
+                            <div>
+                                <p class=" font-weight-bold mb-0 mr-2">Fecha Emisión: </p>
+                            </div>
+                            <div class="text-content">
+                                <p class="mb-0 text-label">{{ data.fH_Emitido && data.fH_Emitido != null ? formatearFecha(data.fH_Emitido.split('T')[0]) : '-' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-presentation-card-container">
+                    <div class="box-input modal-presentation-card">
+                        <div>
+                            <div>
+                                <p class=" font-weight-bold mb-0 mr-2">ID turno:</p>
+                            </div>
+                            <div class="text-content">
+                                <p class="mb-0 text-label">{{ data.idTurno }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-presentation-card-container">
+                    <div class="box-input modal-presentation-card">
+                        <div>
+                            <div>
+                                <p class=" font-weight-bold mb-0 mr-2">Oficina: </p>
+                            </div>
+                            <div class="text-content">
+                                <p class="mb-0 text-label">{{ data.idOficina }} - {{ data.oficina }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-presentation-card-container">
+                    <div class="box-input modal-presentation-card">
+                        <div>
+                            <div>
+                                <p class=" font-weight-bold mb-0 mr-2">Serie</p>
+                            </div>
+                            <div class="text-content">
+                                <p class="mb-0 text-label">{{ data.idSerie }} - {{ data.serie }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-presentation-card-container" *ngIf="data.subSerie">
+                    <div class="box-input modal-presentation-card">
+                        <div>
+                            <div>
+                                <p class=" font-weight-bold mb-0 mr-2">Subserie</p>
+                            </div>
+                            <div class="text-content">
+                                <p class="mb-0 text-label">{{ data.idSubSerie }} - {{ data.subSerie }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mt-3">
+                <h5 class="subtitle">Escritorio de Atención</h5>
+            </div>
+            <div class="col-xl-12 d-flex flex-wrap">
+                <div class="modal-presentation-card-container">
+                    <div class="box-input modal-presentation-card">
+                        <div>
+                            <div>
+                                <p class=" font-weight-bold mb-0 mr-2">Escritorio: </p>
+                            </div>
+                            <div class="text-content">
+                                <p class="mb-0 text-label">{{ data.escritorio }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-presentation-card-container">
+                    <div class="box-input modal-presentation-card">
+                        <div>
+                            <div>
+                                <p class=" font-weight-bold mb-0 mr-2">Ejecutivo:</p>
+                            </div>
+                            <div class="text-content">
+                                <p class="mb-0 text-label">{{ data.idEjecutivo }} - {{ data.ejecutivo }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mt-3">
+                <h5 class="subtitle">Datos del Cliente</h5>
+            </div>
+            <div class="col-xl-12 d-flex flex-wrap">
+                <div class="modal-presentation-card-container">
+                    <div class="box-input modal-presentation-card">
+                        <div>
+                            <div>
+                                <p class=" font-weight-bold mb-0 mr-2">Nombre: </p>
+                            </div>
+                            <div class="text-content">
+                                <p class="mb-0 text-label">{{ data.cliente }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-presentation-card-container">
+                    <div class="box-input modal-presentation-card">
+                        <div>
+                            <div>
+                                <p class=" font-weight-bold mb-0 mr-2">Rut:</p>
+                            </div>
+                            <div class="text-content">
+                                <p class="mb-0 text-label">{{ formatRut(data.rut) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-xl-12 d-flex flex-wrap">
+            <div class="col-xl-12 mt-3">
+                <h5 class="subtitle">Información de atención</h5>
+            </div>
+            <div class="col-md-12">
+                <div class="overflow-auto">
+                    <table class="table  table-sm table-striped table-hover mt-2">
+                        <thead class="table-head-verde">
+                            <tr>
+                                <th>Métrica</th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th>T. Espera</th>
+                                <th>Duración</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Emisón</td>
+                                <td>{{ data.fH_Emitido && data.fH_Emitido != null ? data.fH_Emitido.split('T')[1] : '-' }}</td>
+                                <td>-</td>
+                                <td>{{ convertSecondsToString(data.tiempoEspera) }}</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Llamado</td>
+                                <td>{{ data.fH_Llama && data.fH_Llama != null ? data.fH_Llama.split('T')[1] : '-' }}</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>{{ convertSecondsToString(data.tiempoLlamado) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Atención</td>
+                                <td>{{data.fH_AtencionIni && data.fH_AtencionIni != null ? data.fH_AtencionIni.split('T')[1] : '-'}}</td>
+                                <td>{{ data.fH_AtencionFin && data.fH_AtencionFin != null ? data.fH_AtencionFin.split('T')[1] : '-' }}</td>
+                                <td>-</td>
+                                <td>{{ convertSecondsToString(data.tiempoAtencion) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

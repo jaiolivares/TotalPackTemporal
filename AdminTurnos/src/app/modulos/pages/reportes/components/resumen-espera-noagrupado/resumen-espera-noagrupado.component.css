@@ -1,0 +1,13 @@
+.text-red {
+    color: red;
+}
+.invalid-border {
+    border: 2px solid red;
+  }
+  .icon-container {
+    position: absolute;
+    top: 50%;
+    right: 38px; /* Puedes ajustar esto según tus preferencias */
+    transform: translateY(-50%);
+    cursor: pointer;
+  }

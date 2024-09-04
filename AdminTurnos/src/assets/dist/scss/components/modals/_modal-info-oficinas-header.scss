@@ -1,0 +1,127 @@
+.modal-info-oficinas {
+    max-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    .modal-content {
+        min-height: 100%;
+        min-height: 100vh;
+        background-color: #f4f4f4;
+        border: none;
+        border-radius: inherit;
+        .modal-body {
+            .modal-body-content {
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+            }
+        }
+    }
+}
+
+.modal-info-oficinas-container {
+    .modal-info-oficinas-header-container {
+        .modal-info-oficinas-header {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 3rem;
+            h5 {
+                font-size: 2.2rem;
+            }
+        }
+        .modal-info-oficinas-card-container {
+            margin-top: 2rem;
+            .modal-info-oficinas-card {
+                background-color: #fff;
+                display: flex;
+                padding: 10px;
+                padding-left: 15px;
+                padding-right: 15px;
+                &-number {
+                    h5 {
+                        margin-bottom: 0;
+                        font-size: 1.3rem;
+                        color: var(--color-llamado);
+                        font-family: 'Poppins', sans-serif!important;
+                        font-weight: bold;
+                    }
+                    p {
+                        font-size: 1rem;
+                        font-family: 'Poppins', sans-serif;
+                        margin-bottom: 0;
+                        color: #a3a4a5;
+                    }
+                    span {
+                        font-size: 0.8rem;
+                    }
+                }
+                &-icon {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: flex-start;
+                    flex: 1;
+                    div {
+                        background-color: rgba(49, 255, 0, 0.1);
+                        padding: 15px;
+                        border-radius: 100%;
+                        i {
+                            color: #145105;
+                            font-size: 1.3rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.info-series-oficina-data-card {
+    border-bottom: 4px solid #94cb97;
+    &.no-b-border {
+        border-bottom: initial;
+    }
+    h3 {
+        margin: 0;
+        line-height: 20px;
+    }
+    h6 {
+        // font-size: 2rem;
+        line-height: 17px;
+        margin: 0;
+    }
+    p {
+        margin: 0;
+        // color:#a3a4a5;
+    }
+}
+
+@include media-query(map-get($grid-breakpoints, "sm")) {
+    .modal-info-oficinas-container {
+        .modal-info-oficinas-header-container {
+            .modal-info-oficinas-header {
+                h5 {
+                    font-size: 1.8rem;
+                }
+            }
+        }
+    }
+    .modal-info-oficinas-header-container {
+        .boton-volver {
+            margin-bottom: 1rem;
+        }
+    }
+    .modal-info-oficinas-container {
+        .modal-body {
+            padding: 0;
+        }
+        .card-body {
+            padding: 1rem;
+        }
+    }
+    .info-series-oficina-data-card {
+        h6 {
+            font-size: 0.9rem;
+        }
+        p {
+            font-size: 0.8rem;
+        }
+    }
+}

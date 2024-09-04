@@ -1,0 +1,158 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row col-12 px-0 ml-0" *ngIf="!agregar">
+            <div class="col-2 pl-0 pr-0">
+                <h5 class="pt-2">Pantallas</h5>
+            </div>
+        </div>
+
+        <section class="row col-lg-12 connectedSortable" [@openClose]="agregar ? 'open' : 'closed'">
+            <div class="card box-success box">
+                <div class="col-xl-12 col-lg-12  mx-0 pb-0">
+
+                    <div class="box-input box-series col-12 row no-gutters">
+                        <div class="w-100 d-flex escritorios-title-container justify-content-between ">
+                            <h5 class="sw-text mt-3">{{nomPantallaSelect}}</h5>
+                        </div>
+
+                        <div class="row col-12">
+
+                            <div class="col-xl-7">
+                                <div class="row px-0 no-gutters w-100 mt-2 mb-2 mx-auto">
+
+                                    <div class="col-3 py-1 px-2"
+                                        *ngFor="let medicoView of pantallaViews; let i = index">
+                                        <div class="bar-serie serie-asignada-container">
+                                            <div class="">
+                                                <p class="mb-0 serie-asignada-card-serie">Box : {{medicoView.box}}</p>
+                                                <p class="mb-0 serie-asignada-card-serie">Piso : {{medicoView.piso}}</p>
+                                            </div>
+                                            <div class="close-bar" (click)="borrarPantalla(medicoView)">
+                                                <i class="fas fa-times"></i>
+                                            </div>
+                                            <div class="conf-bar" (click)="modalEditar(medicoView)">
+                                                <img src="assets/dist/img/gear.svg" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-5 col-lg-12 mt-2">
+                                <form [formGroup]="form" (submit)="AgregarPantalla()">
+                                    <div class="w-100 form-group">
+                                        <div class="box-input">
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <label class="text-input">Box:</label>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <input type="text" formControlName="box"
+                                                        [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['box'].errors !== null)}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-100 form-group">
+                                        <div class="box-input">
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <label class="text-input">Piso:</label>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <input type="text" formControlName="piso"
+                                                        [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['piso'].errors !== null)}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-wrap justify-content-between mt-2">
+                                        <button type="submit" class="btn btn-block btn-success">
+                                            <i class="fas fa-save">
+                                            </i> Agregar Box </button>
+                                        <button type="button" class="btn btn-block btn-secondary mt-0"
+                                            (click)="cancelarAgregarPantalla()">
+                                            <i class="fas fa-ban"></i>
+                                            Volver
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section class="row col-lg-12 connectedSortable mt-2" *ngIf="!agregar">
+            <div class="col-md-12 pl-0">
+                <div class="row pb-1">
+                    <ng-container *ngIf="pantallas">
+                        <ng-container *ngIf="pantallas.length > 0">
+
+                            <div class="col-xl-4 col-lg-6 col-sm-6 col-12"
+                                *ngFor="let pantalla of pantallas; let indice = index">
+                                <div class="bar-serie bg-info grey mb-4" style="min-height: 235px;">
+                                    <h6 class="pb-2 mb-0 pt-0">{{pantalla.nombreOficina}}</h6>
+                                    <p class="text-grey mb-1">{{pantalla.idPantallaMedico}}</p>
+                                    <p class="primary-text">Boxes asignados</p>
+
+                                    <p class="mx-0 text-grey"
+                                        *ngIf="pantalla.listaPantallaMedico_view && pantalla.listaPantallaMedico_view.length <= 0">
+                                        No hay pantallas asignadas a esta oficina.
+                                    </p>
+
+                                    <div class="row mx-auto">
+                                        <ng-container
+                                            *ngFor="let pant of pantalla.listaPantallaMedico_view.slice(0, mostrarTodos[indice] ? pantalla.listaPantallaMedico_view.length : 6); let i = index">
+                                            <div class="d-flex align-items-center w-100 py-1 px-2"
+                                                *ngIf="pant.piso !== pantalla.listaPantallaMedico_view[i - 1]?.piso">
+                                                <strong class="w-75 fs-14">Piso: {{pant.piso}}</strong>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-6 col-sm-6 col-12 px-1">
+                                                <div class="bar-serie">
+                                                    Box: {{pant.box}}
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div>
+                                        <div *ngIf="pantalla.listaPantallaMedico_view.length > 6">
+                                            <div class="px-2 mt-2">
+                                                <span role="button" (click)="toggleMostrarTodos(indice)">Ver {{
+                                                    mostrarTodos[indice] ? 'menos' : 'más' }} ></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="close-bar" (click)="selectPantalla(pantalla.idPantallaMedico)">
+                                        <img src="assets/dist/img/gear.svg">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </ng-container>
+                        <ng-container *ngIf="pantallas.length <= 0">
+                            <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+                                <h2 class="primary-text mt-5">No Hay Pantallas Registradas</h2>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+
+<ng-container>
+    <div class="spinner-container">
+        <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

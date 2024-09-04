@@ -1,0 +1,143 @@
+<div class="row d-flex justify-content-between align-items-center ">
+  <h5 class="p-2">Consulta Estado Ejecutivo</h5>
+  <span></span>
+  <button class="btn btn-success m-1" *ngIf="estadoEjecutivo.length > 0" (click)="isCollapsed = !isCollapsed">
+    {{ isCollapsed ? 'Mostrar Formulario' : 'Ocultar Formulario' }}
+  </button>
+
+</div>
+<section class="connectedSortable" [@openClose]="isCollapsed ? 'closed' : 'open'">
+
+  <div class="pb-0 py-3">
+    <form [formGroup]="form" (submit)="EstadoEjecutivo()">
+
+      <div class="row">
+
+        <div class="col-xl-3 col-lg-6 col-12">
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-5 pr-0 col-12">
+                <p class="text-input text-nowrap">Oficina</p>
+              </div>
+              <div class="col-sm-7 col-12 m-0">
+                <select formControlName="idOficina"
+                  [ngClass]="{'invalid-border': (form.get('idOficina')?.invalid && (form.get('idOficina')?.touched || submitted))}">
+                  <option value="" selected disabled>Selecionar</option>
+                  <option *ngFor="let oficina of oficinas" [value]="oficina.id">{{oficina.valor}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6 col-12">
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-5 pr-0 col-12">
+                <p class="text-input text-nowrap">Fecha</p>
+              </div>
+              <div class="col-sm-7 col-12">
+                <input type="date" formControlName="fecha" [max]="fechaActual"
+                  [ngClass]="{'invalid-border': (form.get('fecha')?.invalid && (form.get('fecha')?.touched || submitted))}"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-xl-3 col-lg-6 col-12">
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-5 pr-0 col-12">
+                <p class="text-input text-nowrap">Hora Inicio</p>
+              </div>
+              <div class="col-sm-7 col-12 m-0">
+                <select formControlName="horaInicio"
+                  [ngClass]="{'invalid-border': (form.get('horaInicio')?.invalid && (form.get('horaInicio')?.touched || submitted))}">
+                  <option value="" selected disabled>Selecionar</option>
+                  <option *ngFor="let hora of horas" [value]="hora.time">{{hora.valor}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6 col-12">
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-5 pr-0 col-12">
+                <p class="text-input text-nowrap">Hora Final</p>
+              </div>
+              <div class="col-sm-7 col-12 m-0">
+                <select formControlName="horaFin"
+                  [ngClass]="{'text-red': form.get('horaFin')?.errors?.['invalidRange']}"
+                  [ngClass]="{'invalid-border': (form.get('horaFin')?.invalid && (form.get('horaFin')?.touched || submitted))}">
+                  <option value="" selected disabled>Selecionar</option>
+                  <option *ngFor="let hora of horas" [value]="hora.time">{{hora.valor}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="form.get('horaFin')?.errors?.['invalidRange']">
+          <small class="text-danger">
+            {{error}}
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-success m-1">
+          Consultar
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</section>
+
+
+
+<div class="col-md-12 mt-5" *ngIf="estadoEjecutivo.length > 0">
+  <apx-chart #chart [series]="chartOptions.series!" [chart]="chartOptions.chart!"
+    [plotOptions]="chartOptions.plotOptions!" [xaxis]="chartOptions.xaxis!" [tooltip]="chartOptions.tooltip!"
+    [legend]="chartOptions.legend!" [title]="chartOptions.title!" [subtitle]="chartOptions.subtitle!">
+  </apx-chart>
+</div>
+
+<!-- <div class="col-md-12" *ngIf="estadoEjecutivo.length > 0"> -->
+<div class="col-md-12" *ngIf="false">
+  <!-- <div class="col-xl-12 mt-3 d-flex align-items-center">
+    <h5 class="subtitle mr-auto">Eventos de ejecutivos</h5>
+  </div> -->
+
+  <div class="overflow-auto">
+    <table class="table table-bordered table-sm table-striped table-hover mt-2">
+      <thead class="table-head-verde">
+        <tr>
+          <th>Ejecutivo</th> <!-- Establecemos un ancho para la primera columna -->
+          <th colspan="100">Horas</th> <!-- Establecemos un ancho para la segunda columna -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ejecutivo of estadoEjecutivo">
+          <th>{{ ejecutivo.ejecutivo }}</th>
+          <td *ngFor="let estado of ejecutivo.jsonEstados"> <!-- Establecemos un ancho para cada celda -->
+            <div class="p-1"
+              [ngClass]="{'evento-o': estado.Evento === 'O','evento-p': estado.Evento === 'P', 'evento-a': estado.Evento === 'A'}">
+              {{ estado.Hora }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-container>
+  <div class="spinner-container">
+    <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+    </ngx-spinner>
+  </div>
+</ng-container>

@@ -1,0 +1,69 @@
+{
+    "data": {
+        "motivos": [{
+                "id": 1,
+                "nombre": "Compra de Equipos",
+                "series": [
+                    "Atención General",
+                    "Finalización de Servicio",
+                    "Ventas - Portabilidad",
+                    "Cambio de Equipo / Chip",
+                    "Empresas",
+                    "Agenda Web"
+                ]
+            },
+            {
+                "id": 2,
+                "nombre": "Pago Deuda",
+                "series": [
+                    "serie 3",
+                    "serie 4"
+                ]
+            },
+            {
+                "id": 3,
+                "nombre": "Retiro de Efectivo",
+                "series": [
+                    "serie A",
+                    "serie B"
+                ]
+            },
+            {
+                "id": 4,
+                "nombre": "Cambio de equipo",
+                "series": [
+                    "serie 8",
+                    "serie 9",
+                    "serie 10"
+                ]
+            },
+            {
+                "id": 5,
+                "nombre": "Consulta",
+                "series": []
+            },
+            {
+                "id": 6,
+                "nombre": "Pago Cuota",
+                "series": [
+                    "serie 1",
+                    "serie 2",
+                    "serie 3",
+                    "serie 4"
+                ]
+            },
+            {
+                "id": 7,
+                "nombre": "Solicitud de Garantía",
+                "series": [
+                    "serie A",
+                    "serie B",
+                    "serie C"
+                ]
+            }
+
+        ],
+        "totalMotivos": 7
+    },
+    "status": true
+}

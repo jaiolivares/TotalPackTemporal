@@ -1,0 +1,349 @@
+<div class="card box-success box">
+    <form [formGroup]="form" (submit)="enviarForm()">
+        <div class="row pb-0 p-3">
+            <div class="col-lg-12 col-12">
+                <h6 class="pt-n2"><i class="fas fa-file-signature"></i> Crear Serie</h6>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-4 px-0 col-12">
+                            <p class="text-input">Nombre</p>
+                        </div>
+                        <div class="col-sm-8 col-12">
+                            <input type="text" formControlName="nombreSerie" (input)="onChangeNombreSerie()"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['nombreSerie'].errors !== null)}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-4 px-0 col-12">
+                            <p class="text-input">Botón</p>
+                        </div>
+                        <div class="col-sm-8 col-12">
+                            <input type="text" formControlName="boton"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['boton'].errors !== null)}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-9 px-0 col-12">
+                            <p class="text-input">Letra</p>
+                        </div>
+                        <div class="col-sm-3 pl-0 col-12">
+                            <input type="text" formControlName="letra"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['letra'].errors !== null)}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-8 px-0">
+                            <p class="text-input sw-text">Jornada</p>
+                        </div>
+                        <div class="pl-0 col-4" style="margin-left: -5%">
+                            <input type="text" formControlName="jornada"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['jornada'].errors !== null)}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-10 px-0">
+                            <p class="text-input sw-text">Informativo</p>
+                        </div>
+                        <div class="pl-1 col-2" style="margin-left: -5%">
+                            <label class="switch">
+                                <input type="checkbox" formControlName="info" />
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-10 px-0">
+                            <p class="text-input sw-text">VIP</p>
+                        </div>
+                        <div class="pl-0 col-2" style="margin-left: -5%">
+                            <label class="switch">
+                                <input type="checkbox" formControlName="vip" />
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-8 px-0">
+                            <p class="text-input sw-text">Valor</p>
+                        </div>
+                        <div class="pl-0 col-4" style="margin-left: -5%">
+                            <input type="text" formControlName="valor"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['valor'].errors !== null)}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-10 px-0">
+                            <p class="text-input sw-text">Exige Rut</p>
+                        </div>
+                        <div class="pl-0 col-2" style="margin-left: -5%">
+                            <label class="switch">
+                                <input type="checkbox" formControlName="exigeId" />
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-5 px-0">
+                            <p class="text-input">Derivación</p>
+                        </div>
+                        <div class="col-sm-7 pl-0 col-12">
+                            <select class="custom-select" formControlName="posDeriva">
+                                <option [value]="1">Al comienzo de la fila</option>
+                                <option [value]="-1">Al final de la fila</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-8 col-12 px-0">
+                            <p class="text-input">Alarma tiempo Máximo Espera</p>
+                        </div>
+                        <div class="col-sm-4 col-12 pl-0">
+                            <input formControlName="tiempoMaximoEspera" placeholder="hh:mm:ss" class="text-center mt-3"
+                                mask="h0:m0:s0" [leadZeroDateTime]="true"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['tiempoMaximoEspera'].errors !== null)}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-8 col-12 px-0">
+                            <p class="text-input">Alarma Tiempo Mínimo Atención</p>
+                        </div>
+                        <div class="col-sm-4 col-12 pl-0">
+                            <input formControlName="tiempoMaximoAtencion" placeholder="hh:mm:ss"
+                                class="text-center mt-3" mask="h0:m0:s0" [leadZeroDateTime]="true"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['tiempoMaximoAtencion'].errors !== null)}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <div class="col-lg-3 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-8 col-12 px-0">
+                            <p class="text-input">Tiempo mínimo Atención</p>
+                        </div>
+                        <div class="col-sm-4 col-12 pl-0">
+                            <input formControlName="tiempoMinimoAtencion" placeholder="hh:mm:ss"
+                                class="text-center mt-3" mask="h0:m0:s0" [leadZeroDateTime]="true"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['tiempoMinimoAtencion'].errors !== null)}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-4 px-0 col-12">
+                            <p class="text-input">Tipo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        </div>
+                        <div class="col-sm-8 col-12">
+                            <select class="custom-select" formControlName="tipo">
+                                <option value="0">Normal</option>
+                                <option value="1">Autopago</option>
+                                <option value="2">Videollamada</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-4 px-0 col-12">
+                            <p class="text-input">Descripción</p>
+                        </div>
+                        <div class="col-sm-8 col-12 pt-3 pl-0 pr-4">
+                            <textarea name="" formControlName="descripcion" id="" rows="6" class="w-100"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-2 px-0 col-12">
+                            <p class="text-input">Ticket</p>
+                        </div>
+                        <div class="col-sm-7 col-12 pt-3 pr-1 my-auto">
+                            <textarea #ticketTextArea formControlName="ticket" name="ticket" rows="6" class="w-100"
+                                [ngClass]="{'input-error': (this.isSubmitted && this.form.controls['ticket'].errors !== null)}"></textarea>
+                        </div>
+                        <div class="col-sm-3 pt-3 pl-0 col-12 my-auto">
+                            <div class="text-center">
+                                <button class="btn boton text-grey mx-auto small" type="button"
+                                    (click)="modalCodigos()">
+                                    Códigos <i class="fa fa-terminal"></i>
+                                </button>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn boton text-grey mx-auto small" type="button"
+                                    (click)="swaalDefaultTicket()">
+                                    Default <i class="fa fa-refresh"></i>
+                                </button>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn boton text-grey mx-auto small" type="button"
+                                    (click)="modalVistaPreviaTicket()">
+                                    Ver <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-12" *ngIf="this.form.controls['info'].value">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-sm-4 px-0 col-12">
+                            <p class="text-input">Mensaje informativo</p>
+                        </div>
+                        <div class="col-sm-8 col-12 pt-3 pl-0 pr-4">
+                            <textarea name="" formControlName="infoMsg" id="" rows="6" class="w-100"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-12">
+                <div class="box-input mb-3">
+                    <div class="row">
+                        <div class="col-12 d-flex">
+                            <p class="text-input sw-text mr-3">Horarios de Atención</p>
+                        </div>
+                        <div class="row col-xl-6">
+                            <div class="col-12 row">
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">Día(s)</p>
+                                </div>
+                                <div class="col-sm-5 col-12">
+                                    <select class="custom-select" formControlName="dias">
+                                        <option value="0">Todos</option>
+                                        <option value="1">Lunes a Viernes</option>
+                                        <option value="2">Fin de semana</option>
+                                        <option value="3">Lunes</option>
+                                        <option value="4">Martes</option>
+                                        <option value="5">Miercoles</option>
+                                        <option value="6">Jueves</option>
+                                        <option value="7">Viernes</option>
+                                        <option value="8">Sabado</option>
+                                        <option value="9">Domingo</option>
+                                    </select>
+                                </div>
+                                <div class="col-4 px-0 pt-3">
+                                    <div class=" col-12 d-flex align-items-center">
+                                        <button class="btn btn-ligth boton p-0" type="button" (click)="setHorarios()">
+                                            Confirmar <i class="fa fa-check primary-text fa-lg"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row col-12">
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">De</p>
+                                </div>
+                                <div class="col-sm-3 col-12">
+                                    <timepicker formControlName="horarioDe" [showMeridian]="false"
+                                        [showSpinners]="false"></timepicker>
+                                </div>
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">a</p>
+                                </div>
+                                <div class="col-sm-3 col-12">
+                                    <timepicker formControlName="horarioHasta" [showMeridian]="false"
+                                        [showSpinners]="false"></timepicker>
+                                </div>
+                            </div>
+                            <div class="row col-12">
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">Y de</p>
+                                </div>
+                                <div class="col-sm-3 col-12">
+                                    <timepicker formControlName="horarioYDe" [showMeridian]="false"
+                                        [showSpinners]="false"></timepicker>
+                                </div>
+                                <div class="col-sm-3 pr-0 col-12">
+                                    <p class="text-input mb-1">a</p>
+                                </div>
+                                <div class="col-sm-3 col-12">
+                                    <timepicker formControlName="horarioYHasta" [showMeridian]="false"
+                                        [showSpinners]="false"></timepicker>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class=" col-xl-6   d-flex flex-wrap my-2">
+                            <div class="mx-1" *ngFor="let element of horariosAtencionPorDia">
+                                <app-day-card [data]="element"
+                                    (onDelete)="deleteHorarioAtencion($event)"></app-day-card>
+                            </div>
+                        </div>
+                        <div class="col-12 ml-3 mt-3">
+                            <h6 class="primary-text">Nota: <small class="text-grey"> Recuerde confirmar los horarios
+                                    antes de CREAR la serie, pues de lo contrario sus cambios no quedarán
+                                    registrados</small></h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-10 text-right">
+                <button type="submit" class="btn btn-block btn-success m-1">
+                    <i class="far fa-save"></i> Crear
+                </button>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-secondary btn-fail m-1" (click)="onVolver()">
+                    <i class="fas fa-ban"></i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<ng-container *ngIf="isLoading">
+    <div class="spinner-container component-only">
+        <ngx-spinner name="servicio-loading" [fullScreen]="false" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

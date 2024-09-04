@@ -1,0 +1,110 @@
+<div class="box-input mb-3">
+    <div class="row">
+        <div class="col-6">
+            <p class="text-input sw-text">Permisos de Administración</p>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-10">
+                    <p class="text-input sw-text">Seleccionar Todos</p>
+                </div>
+                <div class="pl-0 col-2">
+                    <label class="switch">
+                        <input type="checkbox" [checked]="checkedAll" (change)="selectAll($event)">
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <table class="table table-xs table-striped table-hover mt-2 tabla-edit mx-auto">
+                <thead class="table-head-verde">
+                    <tr>
+                        <th colspan="1">Detalle</th>
+                        <th colspan="1">Crear</th>
+                        <th colspan="1">Modificar</th>
+                        <th colspan="1">Borrar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of permisosAdministracion()" style="height:2px">
+                        <td>{{ row['modulo'] }}</td>
+                        <ng-container *ngIf="row.prefix !== 'sxo' && row.prefix !== 'ser' && row.prefix != 'pan' && row.prefix != 'bot' && row.prefix != 'ofi'">
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_add']" (change)="row.permisos[row.prefix+'_add']=!row.permisos[row.prefix+'_add']"></td>
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_edit']" (change)="row.permisos[row.prefix+'_edit']=!row.permisos[row.prefix+'_edit']"> </td>
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_del']" (change)="row.permisos[row.prefix+'_del']=!row.permisos[row.prefix+'_del']"></td>
+                        </ng-container>
+                        <ng-container *ngIf="row.prefix == 'sxo'">
+                            <td></td>
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_set']" (change)="row.permisos[row.prefix+'_set']=!row.permisos[row.prefix+'_set']"></td>
+                            <td></td>
+                        </ng-container>
+                        <ng-container *ngIf="row.prefix == 'ser'">
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_add']" (change)="row.permisos[row.prefix+'_add']=!row.permisos[row.prefix+'_add']"></td>
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_edit']" (change)="row.permisos[row.prefix+'_edit']=!row.permisos[row.prefix+'_edit']"> </td>
+                            <td></td>
+                        </ng-container>
+                        <ng-container *ngIf="row.prefix == 'pan' || row.prefix == 'bot' || row.prefix == 'ofi'">
+                            <td></td>
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_edit']" (change)="row.permisos[row.prefix+'_edit']=!row.permisos[row.prefix+'_edit']"> </td>
+                            <td></td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="box-input mb-3">
+    <div class="row">
+        <div class="col-6">
+            <p class="text-input sw-text">Permisos de acceso</p>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-10">
+                    <p class="text-input sw-text">Seleccionar Todos</p>
+                </div>
+                <div class="pl-0 col-2">
+                    <label class="switch">
+                      <input type="checkbox" [checked]="checkedAllAccesos" (change)="selectAllAccesos($event)">
+                      <div class="slider round"></div>
+                  </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <table class="table table-xs table-striped table-hover mt-2 tabla-edit mx-auto">
+                <thead class="table-head-verde">
+                    <tr>
+                        <th colspan="1" style="width:277.42px">Detalle</th>
+                        <th>Acceso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of permisosAcceso()" style="height:2px">
+                        <td>{{ row['modulo'] }}</td>
+                        <ng-container *ngIf="row.prefix === 'rep' && row['modulo'] == 'Módulo Reportería'">
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_add']" (change)="handlePermisosReporteria(!row.permisos[row.prefix+'_add']);row.permisos[row.prefix+'_add']=!row.permisos[row.prefix+'_add']"></td>
+                        </ng-container>
+                        <ng-container *ngIf="row.prefix === 'rep' && row['modulo'] == 'Derivación de turnos (Reportería)'">
+                            <td><input type="checkbox" [disabled]="!permisosReporteria" [checked]="row.permisos[row.prefix+'_edit']" (change)="row.permisos[row.prefix+'_edit']=!row.permisos[row.prefix+'_edit']"></td>
+                        </ng-container>
+                        <ng-container *ngIf="row.prefix === 'bat' && row['modulo'] == 'Históricos (Reportería)'">
+                            <td><input type="checkbox" [disabled]="!permisosReporteria" [checked]="row.permisos[row.prefix+'_add']" (change)="row.permisos[row.prefix+'_add']=!row.permisos[row.prefix+'_add']"></td>
+                        </ng-container>
+                        <ng-container *ngIf="row.prefix === 'bat' && row['modulo'] == 'Módulo Config. General'">
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_edit']" (change)="row.permisos[row.prefix+'_edit']=!row.permisos[row.prefix+'_edit']"></td>
+                        </ng-container>
+                        <ng-container *ngIf="row.prefix === 'bat' && row['modulo'] == 'Módulo Config. Oficinas'">
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_del']" (change)="row.permisos[row.prefix+'_del']=!row.permisos[row.prefix+'_del']"></td>
+                        </ng-container>
+                        <ng-container *ngIf="row.prefix === 'rep' && row['modulo'] == 'Módulo Llamado Pacientes'">
+                            <td><input type="checkbox" [checked]="row.permisos[row.prefix+'_del']" (change)="row.permisos[row.prefix+'_del']=!row.permisos[row.prefix+'_del']"></td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

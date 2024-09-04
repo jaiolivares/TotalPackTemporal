@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row col-12">
+            <!-- <img src="assets/dist/img/construccion.png" alt="En construcción" class="mx-auto"> -->
+            <div class="col-3 pl-0 pr-0" *ngIf="!agregar && !editar">
+                <h5 class="pt-2">Menús</h5>
+            </div>
+            <div class="col-4 pl-0 pr-0" *ngIf="!agregar && !editar">
+                <h5 class="pt-2">Series por menú</h5>
+            </div>
+
+            <div class="col-5 d-flex justify-content-end" *ngIf="!agregar && !editar">
+                <button type="button" class="btn btn-block btn-success mt-0 mr-3 " (click)="handleActualizarMenus()" *ngIf="this.menusData.length > 0 &&  permisosAdministracion.includes('mnu_edit')" >
+                    <i class="fas fa-save"></i> Actualizar series
+                </button>
+                <button type="button" class="btn btn-block btn-success mt-0 " (click)="irACrear()" *ngIf="permisosAdministracion.includes('mnu_add')">
+                  <i class="fas fa-cogs"></i> Agregar menú
+              </button>
+            </div>
+        </div>
+        <section class="row col-lg-12 connectedSortable" [@openClose]="agregar ? 'open' : 'closed'">
+            <app-sub-servicios-create class="w-100" *ngIf="agregar" (onVolver)="volverADatos($event)"></app-sub-servicios-create>
+        </section>
+        <section class="row col-lg-12 connectedSortable" [@openClose]="editar ? 'open' : 'closed'">
+            <app-sub-servicios-edit class="w-100" *ngIf="editar" (onVolver)="volverADatos($event)" [data]="selectedMenu"></app-sub-servicios-edit>
+        </section>
+
+        <ng-container *ngIf="!agregar && !editar">
+            <div class="row my-3" *ngFor="let menu of menusData; let i = index">
+                <div class="col-xl-3 col-lg-3 col-sm-6">
+                    <div class="bar-serie bg-info grey mb-3 listado">
+                        <p>{{menu.nombre}}</p>
+                        <div class="close-bar" (click)="deleteSubSerie(menu)" *ngIf="permisosAdministracion.includes('mnu_del')">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="conf-bar">
+                            <img src="assets/dist/img/gear.svg" (click)="irAEditar(menu)" *ngIf="permisosAdministracion.includes('mnu_edit')">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-12 col-sm-6">
+                    <div class="bar-serie bg-info grey mb-3 pt-3 row mx-0 col-12 subseries" cdkDropList #list [id]="'list'+i" [cdkDropListData]="menu.series" [cdkDropListConnectedTo]="listDrop" (cdkDropListDropped)="drop($event,i,menu)">
+                        <div class="col-3 mb-0 text-dark px-1" *ngFor="let serie of menu.series" cdkDrag>
+                            <div class="box-subserie bar-serie  ml-2 " [ngClass]="{'bg-active': serie.nuevo, 'text-dark':!serie.nuevo}">
+                                {{serie.serieBoton}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row my-2" *ngIf="permisosAdministracion.includes('mnu_add') || permisosAdministracion.includes('mnu_edit')">
+                <div class="col-3 pl-0 pr-0" *ngIf="!agregar && !editar">
+                    <h5 class="pt-2 ml-3">Series</h5>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-sm-12 mt-2">
+                    <div class="bar-serie bg-info grey-disabled row mx-0 col-12 subseries" cdkDropList #list [id]="'series'" [cdkDropListData]="series" [cdkDropListConnectedTo]="listDrop" (cdkDropListDropped)="drop($event)">
+                        <div class="px-1 col-3 mb-0 text-dark box-subserie" *ngFor="let series of series" cdkDrag>
+                            <div class="bar-serie">
+                                {{series.serieBoton}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<ng-container>
+    <div class="spinner-container component-only">
+        <ngx-spinner [fullScreen]="false" name="servicio-get-menu-loading" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

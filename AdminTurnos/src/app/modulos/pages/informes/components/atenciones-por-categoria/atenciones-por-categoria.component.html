@@ -1,0 +1,155 @@
+<div class="row d-flex justify-content-between align-items-center " >
+  <h5 class="p-2">Reporte Atenciones por Categoría</h5>
+  <span></span>
+  <button class="btn btn-success m-1" *ngIf="informe.length > 0" (click)="isCollapsed = !isCollapsed">
+    {{ isCollapsed ? 'Mostrar Formulario' : 'Ocultar Formulario' }}
+  </button>
+</div>
+
+<section class="connectedSortable" [@openClose]="isCollapsed ? 'closed' : 'open'" >
+  <div class="pb-0 py-3" >
+    <form [formGroup]="form"  (submit)="onsubmit()">
+      <div class="row">
+
+        <div class="col-lg-12 col-12">
+          <div class="box-input mb-3" >
+            <div class="row">
+              <div class="d-flex col-6">
+                <p class="text-input sw-text" [ngClass]="{'text-red': (form.get('listIdOficina')?.invalid && (form.get('listIdOficina')?.touched || submitted))}">Oficinas</p>
+                <input type="text"
+                (input)="tecleado($event.target, 'oficinas')" spellcheck="false" placeholder="Buscar oficina...">
+              </div>
+
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-10" >
+                    <p class="text-input sw-text"
+                    >Seleccionar todas</p>
+                  </div>
+                  <div class="pl-0 col-2">
+                    <label class="switch">
+                      <input type="checkbox" [checked]="false" (change)="selectTodasOficinas($event)" >
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="table-scroll">
+                  <table class="table table-xs table-striped table-hover mt-2 tabla-edit mx-auto">
+                    <thead class="table-head-verde">
+                      <tr>
+                        <th colspan="1">Id</th>
+                        <th colspan="3">Oficina</th>
+                        <th colspan="2">Fecha Min</th>
+                        <th colspan="2">Fecha Max</th>
+                        <th colspan="1">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let oficina of oficinas | buscador:searchOficina:['idOficina','oficina']">
+                        <td colspan="1">{{ oficina.idOficina }}</td>
+                        <td colspan="3">{{ oficina.oficina }}</td>
+                        <td colspan="2">{{ oficina.dataMin | date: 'dd/MM/yyyy'}}</td>
+                        <td colspan="2">{{ oficina.dataMax | date: 'dd/MM/yyyy'}}</td>
+                        <td colspan="1">
+                          <input type="checkbox" (change)="selecteIdOficina($event, oficina.idOficina)"
+                          [checked]="false" [value]="oficina.idOficina" class="mx-auto oficeCheck" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-12">
+          <!-- <label for="rangoFecha" class="text-input text-nowrap">Rango Fecha</label> -->
+          <div class="box-input mb-0">
+            <div class="row align-items-center">
+              <div class="col-sm-4 pr-0 col-12">
+                <p class="text-input text-nowrap">Rango fecha</p>
+              </div>
+              <div class="col-sm-8 col-12">
+                  <input type="text" placeholder="Selección de fecha"
+                  (bsValueChange)="selectFecha($event)"
+                  placement="bottom"
+                  [bsConfig]="bsConfig"
+                  #dpRange="bsDaterangepicker"
+                  bsDaterangepicker
+                  [ngClass]="{'invalid-border': (form.get('fechaInicio')?.invalid && (form.get('fechaInicio')?.touched || submitted))}"/>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div><br>
+        <button type="submit" class="btn btn-success m-1">Consultar</button><br><br>
+      </div>
+    </form>
+  </div>
+</section>
+
+<div class="row" *ngIf="informe.length > 0">
+  <div class="col-xl-12 mt-3 d-flex  align-items-center">
+    <h5 class="subtitle mr-auto">Datos de Entrada</h5>
+  </div>
+  <div class="col-md-12">
+    <div class="overflow-auto" [@openClose]="isCollapsed ? 'open' : 'closed'">
+      <table class="table rounded-lg table-bordered table-sm table-striped table-hover mt-2">
+        <thead class="table-head-verde">
+          <tr>
+            <th>Oficina</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td > {{nombreOficinas}}</td>
+            <td> {{form.value.fechaInicio | date: 'dd/MM/yyyy'}} </td>
+            <td> {{form.value.fechaFin | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-xl-12 mt-3 d-flex  align-items-center">
+      <h5 class="subtitle mr-auto">Resultado</h5>
+
+      <div class="d-flex align-items-center">
+        <button (click)="exportarDataExcel()" class="btn btn-ligth boton px-0">
+          <i class="fa fa-file-excel ml-2 "></i>
+          <i class="fa fa-arrow-down-long "></i></button>
+      </div>
+
+    </div>
+    <div class="overflow-auto">
+<table class="table rounded table-bordered table-sm table-striped table-hover mt-2">
+  <thead class="table-head-verde">
+    <tr>
+      <th>Oficinas</th>
+      <th>Serie o Categorias</th>
+      <th>Cantidad de Atenciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of informe; let last = last">
+      <td *ngIf="data.qOfi !== null" [attr.rowspan]="data.qOfi">{{data.oficina}}</td>
+      <td>{{data.ser}}</td>
+      <td>{{data.qAte}}</td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+  </div>
+</div>
+
+<ng-container>
+  <div class="spinner-container">
+      <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+      </ngx-spinner>
+  </div>
+</ng-container>

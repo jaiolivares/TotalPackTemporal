@@ -1,0 +1,63 @@
+{
+    "data": {
+        "ejecutivos": [{
+                "id": 1,
+                "usuario": "lcastella",
+                "nombre": "Luis Eliseo Castellano",
+                "email": "lcastella@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 2,
+                "usuario": "dsepulved.13",
+                "nombre": "Daniela Sepulveda",
+                "email": "danielagmail.com",
+                "activo": 1
+            },
+            {
+                "id": 3,
+                "usuario": "lcarlos",
+                "nombre": "Luis Carlos García",
+                "email": "LuisCarlos@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 4,
+                "usuario": "papr01",
+                "nombre": "Pedro Antonio Pérez Rodríguez",
+                "email": "Pedro@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 5,
+                "usuario": "mbr200",
+                "nombre": "María Briceño",
+                "email": "mbr200@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 6,
+                "usuario": "yennifer1157",
+                "nombre": "Yennifer Duarte",
+                "email": "yennifer@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 7,
+                "usuario": "ignasi",
+                "nombre": "Ignasi Quintana",
+                "email": "ignasi@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 8,
+                "usuario": "josemaria",
+                "nombre": "Jose Maria Estrada",
+                "email": "josemaria@gmail.com",
+                "activo": 0
+            }
+        ],
+        "totalEjecutivos": 8
+    },
+    "status": true
+}

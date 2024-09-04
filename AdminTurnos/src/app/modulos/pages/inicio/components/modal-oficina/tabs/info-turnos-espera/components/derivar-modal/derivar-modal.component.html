@@ -1,0 +1,79 @@
+<div class="modal-info-oficinas-container container py-5">
+    <!-- <div class="modal-info-oficinas-header-container">
+    <div class="modal-info-oficinas-header">
+      <h5 class="subtitle">Turno #{{ item.letra }}{{ item.turno }}</h5>
+      <div class="text-right">
+        <button
+          type="button"
+          class="btn btn-ligth boton mr-3"
+        (click)="cerrarModal()"
+      >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+      </button> </div>
+  </div> -->
+    <div class="modal-body px-0 py-5">
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <h5 class="subtitle">Derivar Turno {{ item.letra }}{{ item.turno }}</h5>
+            </div>
+            <div class="col-xl-12">
+                <div class="mb-3 form-group">
+                    <!--  <label for="tipoFormato" class="form-label"
+            >¿Deseas derivar el turno a un ejecutivo?</label
+          > -->
+                    <select name="" id="tipoFormato" class="form-select form-control" [ngClass]="{
+              'is-invalid': isSubmitted && ejecutivoSeleccionado.value == ''
+            }" [formControl]="ejecutivoSeleccionado">
+            <option value="" selected disabled>Selecciona el ejecutivo al que se derivará el turno</option>
+            <option
+              [value]="(ejecutivo.idEsc)"
+              *ngFor="let ejecutivo of this.ejecutivos"
+            >
+              {{ ejecutivo.ejecutivo }} - {{ejecutivo.detalleSerie}}
+            </option>
+          </select>
+                    <div *ngIf="isSubmitted && ejecutivoSeleccionado.value == ''" class="invalid-feedback mt-2">
+                        Debe seleccionar un ejecutivo
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-xl-12 d-flex justify-content-center align-items-center">
+                <button type="button" class="btn btn-secondary mr-3" (click)="cerrarModal()">
+            Cancelar
+          </button>
+                <button type="button" class="btn btn-success" (click)="onSubmit()">
+            Derivar
+          </button>
+            </div>
+            <div class="col-12 modal-body-content card"></div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="modal-content bg-light">
+  <div class="modal-header border-0">
+    <h5 class="modal-title">Derivar</h5>
+    <button type="button" (click)="cerrarModal()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cerrarModal()">
+      No
+    </button>
+    <button type="button" class="btn btn-primary" (click)="onSubmit()">
+      Si
+    </button>
+  </div>
+</div> -->
+<ng-container>
+    <div class="spinner-container">
+        <ngx-spinner name="form-modal-derivar-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+        </ngx-spinner>
+    </div>
+</ng-container>

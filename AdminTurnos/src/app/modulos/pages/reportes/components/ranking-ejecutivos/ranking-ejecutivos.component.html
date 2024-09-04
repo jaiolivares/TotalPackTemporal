@@ -1,0 +1,226 @@
+<div class="row d-flex justify-content-between align-items-center ">
+  <h5 class="p-2">Ranking de los Ejecutivos</h5>
+  <span></span>
+  <button class="btn btn-success m-1"  *ngIf="respReporte.length > 0" (click)="isCollapsed = !isCollapsed">
+    {{ isCollapsed ? 'Mostrar Formulario' : 'Ocultar Formulario' }}
+  </button>
+
+</div>
+
+<section class="connectedSortable" [@openClose]="isCollapsed ? 'closed' : 'open'">
+
+
+  <div class="pb-0 py-3">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="row">
+
+        <div class="col-xl-4 col-lg-6 col-12">
+          <label class="text-input text-nowrap">Oficina</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+              </div>
+              <div class="col-sm-11 col-12 m-0">
+                <select formControlName="id"
+                [ngClass]="{'invalid-border': (form.get('id')?.invalid && (form.get('id')?.touched || submitted))}">
+                  <option value="" selected disabled>Seleccionar</option>
+                  <option *ngFor="let item of oficinas" [ngValue]="item.valor">{{item.valor}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-xl-3 col-lg-6 col-12">
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-5 pr-0 col-12">
+                <p class="text-input text-nowrap">Serie</p>
+              </div>
+              <div class="col-sm-7 col-12 m-0">
+                <select (change)="dateFecha($event)"  formControlName="idS">
+                  <option value="" selected disabled>Selecionar</option>
+                  <option value="1">Serie 1</option>
+                  <option value="2">Serie 2</option>
+                  <option value="3">Serie 3</option>
+                  <option value="4">Serie 4</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="col-xl-4 col-lg-6 col-12">
+          <label for="rangoFecha" class="text-input text-nowrap">Rango Fecha</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+                <!-- <label class="text-input text-nowrap"></label> -->
+              </div>
+              <div class="col-sm-10 col-12">
+                <input type="text" placeholder="Selección de fecha" (bsValueChange)="selectFecha($event)" 
+                placement="right" [bsConfig]="bsConfig"  #dpRange="bsDaterangepicker" bsDaterangepicker 
+                [ngClass]="{'invalid-border': (form.get('fechaIni')?.invalid && (form.get('fechaIni')?.touched || submitted))}"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-2 col-lg-6 col-12">
+          <label class="text-input text-nowrap">Tiempo Min (seg)</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+              </div>
+              <div class="col-sm-10 col-12">
+                <input type="number" placeholder="Entre 1 y 60"  formControlName="tmin" 
+                [ngClass]="{'invalid-border': (form.get('tmin')?.invalid && (form.get('tmin')?.touched || submitted))}" min="1"/>
+                <!-- <div *ngIf="form.get('tmin')?.errors?.['min']">
+                  <small class="text-danger">
+                    No debe ser menor que 1.
+                  </small>
+                </div>
+                <div *ngIf="form.get('tmin')?.errors?.['max']">
+                  <small class="text-danger">
+                    No debe ser mayor que 60.
+                  </small>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-2 col-lg-6 col-12">
+          <label class="text-input text-nowrap">Jornada (hrs)</label>
+          <div class="box-input mb-3">
+            <div class="row align-items-center">
+              <div class="col-sm-1 pr-0 col-12">
+              </div>
+              <div class="col-sm-10 col-12">
+                <input type="number" placeholder="Entre 1 y 24" formControlName="jornada" 
+                [ngClass]="{'invalid-border': (form.get('jornada')?.invalid && (form.get('jornada')?.touched || submitted))}" min="1"/>
+                <!-- <div *ngIf="form.get('jornada')?.errors?.['min']">
+                  <small class="text-danger">
+                    No debe ser menor que 1.
+                  </small>
+                </div>
+                <div *ngIf="form.get('jornada')?.errors?.['max']">
+                  <small class="text-danger">
+                    No debe ser mayor que 24.
+                  </small>
+                </div> -->
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-success m-1">
+          Consultar
+        </button><br><br>
+      </div>
+
+    </form>
+  </div>
+
+</section>
+
+
+<!-- <div class="row">
+  <div class="col-xl-12 mt-3 d-flex  align-items-center">
+    <h5 class="subtitle mr-auto">Eventos del ejecutivo</h5>
+
+    <div class="d-flex align-items-center">
+        <button class="btn btn-success mr-2" >Exportar a Txt</button>
+        <button class="btn btn-warning">Exportar a CSV</button>
+    </div> -->
+
+<div class="row" *ngIf="respReporte.length >= 1">
+  <div class="col-xl-12 mt-3 d-flex  align-items-center">
+    <h5 class="subtitle mr-auto">Datos de Entrada</h5>
+  </div>
+  <div class="col-md-12">
+    <div class="overflow-auto" [@openClose]="isCollapsed ? 'open' : 'closed'">
+      <table class="table rounded-lg table-bordered table-sm table-striped table-hover mt-2">
+        <thead class="table-head-verde">
+          <tr>
+            <th>Oficina</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Tiempo Medio (min)</th>
+            <th>Jornada (hrs)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td > {{nombreOficina}}</td>
+            <td> {{form.value.fechaIni | date: 'dd/MM/yyyy'}} </td>
+            <td> {{form.value.fechaFin | date: 'dd/MM/yyyy'}}</td>
+            <td> {{ segundosAMinutos(form.value.tmin)}} </td>
+            <td> {{form.value.jornada}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-xl-12 mt-3 d-flex  align-items-center">
+      <h5 class="subtitle mr-auto">Resultado</h5>
+  
+      <div class="d-flex align-items-center">
+        <button placement="bottom" (click)="exportExcel()" *ngIf="respReporte.length > 0" tooltip="Exporta los datos de los usuarios filtrados" class="btn btn-ligth boton px-0">
+          <i class="fa fa-file-excel ml-2 "></i>
+          <i class="fa fa-arrow-down-long "></i></button>
+      </div>
+  
+    </div>
+    <div class="overflow-auto">
+      <table class="table table-bordered table-sm table-striped table-hover mt-2">
+        <thead class="table-head-verde">
+          <tr>
+            <th>Ranking</th>
+            <th>Ejecutivo</th>
+            <th>Atenciones</th>
+            <th>Tiempo Medio (Minutos)</th>
+            <th>% Activo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let data of respReporte; let i = index">
+            <tr *ngIf="data.ejecutivo !== 'TOT'">
+              <td>{{data.mk}}</td>
+              <td>{{data.ejecutivo}}</td>
+              <td>{{data.qAte}}</td>
+              <td>{{ segundosAMinutos(data.timepoMedio) }}</td>
+              <td>{{data.poo}}%</td>
+            </tr>
+            <tr *ngIf="data.ejecutivo === 'TOT'" style="background-color: #0b147a !important; color:#fff !important">
+              <td>{{data.ejecutivo === 'TOT' ? 'Totales': data.ejecutivo }}</td>
+              <td></td>
+              <td>{{data.qAte}}</td>
+              <td>{{ segundosAMinutos(data.timepoMedio) }}</td>
+              <td>{{data.poo}}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <!-- <tfoot class="table-head-verde">
+          <tr>
+            <td>Total</td>
+            <td></td>
+            <td>{{totalQAtendidas}}</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot> -->
+      </table>
+    </div>
+  </div>
+</div>
+<ng-container>
+  <div class="spinner-container">
+      <ngx-spinner name="servicio-loading" [fullScreen]="true" type="ball-scale-ripple" size="large">
+      </ngx-spinner>
+  </div>
+</ng-container>

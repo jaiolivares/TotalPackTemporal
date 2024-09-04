@@ -1,0 +1,201 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row col-12" *ngIf="this.estado.selectedOficina">
+      <div class="col-9 pl-0 pr-0">
+        <h5 class="pt-2">Oficina: <span class="texto-customer">{{ estado.selectedOficina?.oficina }}</span></h5>
+      </div>
+    </div>
+
+    <div class="row col-12">
+      <div class="col-12 d-flex justify-content-end" *ngIf="!isCollapsed">
+        <button type="button" class="btn btn-block btn-success mt-0 mr-3 " (click)="agregarEmisor()">
+          <i class="fas fa-save"></i> Agregar Emisor
+        </button>
+        <!-- <button type="button" class="btn btn-block btn-grey mt-0  " >
+            Editar Emisor
+        </button> -->
+      </div>
+    </div>
+
+    <div class=" col-12 mt-1" *ngIf="!vistaDragAndDrop && !agregar">
+      <div class="">
+        <div class="row">
+
+          <div class="col-12">
+
+            <p class="primary-text text-input sw-text">Botones asignados</p>
+          </div>
+          <div class="row col-12 pr-0 align-items-center ml-2" *ngIf="!isCollapsed">
+            <div class="row col-12 p-1 ">
+
+              <div class="col-xl-3 col-lg-3 col-sm-4 col-12 " *ngFor="let item of respEmisor">
+
+               
+                <div class="bar-serie box-input mb-2">
+                  <p class="primary-text">Emisor {{ item.idEmisor }} </p>
+                  <div class="conf-bar-2" (click)="editarEmisor(item.idEmisor)" title="Editar emisor">
+                    <img src="assets/dist/img/gear.svg">
+                  </div>
+                  
+                    <p *ngFor="let valor of item.valores" class="text-grey bar-serie px-3 py-1 bar-serie px-3 py-1 text-center">{{ valor }}</p>
+                  
+                  <!-- <p> {{item | json}}</p> -->
+                  <div class="conf-bar-3" (click)="eliminarEmisor(item.idEmisor)" title="Eliminar emisor">
+                    <i class="fas fa-times"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin emisor -->
+    <!-- Inicio botones -->
+    <div class="row col-12" *ngIf="vistaDragAndDrop">
+      <div class="col-3 d-flex justify-content-start">
+        <!--        <h3 *ngIf="vistaDragAndDrop">{{ titulo }}</h3>-->
+      </div>
+      <div class="col-9 d-flex justify-content-end">
+        <button type="button" class="btn btn-block btn-success mt-0 mr-3 " *ngIf="agregar"
+                (click)="crearEmisor(emisor)">
+          <i class="fas fa-save"></i> Crear emisor
+        </button>
+        <button type="button" class="btn btn-block btn-success mt-0 mr-3 "
+                (click)="handleActualizarBotonesEnEmisor()"
+                *ngIf="permisosAdministracion.includes('bot_edit') && !agregar">
+          <i class="fas fa-save"></i> Actualizar botones en emisor
+        </button>
+        <button type="button" class="btn btn-block btn-grey mt-0  " (click)="limpiarBotonesEnEmisorAsignados()"
+                *ngIf="permisosAdministracion.includes('bot_edit')">
+          Limpiar
+        </button>
+      </div>
+
+    </div>
+    <br>
+    <!-- Fin botones -->
+    <ng-container *ngIf="vistaDragAndDrop">
+      <div class="row align-items-start">
+        <div class="container-fuid box-input mb-1 pt-1 row mx-0 col-12" *ngIf="agregar">
+          <div class="row align-items-center">
+            <div class="col-smfa-rotate-180">
+              <label class="text-input">N° del emisor a crear:</label>
+            </div>
+            <div class="col-sm-3 col-12">
+              <input type="text" [(ngModel)]="emisor" min="1" (change)="controlNumeroEmisor($event)" minlength="1"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-12 col-sm-6">
+          <h5 class="pt-2 ml-3">Botones en emisor {{ emisorId }}</h5>
+          <div class="bar-serie bg-info grey mb-3 pt-3 row mx-0 col-12 subseries" cdkDropList #list
+               [id]="'botonesEnEmisor'" [cdkDropListData]="botonesEnEmisor" [cdkDropListConnectedTo]="listDrop"
+               (cdkDropListDropped)="drop($event)">
+            <ng-container *ngIf="botonesEnEmisor.length > 0">
+              <div class="col-12 mb-0 text-dark px-1 d-flex justify-content-center align-items-center"
+                   *ngFor="let boton of botonesEnEmisor; let i = index" cdkDrag>
+                <div class="bar-serie cursor-move serie-asignada-container position-relative mb-4"
+                     [ngClass]="{'grey-disabled': !boton.activo,'bg-active': boton.nuevo,'text-dark': !boton.nuevo}">
+                  <div class="serie-asignada-card ">
+                    <p class="mb-0 serie-asignada-card-serie">{{ i + 1 }} - {{ boton.valor }}
+                      ({{ boton.tipo }})</p>
+                  </div>
+                  <div class="close-bar" (click)="changeSelectedSerie(boton.id,!boton.activo)"
+                       *ngIf="permisosAdministracion.includes('bot_edit')">
+                    <i class="fas fa-times" *ngIf="boton.activo"></i>
+                    <i class="fa-solid fa-rotate" *ngIf="!boton.activo"></i>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="botonesEnEmisor.length <= 0">
+              <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+                <h5 class="primary-text">Aun no se han asignado botones al emisor</h5>
+              </div>
+            </ng-container>
+          </div>
+
+          <ng-container *ngIf="permisosAdministracion.includes('bot_edit')">
+            <h5 class="pt-2 ml-3">Botones para asignar</h5>
+            <div class="bar-serie bg-info grey-disabled row mx-0 col-12 subseries" style="min-height: 70px;"
+                 cdkDropList #list [id]="'botones'" [cdkDropListData]="botones"
+                 [cdkDropListConnectedTo]="listDrop" (cdkDropListDropped)="drop($event)">
+              <ng-container *ngIf="botones.length > 0">
+                <div class="px-1 col-6 mb-0 text-dark box-subserie" *ngFor="let boton of botones"
+                     cdkDrag>
+                  <div class="bar-serie">
+                    {{ boton.valor }} ({{ boton.tipo }})
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="botones.length <= 0">
+                <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+                  <h5 class="primary-text mt-1">No hay botones disponibles para asignar al emisor</h5>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+
+        </div>
+        <div class="col-xl-6 col-lg-12 col-sm-6">
+          <h5 class="pt-2 ml-3">Emisor (vista previa)</h5>
+
+          <div class="bar-serie bg-white mb-3 p-2 subseries d-flex align-items-center flex-column" cdkDropList
+               #list [id]="'botonesEnEmisor'" [cdkDropListData]="botonesEnEmisor"
+               [cdkDropListConnectedTo]="listDrop" (cdkDropListDropped)="drop($event)">
+            <div class="row col-12 mb-5 px-0">
+              <div class="col-6">
+                <img [src]="logo" alt="Logo" class="" style="height: 30px">
+              </div>
+              <div class="col-6  text-right">
+                <div class="row">
+                  <div class="col-6 offset-6 text-center text-clock">
+                    <p class="mb-0">{{ now | date: "HH:mm" }}</p>
+                    <p class="mb-0" style="margin-top: -7px;"><small>{{ now | date: "dd" }} de {{
+                        now |
+                          date: "MMMM"
+                      }}</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row series-box w-100">
+              <div class="mb-0 text-dark px-1 d-flex justify-content-center align-items-center w-100"
+                   *ngFor="let boton of obtenerBotonesActivos()" cdkDrag>
+                <div class="boton-emisor ml-2">
+                  {{ boton.valor }}
+                </div>
+              </div>
+            </div>
+
+            <div class="row col-12 mt-5">
+              <div class="col-6 version p-0">V {{ version }}</div>
+              <div class="col-6 p-0">
+                <img class="float-right logo-emisor" src="/assets/dist/img/powered-ttp.svg">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 text-right">
+          <button type="button" class="btn btn-secondary m-1" (click)="cancelar()">
+            <i class="fas fa-ban"></i>
+            Cancelar
+          </button>
+
+        </div>
+        <!-- <div class="col-xl-12 col-lg-12 col-sm-6 mt-5">
+
+        </div> -->
+      </div>
+    </ng-container>
+    <!-- Fin botones -->
+  </div>
+</div>
+<ng-container>
+  <div class="spinner-container component-only">
+    <ngx-spinner [fullScreen]="false" name="servicio-get-menu-loading" type="ball-scale-ripple" size="large">
+    </ngx-spinner>
+  </div>
+</ng-container>

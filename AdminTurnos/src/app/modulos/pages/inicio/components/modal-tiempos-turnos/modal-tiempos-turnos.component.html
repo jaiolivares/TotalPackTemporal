@@ -1,0 +1,490 @@
+<div class="modal-info-oficinas-container container">
+    <div class="modal-info-oficinas-header-container">
+        <div class="modal-info-oficinas-header-container mb-4">
+            <div class="modal-info-oficinas-header">
+                <h5 class="subtitle ml-3"> Tiempos de Espera y Atención
+                    <span>
+                    <button type="button" class="btn boton text-grey mb-0" (click)="refreshData()" [disabled]="!refrescarActivado">
+                      <ng-container *ngIf="refrescarActivado"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"> <polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path> </svg> </ng-container>
+                      <ng-container *ngIf="!refrescarActivado"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></ng-container>
+                    </button>
+                  </span>
+                </h5>
+                <button type="button" class="btn  btn-ligth boton mr-3" (click)="closeModal()">
+                  Volver al dashboard <i class="fa fa-chevron-left ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-sm-6 col-12">
+            <!-- small box -->
+            <div class="small-box bg-info mb-0 box-repo">
+                <div class="inner text-orange">
+                    <h6>Mayor tiempo de Atención</h6>
+                    <h3 class="num-popp">{{maxTpoAte.tiempoMaximoAtencion}}</h3>
+                    <small>Oficina <strong>{{maxTpoAte.oficina}}</strong></small>
+                </div>
+                <div class="icon">
+                    <div class="ico-box">
+                        <img src="assets/dist/img/ticket.svg">
+                        <!-- <i class="ion ion-bag"></i> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+            <!-- small box -->
+            <div class="small-box bg-info mb-0 box-repo">
+                <div class="inner text-gray">
+                    <h6>Tiempo de Atención Promedio</h6>
+                    <h3 class="num-popp">{{promAte}}</h3>
+                    <small>Todas las Oficinas Activas</small>
+                </div>
+                <div class="icon">
+                    <div class="ico-box">
+                        <img src="assets/dist/img/fila.svg">
+                        <!-- <i class="ion ion-bag"></i> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6 col-12">
+            <!-- small box -->
+            <div class="small-box bg-info mb-0 box-repo">
+                <div class="inner text-cyan">
+                    <h6>Menor Tiempo Promedio Espera</h6>
+                    <h3 class="num-popp">{{minPromEsp.tiempoPromedioEspera}}</h3>
+                    <small>Oficina <strong>{{minPromEsp.oficina}}</strong></small>
+                </div>
+                <div class="icon">
+                    <div class="ico-box">
+                        <img src="assets/dist/img/ticket.svg">
+                        <!-- <i class="ion ion-bag"></i> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+            <!-- small box -->
+            <div class="small-box bg-info mb-0 box-repo">
+                <div class="inner text-gray-dark">
+                    <h6>Tiempo de Espera Promedio</h6>
+                    <h3 class="num-popp">{{promEsp}}</h3>
+                    <small>Todas las Oficinas Activas</small>
+                </div>
+                <div class="icon">
+                    <div class="ico-box">
+                        <img src="assets/dist/img/ticket.svg">
+                        <!-- <i class="ion ion-bag"></i> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body px-0 mt-3">
+        <div class="row no-gutters">
+            <div class="col-12 modal-body-content card">
+                <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onSelectTab($event)" [dynamicHeight]="true" #tabGroup>
+                    <mat-tab md-active>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Tiempo Máximo de Atención por Oficina
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar oficinas...">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                              <i class="fa fa-search"></i>
+                            </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">
+                                                Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                {{ordenadoPor}}
+                              </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('tiempoMaximoAtencion','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'tiempoMaximoAtencion-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('tiempoMaximoAtencion','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'tiempoMaximoAtencion-A'}" class="dropdown-item">Ascendente</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type }  | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==1">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.tiempoMaximoAtencion}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">{{series.tiempoMaximoAtencion}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==0 && oficina.emitidosNormal > 0">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey-disabled h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.emitidosNormal}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8 ">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.emitidosNormal}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Tiempo Máximo de Espera por Oficina
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar oficinas...">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                            <i class="fa fa-search"></i>
+                          </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">
+                                                Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                {{ordenadoPor}}
+                            </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('tiempoMaximoEspera','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'tiempoMaximoEspera-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('tiempoMaximoEspera','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'tiempoMaximoEspera-A'}" class="dropdown-item">Ascendente</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } |  buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==1">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.tiempoMaximoEspera}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">{{series.tiempoMaximoEspera}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==0 && oficina.emitidosNormal > 0">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey-disabled h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.emitidosNormal}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8 ">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.emitidosNormal}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Tiempo Promedio de Atención por Oficina
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar oficinas...">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                          <i class="fa fa-search"></i>
+                        </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">
+                                                Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                {{ordenadoPor}}
+                          </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('tiempoPromedioAtencion','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'tiempoPromedioAtencion-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('tiempoPromedioAtencion','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'tiempoPromedioAtencion-A'}" class="dropdown-item">Ascendente</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==1">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.tiempoPromedioAtencion}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">{{series.tiempoPromedioAtencion}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } |  buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==0 && oficina.emitidosNormal > 0">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey-disabled h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.emitidosNormal}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8 ">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.emitidosNormal}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>local_offer</mat-icon> Tiempo Promedio de Espera por Oficina
+                        </ng-template>
+                        <div class="card-body px-0">
+                            <div class="tab-content p-0">
+
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group relative">
+                                                <input type="text" (keyup)="tecleado($event.target)" class="form-control form-control-md search" placeholder="Buscar oficinas...">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-md btn-default">
+                        <i class="fa fa-search"></i>
+                      </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="dropdown mr-2">
+                                                Ordenar por orden:
+                                                <button class="btn btn-block btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                {{ordenadoPor}}
+                        </button>
+                                                <div class="dropdown-menu">
+                                                    <a type="button" (click)="ordenar('tiempoPromedioEspera','D')" [ngClass]="{'active-dropdown':activeOrderBy === 'tiempoPromedioEspera-D'}" class="dropdown-item">Descendente</a>
+                                                    <a type="button" (click)="ordenar('tiempoPromedioEspera','A')" [ngClass]="{'active-dropdown':activeOrderBy === 'tiempoPromedioEspera-A'}" class="dropdown-item">Ascendente</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==1">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.tiempoPromedioEspera}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0" [ngClass]="series.ejecutivosActivos == 0 ? 'text-gray-dark' : 'text-cyan'">{{series.tiempoPromedioEspera}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let oficina of oficinas | filtro
+                                    : {}
+                                    : { key: this.orderBy.key, type: this.orderBy.type } | buscador:searchText:['nombre']">
+                                        <div class="col-12 col-md-4" *ngIf="oficina.activa==0 && oficina.emitidosNormal > 0">
+                                            <div class="card-body px-0 h-100">
+                                                <div class="tab-content p-0 h-100">
+
+                                                    <div class="small-box bg-info grey-disabled h-100">
+                                                        <div class="inner pb-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="pb-2 mb-0"><span>{{oficina.nombre}}</span></h6>
+                                                                <h2 class="ml-auto mb-0">{{oficina.emitidosNormal}}</h2>
+                                                            </div>
+                                                            <div *ngFor="let series of oficina.series" class="row align-items-center">
+                                                                <div class="col-8 ">
+                                                                    <span class="text-1">{{series.serie}}</span>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div>
+                                                                        <h6 class="text-right mb-0 p-0">{{series.emitidosNormal}}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

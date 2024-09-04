@@ -1,0 +1,23 @@
+.info-historico-atencion-actions-btns{
+    @include media-query(map-get($grid-breakpoints, "xl")) {
+        margin-top: 1rem;
+    }
+}
+.info-historico-atencion-filters{
+    @include media-query(map-get($grid-breakpoints, "sm")) {
+        flex-direction: column;
+        .input-group{
+            margin-top: 0.5rem;
+        }
+        
+    }
+}
+
+@include media-query(map-get($grid-breakpoints, "lg")) {
+    .info-historico-card{
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+}
+

@@ -1,0 +1,121 @@
+<div class="row">
+    <div class="col-md-12 px-0">
+        <div class="row mx-0" *ngIf="this.estado.selectedOficina">
+            <div class="col-xl-9 col-lg-9 pl-0 pr-0">
+                <h5 class="pt-2">Oficina: <span class="texto-customer">{{estado.selectedOficina.oficina}}</span> </h5>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 px-0" *ngIf="!editar">
+                <button type="button" class="btn btn-block btn-success mb-2 float-right" (click)="editar=true;" *ngIf="permisosAdministracion.includes('ofi_edit')">
+        <i class="fas fa-cogs"></i> Editar Oficina
+      </button>
+            </div>
+        </div>
+        <section class="row oficina-section connectedSortable" *ngIf="!editar">
+            <div class="row mx-0 w-100 pb-0" *ngIf="this.estado.selectedOficina">
+                <div class="col-xl-7 col-lg-12 px-0">
+                    <div class="row col-12 mr-0">
+                        <div class="col-4 mx-0 form-group">
+                            <div class="box-input">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-8 px-0">
+                                        <label class="text-input">Id Oficina:</label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p class="font-weight-bold mb-0 mr-2">{{estado.selectedOficina.idOficina}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8 form-group">
+                            <div class="box-input">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-2 px-0">
+                                        <label class="text-input">Oficina:</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <p class="font-weight-bold mb-0 mr-2">{{estado.selectedOficina.oficina}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row col-12 mr-0">
+                        <div class="col-5 form-group">
+                            <div class="box-input">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-8 px-0">
+                                        <label class="text-input">Código Oficina:</label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p class="font-weight-bold mb-0 mr-2">{{estado.selectedOficina.codOficina}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7 form-group">
+                            <div class="box-input">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-4 px-0">
+                                        <label class="text-input">Zona:</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p class="font-weight-bold mb-0 mr-2">{{estado.selectedOficina.zona}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-12 mr-0">
+
+                        <div class="col-12 form-group">
+                            <div class="box-input">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-2 px-0">
+                                        <label class="text-input">Dirección:</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <p class="font-weight-bold mb-0 mr-2">{{estado.selectedOficina.direccion}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-12 px-0">
+                    <div class="row col-12 mx-0 px-0">
+
+                        <div class="col-12 form-group mx-0 px-0">
+                            <div class="box-input">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-2 px-0">
+                                        <label class="text-input">Ubicación:</label>
+                                    </div>
+                                    <div class="col-sm-10 py-2 px-3">
+                                        <div class="map-container" style="height:210px;" id="readOnlyMap" leaflet [leafletOptions]="options" (leafletMapReady)="onMapReady($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row mx-0 w-100 pb-0  mt-3" *ngIf="!this.estado.selectedOficina">
+                <div class="col-xl-12 d-flex justify-content-center font-weight-bold">
+                    <h2 class="primary-text">No hay oficina seleccionada</h2>
+                </div>
+            </div>
+        </section>
+        <section class="row mx-0 connectedSortable" [@openClose]="editar ? 'open' : 'closed'">
+            <app-oficina-edit class="col-xl-12" (onVolver)="volverADatos($event)" *ngIf="editar">
+            </app-oficina-edit>
+        </section>
+
+    </div>
+</div>
+
+
+<hr *ngIf="!editar">

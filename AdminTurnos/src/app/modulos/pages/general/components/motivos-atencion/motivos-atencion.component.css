@@ -1,0 +1,35 @@
+.motivo-card {
+    min-height: 75px;
+}
+
+.edit-series {
+    position: absolute;
+    right: 20px;
+    top: 48px;
+    display: block;
+    color: #808080;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.edit-series:hover {
+    color: var(--color-llamado);
+}
+
+.box-series {
+    min-height: 195px;
+}
+
+.grey-disabled {
+    color: black;
+}
+
+.disabled-div {
+    pointer-events: none; /* Deshabilita los eventos de clic */
+    opacity: 0.5; /* Cambia la opacidad para indicar que está deshabilitado */
+}
+
+.bg-active {
+    color: var(--color-llamado)!important;
+    background-color: rgba(49, 255, 0, 0.1);
+}

@@ -1,0 +1,118 @@
+{
+    "oficinas": [{
+            "oficina": "Demo",
+            "total": 46,
+            "series": [
+                { "serie": "Atención General", "personas": 16 },
+                { "serie": "Atención Especializada", "personas": 8 },
+                { "serie": "Cambio de SIM Card", "personas": 12 },
+                { "serie": "Compra de Equipos", "personas": 10 }
+            ]
+        },
+        {
+            "oficina": "Maipú",
+            "total": 64,
+            "series": [
+                { "serie": "Atención General", "personas": 16 },
+                { "serie": "Atención Especializada", "personas": 8 },
+                { "serie": "Cambio de SIM Card", "personas": 12 }
+            ]
+        },
+        {
+            "oficina": "Quilín",
+            "total": 32,
+            "series": [
+                { "serie": "Atención General", "personas": 16 },
+                { "serie": "Atención Especializada", "personas": 8 },
+                { "serie": "Cambio de SIM Card", "personas": 12 },
+                { "serie": "Compra de Equipos", "personas": 10 },
+                { "serie": "Accesorios", "personas": 12 }
+            ]
+        },
+        {
+            "oficina": "Plaza Oeste",
+            "total": 98,
+            "series": [
+                { "serie": "Atención General", "personas": 16 },
+                { "serie": "Atención Especializada", "personas": 8 },
+                { "serie": "Cambio de SIM Card", "personas": 12 },
+                { "serie": "Compra de Equipos", "personas": 10 }
+            ]
+        },
+        {
+            "oficina": "Huérfanos",
+            "total": 18,
+            "series": [
+                { "serie": "Atención General", "personas": 16 },
+                { "serie": "Atención Especializada", "personas": 8 },
+                { "serie": "Cambio de SIM Card", "personas": 12 },
+                { "serie": "Compra de Equipos", "personas": 10 }
+            ]
+        },
+        {
+            "oficina": "Plaza Norte",
+            "total": 25,
+            "series": [
+                { "serie": "Atención General", "personas": 16 },
+                { "serie": "Atención Especializada", "personas": 8 },
+                { "serie": "Cambio de SIM Card", "personas": 12 },
+                { "serie": "Compra de Equipos", "personas": 10 }
+            ]
+        },
+        {
+            "oficina": "Plaza Vespucio",
+            "total": 30,
+            "series": [
+                { "serie": "Atención General", "personas": 16 },
+                { "serie": "Atención Especializada", "personas": 8 },
+                { "serie": "Cambio de SIM Card", "personas": 12 },
+                { "serie": "Compra de Equipos", "personas": 10 }
+            ]
+        }
+    ],
+
+
+
+    "series": [{
+            "serie": "Atención General",
+            "total": 150,
+            "oficinas": [
+                { "oficina": "Demo", "personas": 16 },
+                { "oficina": "Maipú", "personas": 8 },
+                { "oficina": "Quilín", "personas": 12 },
+                { "oficina": "Plaza Oeste", "personas": 10 }
+            ]
+        },
+        {
+            "serie": "Atención Especializada",
+            "total": 25,
+            "oficinas": [
+                { "oficina": "Demo", "personas": 16 },
+                { "oficina": "Maipú", "personas": 8 },
+                { "oficina": "Quilín", "personas": 12 },
+                { "oficina": "Plaza Oeste", "personas": 10 }
+            ]
+        },
+        {
+            "serie": "Cambio de SIM Card",
+            "total": 17,
+            "oficinas": [
+                { "oficina": "Demo", "personas": 16 },
+                { "oficina": "Maipú", "personas": 8 },
+                { "oficina": "Quilín", "personas": 12 },
+                { "oficina": "Plaza Oeste", "personas": 10 }
+            ]
+        },
+        {
+            "serie": "Compra de Equipos",
+            "total": 82,
+            "oficinas": [
+                { "oficina": "Demo", "personas": 16 },
+                { "oficina": "Maipú", "personas": 8 },
+                { "oficina": "Quilín", "personas": 12 },
+                { "oficina": "Plaza Oeste", "personas": 10 }
+            ]
+        }
+    ],
+    "status": true
+}

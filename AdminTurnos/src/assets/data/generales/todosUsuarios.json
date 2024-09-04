@@ -1,0 +1,147 @@
+{
+    "data": {
+        "usuarios": [{
+                "id": 1,
+                "usuario": "admin",
+                "nombre": "Ivan manuel",
+                "email": "morillo864@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 2,
+                "usuario": "fcovarrubia",
+                "nombre": "Franklin Covarrubia",
+                "email": "franklincovarrubia20@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 3,
+                "usuario": "juan",
+                "nombre": "Juan pérez",
+                "email": "juanperez@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 4,
+                "usuario": "kevin",
+                "nombre": "Kevin Pacheco",
+                "email": "kevin@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 5,
+                "usuario": "asier",
+                "nombre": "Asier Francisco",
+                "email": "asier@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 6,
+                "usuario": "carlitush",
+                "nombre": "Carlos Sáchez",
+                "email": "carlos@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 7,
+                "usuario": "ignasi",
+                "nombre": "Ignasi Quintana",
+                "email": "ignasi@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 8,
+                "usuario": "josemaria",
+                "nombre": "Jose Maria Estrada",
+                "email": "josemaria@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 9,
+                "usuario": "david",
+                "nombre": "David Gracia",
+                "email": "david@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 10,
+                "usuario": "joseb",
+                "nombre": "Jose Benavides",
+                "email": "joseb@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 11,
+                "usuario": "josepm",
+                "nombre": "Josep Maria Cardona",
+                "email": "josepm@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 12,
+                "usuario": "toto",
+                "nombre": "Luis Antonio Castellano",
+                "email": "toto@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 13,
+                "usuario": "cristobale",
+                "nombre": "Cristobal Escobar",
+                "email": "cristobale@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 14,
+                "usuario": "josecarlos",
+                "nombre": "Jose Carlos Vizcaino",
+                "email": "josecarlos@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 15,
+                "usuario": "marcelinoh",
+                "nombre": "Marcelino Holgado",
+                "email": "marcelinoh@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 16,
+                "usuario": "alanr",
+                "nombre": "Alan Robles",
+                "email": "alanr@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 17,
+                "usuario": "marcoantonio",
+                "nombre": "Marcos Antonio Tovar",
+                "email": "marcoantonio@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 18,
+                "usuario": "luifi",
+                "nombre": "Fernándo Azócar",
+                "email": "fcastellano@gmail.com",
+                "activo": 1
+            },
+            {
+                "id": 19,
+                "usuario": "juandiegop",
+                "nombre": "Juan Diego Puerto",
+                "email": "juandiegop@gmail.com",
+                "activo": 0
+            },
+            {
+                "id": 20,
+                "usuario": "antonio",
+                "nombre": "José Antonio Tovar",
+                "email": "jantonio@gmail.com",
+                "activo": 1
+            }
+        ],
+        "totalUsuarios": 20
+    },
+    "status": true
+}
